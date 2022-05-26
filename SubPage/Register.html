@@ -9,13 +9,13 @@
 </head>
 <body>
     <form name="register" method="post" action="../phpCode/Register.php">
-        姓名: <input type="text" name="nickName" size="10" required/><br/>
-        帳號: <input type="text" name="userName" size="10" required/><br/>
-        密碼: <input type="password" name="password" size="10" required/><br/>
+        姓名: <input type="text" name="nickName" maxlength="20" required/><br/>
+        帳號: <input type="text" name="userName" maxlength="20" required/><br/>
+        密碼: <input type="password" name="password" maxlength="20" minlength="8" required/><br/>
         男 <input type="radio" name="gender" value="male" required><br/>
         女 <input type="radio" name="gender" value="female" required><br/>
-        聯絡電話: <input type="tel" name="phoneNumber" size="10" required/><br/>
-        電子郵件: <input type="text" name="email" size="50"/><br/>
+        聯絡電話: <input type="tel" name="phoneNumber" maxlength="10" required/><br/>
+        電子郵件: <input type="text" name="email" maxlength="50"/><br/>
         <input type="submit" value="註冊使用者"/>
         </form>
 </body>

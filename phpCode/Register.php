@@ -1,9 +1,10 @@
+<!-- 用戶註冊 -->
 <?php
 
-//用戶註冊
-
+//建立連結
 require_once("loginDB.inc");
 
+//取得表單資料
 $nickName = $_POST["nickName"];
 $userName = $_POST["userName"];
 $password = $_POST["password"];
@@ -12,6 +13,8 @@ $phoneNumber = $_POST["phoneNumber"];
 $email = $_POST["email"];
 
 
+
+//測試
 print "姓名: ".$nickName."<br/>";
 print "帳號: ".$userName."<br/>";
 print "密碼: ".$password."<br/>";
