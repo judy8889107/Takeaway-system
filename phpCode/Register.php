@@ -1,16 +1,8 @@
 <?php
 
-//註冊按鈕
+//用戶註冊
 
-//連接資料庫
-$host = 'localhost';  //host
-$dbuser ='root';  //帳號
-$dbpassword = 'judy890912'; //密碼
-$dbname = 'takeaway-system'; //資料庫名稱
-$link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
-
-if(!$link) echo '連接錯誤';
-else echo '連接成功';
+require_once("loginDB.inc");
 
 $nickName = $_POST["nickName"];
 $userName = $_POST["userName"];
