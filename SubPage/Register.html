@@ -1,0 +1,22 @@
+<!-- 用戶註冊頁面，後台Register.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用戶註冊</title>
+</head>
+<body>
+    <form name="register" method="post" action="./phpCode/register.php">
+        姓名: <input type="text" name="nickName" size="10" required/><br/>
+        帳號: <input type="text" name="userName" size="10" required/><br/>
+        密碼: <input type="password" name="password" size="10" required/><br/>
+        男 <input type="radio" name="gender" value="male" required><br/>
+        女 <input type="radio" name="gender" value="female" required><br/>
+        聯絡電話: <input type="tel" name="phoneNumber" size="10" required/><br/>
+        電子郵件: <input type="text" name="email" size="50"/><br/>
+        <input type="submit" value="註冊使用者"/>
+        </form>
+</body>
+</html>
