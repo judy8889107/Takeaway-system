@@ -2,7 +2,7 @@
 <?php
 
 //建立連結
-require_once("loginDB.inc");
+require_once("./inc/LoginDB.inc");
 
 //取得表單資料
 $nickName = $_POST["nickName"];
@@ -23,6 +23,8 @@ print "聯絡號碼: ".$phoneNumber."<br/>";
 print "Email: ".$email."<br/>";
 
 
+// 關閉資料庫連結
+require_once("./inc/CloseDB.inc");
 
 
 
