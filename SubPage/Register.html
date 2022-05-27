@@ -16,13 +16,12 @@
                     $nickName = $("input[name='nickName']").val();
                     if($nickName.length < 4){
                         document.getElementById("nickNameHint").innerHTML = "長度過短";
-                        document.getElementById("submit").setAttribute("disabled","");
+                        $("#submit").prop("disabled",true);
                     }
                         
                     else{
                         document.getElementById("nickNameHint").innerHTML = "";
-                        document.getElementById("submit").removeAttribute("disabled", "");;
-                        document.getElementById("submit").setAttribute("enabled","");
+                        $("#submit").prop("disabled",false);
                     }
                    
                  });
@@ -31,12 +30,11 @@
                     $userName = $("input[name='userName']").val();
                     if($userName.length < 4){
                         document.getElementById("userNameHint").innerHTML = "帳號長度過短";
-                        document.getElementById("submit").setAttribute("disabled","");
+                        $("#submit").prop("disabled",true);
                     } 
                     else{
                         document.getElementById("userNameHint").innerHTML = "";
-                        document.getElementById("submit").removeAttribute("disabled", "");;
-                        document.getElementById("submit").setAttribute("enabled","");
+                        $("#submit").prop("disabled",false);
                     } 
                     
                     
@@ -46,13 +44,12 @@
                     $password = $("input[name='password']").val();
                     if($password.length < 8){
                         document.getElementById("passwordHint").innerHTML = "長度至少要為8";
-                        document.getElementById("submit").setAttribute("disabled","");
+                       $("#submit").prop("disabled",true);
                     }
                     
                     else {
                         document.getElementById("passwordHint").innerHTML = "";
-                        document.getElementById("submit").removeAttribute("disabled", "");;
-                        document.getElementById("submit").setAttribute("enabled","");
+                        $("#submit").prop("disabled",false);
                     }
                     
                     
@@ -61,13 +58,12 @@
                     $phoneNumber = $("input[name='phoneNumber']").val();
                     if(!$phoneNumber.match("^09[0-9]{8}")){
                         document.getElementById("phoneNumberHint").innerHTML = "錯誤的格式";
-                        document.getElementById("submit").setAttribute("disabled","");
+                        $("#submit").prop("disabled",true);
                     }
                         
                     else{
                         document.getElementById("phoneNumberHint").innerHTML = "";
-                        document.getElementById("submit").removeAttribute("disabled", "");;
-                        document.getElementById("submit").setAttribute("enabled","");
+                        $("#submit").prop("disabled",false);
                     } 
                     
                     
@@ -76,12 +72,11 @@
                     var validEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
                     if(!$email.match(validEmail)){
                         document.getElementById("emailHint").innerHTML = "錯誤的格式";
-                        document.getElementById("submit").setAttribute("disabled","");
+                        $("#submit").prop("disabled",true);
                     }  
                     else{
                         document.getElementById("emailHint").innerHTML = "";  
-                        document.getElementById("submit").removeAttribute("disabled", "");;
-                        document.getElementById("submit").setAttribute("enabled","");
+                        $("#submit").prop("disabled",false);
                     }
                  });
                  // 當按下送出，將表單資料傳到後台(ajax)
