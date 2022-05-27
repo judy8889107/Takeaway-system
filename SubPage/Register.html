@@ -11,7 +11,7 @@
     <!-- 動態判斷input -->
         <script>
             $(document).ready(function(){
-                // 判斷暱稱
+                // 判斷暱稱(長度不小於4)
                 $("input[name='nickName']").bind("input propertychange", function(e) {
                     $nickName = $("input[name='nickName']").val();
                     if($nickName.length < 4){
@@ -25,7 +25,7 @@
                     }
                    
                  });
-                 // 判斷帳號，並送到後台檢查有無重複帳號
+                 // 判斷帳號(長度不小於4)
                  $("input[name='userName']").bind("input propertychange", function(e) {
                     $userName = $("input[name='userName']").val();
                     if($userName.length < 4){
@@ -54,6 +54,7 @@
                     
                     
                  });
+                 //  判斷手機號碼格式
                  $("input[name='phoneNumber']").bind("input propertychange", function(e) {
                     $phoneNumber = $("input[name='phoneNumber']").val();
                     if(!$phoneNumber.match("^09[0-9]{8}")){
@@ -66,7 +67,7 @@
                         $("#submit").prop("disabled",false);
                     } 
                     
-                    
+                 //  判斷信箱格式
                  });$("input[name='email']").bind("input propertychange", function(e) {
                     $email = $("input[name='email']").val();
                     var validEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
