@@ -2,7 +2,7 @@
 <?php
 
 //建立連結
-// $link = require_once("./inc/LoginDB.inc");
+$link = require_once("./inc/LoginDB.inc");
 
 
 //取得表單資料
@@ -14,36 +14,45 @@ $birthday = isset($_POST["birthday"])? $_POST["birthday"]: "";
 $phoneNumber = isset($_POST["phoneNumber"])? $_POST["phoneNumber"]: "";
 $email = isset($_POST["email"])? $_POST["email"]: "";
 
-// if($link) print "ok";
+
 
 // //insert前確認資料有無重複
-// $Rep = array("帳號"=>false, "手機號碼"=>false, "電子郵件"=>false);
-// // $userNameRep = false;
-// // $phoneNumberRep = false;
-// // $emailRep = false;
-// $isRep = false;
-// $sql = "SELECT userName, phoneNumber, email FROM userdb";
-// $result = mysqli_query($link, $sql);
-// while($row = mysqli_fetch_row($result)){
-//     if($row[0] == $userName) $Rep['帳號'] = true;
-//     if($row[1] == $phoneNumber) $Rep['手機號碼'] = true;
-//     if($row[2] == $email) $Rep['電子郵件'] = true;
-//     if($Rep['帳號'] || $Rep['手機號碼'] || $Rep['電子郵件']){
-//         $isRep = true;
-//         // 有可能帳號一樣，手機號碼也跟別人相同，但是不同列，所以不能break
-//     }
-// }
+$Rep = array("userNameRep"=>false, "phoneNumberRep"=>false, "emailRep"=>false);
+
+$isRep = false;
+$sql = "SELECT userName, phoneNumber, email FROM userdb";
+$result = mysqli_query($link, $sql);
+while($row = mysqli_fetch_row($result)){
+    if($row[0] == $userName) $Rep['userNameRep'] = true;
+    if($row[1] == $phoneNumber) $Rep['phoneNumberRep'] = true;
+    if($row[2] == $email) $Rep['emailRep'] = true;
+    if($Rep['userNameRep'] || $Rep['phoneNumberRep'] || $Rep['emailRep']){
+        $isRep = true;
+        // 有可能帳號一樣，手機號碼也跟別人相同，但是不同列，所以不能break
+    }
+}
+
 
 
 // //插入資料
-// if(!$isRep){
-//     $sql = "INSERT INTO userdb (nickName, userName, password, gender, birthday, phoneNumber, email) 
-//     VALUES ('$nickName', '$userName', '$password', '$gender', '$birthday', '$phoneNumber', '$email')";
-//     mysqli_query($link,$sql);
-// }
+if(!$isRep){
+    $sql = "INSERT INTO userdb (nickName, userName, password, gender, birthday, phoneNumber, email) 
+    VALUES ('$nickName', '$userName', '$password', '$gender', '$birthday', '$phoneNumber', '$email')";
+    mysqli_query($link,$sql);
+}
 
+foreach($Rep as &$x_value){
+    $x_value = $x_value? "true":"false";
+}
+unset($value);
 
-// print 3;
+//回傳結果給前台(將陣列轉為json檔案)
+$Rep = json_encode($Rep);
+print $Rep;
+
+// 關閉資料庫連結
+mysqli_close($link);
+
 
 // 測試用輸出
 // echo $nickName."<br>";
@@ -54,8 +63,7 @@ $email = isset($_POST["email"])? $_POST["email"]: "";
 // echo $phoneNumber."<br>";
 // echo $email."<br>";
 
-// 關閉資料庫連結
-// mysqli_close($link);
+
 
 ?>
 

@@ -92,11 +92,15 @@
                     $.ajax({
                         type: "POST",
                         url: url,
+                        dataType:"json", //接收json資料
                         data: form.serialize(), // serializes the form's elements.
                         success: function(data)
                         {
-                            alert("成功"); // show response from the php script.
-                            alert(data);
+                            // 接收表單資料
+                            // 前台做處理
+                            alert("帳號重複:"+data.userNameRep);
+                            alert("手機重複"+data.phoneNumberRep);
+                            alert("信箱重複"+data.emailRep);
                         }
                         });
 
