@@ -79,7 +79,9 @@
                         $("#submit").prop("disabled",false);
                     }
                  });
-                 // 當按下送出，將表單資料傳到後台(ajax)
+
+                 // 當按下送出，ajax將表單資料傳到後台(Register.php)
+                //  Register.php print資料到前台
                  $("#register").submit(function(e){
                     var form = $(this);
                     var url = form.attr('action');
@@ -93,6 +95,7 @@
                         {
                             // 接收表單資料
                             // 前台做處理
+                            alert(data);
                             alert("帳號重複:"+data.userNameRep);
                             alert("手機重複"+data.phoneNumberRep);
                             alert("信箱重複"+data.emailRep);
@@ -109,8 +112,6 @@
         
 </head>
 <body>
-    <p id="test"></p>
-    <!-- Register.php在iframe中打開(不顯示)，實現提交表單頁面不跳轉 -->
     <form id="register" action="../phpCode/Register.php">
         姓名: <input type="text" name="nickName" maxlength="20" required/><br/>
         <label id="nickNameHint"></label><br/>

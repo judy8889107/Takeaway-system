@@ -46,8 +46,8 @@ foreach($Rep as &$x_value){
 }
 unset($value);
 
-//回傳結果給前台(將陣列轉為json檔案)
-$Rep = json_encode($Rep);
+//回傳結果給前台
+$Rep = json_encode($Rep); // (將陣列轉為json檔案)
 print $Rep;
 
 // 關閉資料庫連結
