@@ -11,3 +11,7 @@
     <h1>首頁</h1>
 </body>
 </html>
+
+<?php
+    include './phpCode/HomePageBackground.php';
+?>

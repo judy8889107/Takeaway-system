@@ -1,6 +1,6 @@
 <?php
 // 寄送驗證碼給使用者，讓使用者可以重設密碼
-
+session_start();
 //建立連結
 $link = require_once("./inc/LoginDB.inc");
 
@@ -15,6 +15,7 @@ while($row = mysqli_fetch_row($result)){
     for($i=0;$i<$field_count;$i++){
         if(strcmp($row[$i],$userName) == 0){
             $userEmail = $row[$field_count-1];
+            $_SESSION['userName'] = $row[0]; /* 記錄使用者帳號 */
             break;
         }
     }

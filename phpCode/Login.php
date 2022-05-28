@@ -1,5 +1,6 @@
 <?php
-
+// 建立session
+session_start();
 //建立連結
 $link = require_once("./inc/LoginDB.inc");
 
@@ -34,7 +35,11 @@ if($userNameMatch){
 }
 
 
-if($userNameMatch && $passwordMatch) print "true";
+if($userNameMatch && $passwordMatch){
+    print "true";
+    $_SESSION['userName'] = $userName;
+    $_SESSION['islogin'] = 1;
+}
 else print "false";
 
 // 關閉資料庫連結
