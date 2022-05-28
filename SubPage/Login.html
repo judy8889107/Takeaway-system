@@ -20,7 +20,14 @@
                         data: form.serialize(), // serializes the form's elements.
                         success: function(data)
                         {
-                           alert(data);
+                        
+                           var isLoginSuccess = data=="true"? true:false;
+                            if(isLoginSuccess){
+                                alert("登入成功");
+                                $(location).prop("href", "../HomePage.html"); /* 登入成功跳轉首頁 */
+                            }
+                            else alert("帳號/密碼有誤，請重新登入");
+
                            
                         }
                     });
@@ -33,7 +40,7 @@
 <body>
     <div id="formDiv">
         <form id="login" action="../phpCode/Login.php">
-            帳號/手機號碼/電子郵件: <input type="text" name="userName" maxlength="50" required/><br/>
+            帳號/手機號碼/電子郵件: <input type="tel" name="userName" maxlength="50" required/><br/>
             密碼: <input type="password" name="password" maxlength="20" required/><br/>
             <a href="">忘記密碼</a><br/>
             <input id="submit" type="submit" name="submit" value="登入"/><br/>

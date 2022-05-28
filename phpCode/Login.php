@@ -10,10 +10,12 @@ $result = mysqli_query($link, $sql);
 $field_count = $result->field_count;
 $userNameMatch = false;
 $passwordMatch = false;
+
+
 // 核對使用者帳號
 while($row = mysqli_fetch_row($result)){
     for($i=0;$i<$field_count;$i++){
-        if($row[$i] == $userName){
+        if(strcmp($row[$i],$userName) == 0){
             $userNameMatch = true;
             break;
         }
@@ -24,12 +26,13 @@ if($userNameMatch){
     $sql = "SELECT password FROM userdb";
     $result = mysqli_query($link, $sql);
     while($row = mysqli_fetch_row($result)){
-        if($row[0] == $password){
+        if(strcmp($row[0],$password) == 0){
             $passwordMatch = true;
             break;
         }
     }
 }
+
 
 if($userNameMatch && $passwordMatch) print "true";
 else print "false";

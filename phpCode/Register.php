@@ -22,9 +22,9 @@ $isRep = false;
 $sql = "SELECT userName, phoneNumber, email FROM userdb";
 $result = mysqli_query($link, $sql);
 while($row = mysqli_fetch_row($result)){
-    if($row[0] == $userName) $Rep['userNameRep'] = true;
-    if($row[1] == $phoneNumber) $Rep['phoneNumberRep'] = true;
-    if($row[2] == $email) $Rep['emailRep'] = true;
+    if(strcmp($row[0],$userName)==0) $Rep['userNameRep'] = true;
+    if(strcmp($row[1],$phoneNumber)==0) $Rep['phoneNumberRep'] = true;
+    if(strcmp($row[2],$email)==0) $Rep['emailRep'] = true;
     if($Rep['userNameRep'] || $Rep['phoneNumberRep'] || $Rep['emailRep']){
         $isRep = true;
         // 有可能帳號一樣，手機號碼也跟別人相同，但是不同列，所以不能break
