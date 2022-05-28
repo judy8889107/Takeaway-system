@@ -9,5 +9,6 @@
     } else {
     // 若沒有登入
     echo "您還沒有登入,請<a href='./SubPage/Login.html'>登入</a>";
+    echo "或是<a href='./SubPage/Register.html'>新用戶註冊</a>";
     }
 ?>

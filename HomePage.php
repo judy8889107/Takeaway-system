@@ -13,5 +13,5 @@
 </html>
 
 <?php
-    include './phpCode/HomePageBackground.php';
+    include './phpCode/HomePageBackside.php';
 ?>
