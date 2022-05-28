@@ -94,12 +94,36 @@
                         data: form.serialize(), // serializes the form's elements.
                         success: function(data)
                         {
-                            // 接收表單資料
+                            // 接收表單資料(判斷帳號, 手機號碼, 電子郵件有無重複)
+                            // {'userNameRep'='true/false', 'phoneNumberRep':'', 'emailRep'=''};
                             // 前台做處理
-                            alert(data);
-                            alert("帳號重複:"+data.userNameRep);
-                            alert("手機重複"+data.phoneNumberRep);
-                            alert("信箱重複"+data.emailRep);
+                            var registerComplete = false;
+                            var arr = ["帳號", "聯絡電話", "電子郵件"];
+                            var index = 0;
+                            var response = "";
+                            for(var k in data){
+                                data[k] = data[k] == "true"?true:false; /* 字串轉boolean */
+                                if(data[k]){
+                                    if(response!="") response += ", ";
+                                    response += arr[index];
+                                }
+                                index++;  
+                            }
+                            if(!data.userNameRep && !data.phoneNumberRep && !data.emailRep)
+                                 registerComplete = true;
+
+                            // 對用戶返回註冊結果
+                            if(registerComplete){
+                                $("#formDiv").hide(); /* 註冊成功則表單隱藏 */
+                                alert("註冊成功!");
+                                $(location).prop("href", "../HomePage.html"); /* 註冊成功跳轉首頁 */
+                            }
+                            // 顯示重複的input有哪些
+                            else{
+                                response += "重複，請重新輸入";
+                                alert(response);
+                            }
+                           
                         }
                         });
 
@@ -113,6 +137,7 @@
         
 </head>
 <body>
+    <div id="formDiv">
     <form id="register" action="../phpCode/Register.php">
         姓名: <input type="text" name="nickName" maxlength="20" required/><br/>
         <label id="nickNameHint"></label><br/>
@@ -129,6 +154,7 @@
         <label id="emailHint"></label><br/>
         <input id="submit" type="submit" name="submit" value="註冊使用者"/>
         </form>
+    </div>
     <!-- <iframe name="nullFrame" frameBorder="0"></iframe> -->
     <!-- <iframe name="nullFrame" style="display:none;"></iframe> -->
 </body>

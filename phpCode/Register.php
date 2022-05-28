@@ -15,7 +15,6 @@ $phoneNumber = isset($_POST["phoneNumber"])? $_POST["phoneNumber"]: "";
 $email = isset($_POST["email"])? $_POST["email"]: "";
 
 
-
 // //insert前確認資料有無重複
 $Rep = array("userNameRep"=>false, "phoneNumberRep"=>false, "emailRep"=>false);
 
