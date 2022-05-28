@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入頁面</title>
+    <!-- 引用jquery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script>
+         $(document).ready(function(){
+            $("#login").submit(function(e){
+                    var form = $(this);
+                    var url = form.attr('action');
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        dataType:"text", //接收text資料
+                        data: form.serialize(), // serializes the form's elements.
+                        success: function(data)
+                        {
+                           alert(data);
+                           
+                        }
+                    });
+
+                    e.preventDefault(); // avoid to execute the actual submit of the form.
+                })
+        })
+    </script>
+</head>
+<body>
+    <div id="formDiv">
+        <form id="login" action="../phpCode/Login.php">
+            帳號/手機號碼/電子郵件: <input type="text" name="userName" maxlength="50" required/><br/>
+            密碼: <input type="password" name="password" maxlength="20" required/><br/>
+            <a href="">忘記密碼</a><br/>
+            <input id="submit" type="submit" name="submit" value="登入"/><br/>
+        </form>
+    </div>
+    
+</body>
+</html>

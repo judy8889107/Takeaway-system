@@ -54,6 +54,22 @@
                     
                     
                  });
+                  //  確認輸入密碼
+                  $("input[name='checkpassword']").bind("input propertychange", function(e) {
+                    $password = $("input[name='password']").val();
+                    $checkpassword = $("input[name='checkpassword']").val();
+                    if($checkpassword != $password){
+                        document.getElementById("checkpasswordHint").innerHTML = "輸入密碼不一致，請重新輸入";
+                       $("#submit").prop("disabled",true);
+                    }
+                    
+                    else {
+                        document.getElementById("checkpasswordHint").innerHTML = "";
+                        $("#submit").prop("disabled",false);
+                    }
+                    
+                    
+                 });
                  //  判斷手機號碼格式
                  $("input[name='phoneNumber']").bind("input propertychange", function(e) {
                     $phoneNumber = $("input[name='phoneNumber']").val();
@@ -125,7 +141,7 @@
                             }
                            
                         }
-                        });
+                    });
 
                     e.preventDefault(); // avoid to execute the actual submit of the form.
                 })
@@ -145,17 +161,17 @@
         <label id="userNameHint"></label><br/>
         密碼: <input type="password" name="password" maxlength="20" required/><br/>
         <label id="passwordHint"></label><br/>
+        確認密碼: <input type="password" name="checkpassword" maxlength="20" required/><br/>
+        <label id="checkpasswordHint"></label><br/>
         男 <input type="radio" name="gender" value="male" required><br/>
         女 <input type="radio" name="gender" value="female" required><br/>
         生日: <input type="date" name="birthday" required/><br/>
-        聯絡電話: <input type="tel" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required/><br/>
+        手機號碼: <input type="tel" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required/><br/>
         <label id="phoneNumberHint"></label><br/>
         電子郵件: <input type="text" name="email" maxlength="50"/><br/>
         <label id="emailHint"></label><br/>
         <input id="submit" type="submit" name="submit" value="註冊使用者"/>
         </form>
     </div>
-    <!-- <iframe name="nullFrame" frameBorder="0"></iframe> -->
-    <!-- <iframe name="nullFrame" style="display:none;"></iframe> -->
 </body>
 </html>
