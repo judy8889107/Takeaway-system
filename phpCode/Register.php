@@ -14,6 +14,10 @@ $birthday = isset($_POST["birthday"])? $_POST["birthday"]: "";
 $phoneNumber = isset($_POST["phoneNumber"])? $_POST["phoneNumber"]: "";
 $email = isset($_POST["email"])? $_POST["email"]: "";
 $countySelect = isset($_POST["countySelect"])? $_POST["countySelect"]: "";
+$townshipSelect = isset($_POST["townshipSelect"])? $_POST["townshipSelect"]: "";
+$streetSelect = isset($_POST["streetSelect"])? $_POST["streetSelect"]: "";
+$RESTaddress = isset($_POST["RESTaddress"])? $_POST["RESTaddress"]: "";
+$address = $countySelect.$townshipSelect.$streetSelect.$RESTaddress;
 
 
 // //insert前確認資料有無重複
@@ -36,8 +40,8 @@ while($row = mysqli_fetch_row($result)){
 
 // //插入資料
 if(!$isRep){
-    $sql = "INSERT INTO userdb (nickName, userName, password, gender, birthday, phoneNumber, email) 
-    VALUES ('$nickName', '$userName', '$password', '$gender', '$birthday', '$phoneNumber', '$email')";
+    $sql = "INSERT INTO userdb (nickName, userName, password, gender, birthday, phoneNumber, email, address) 
+    VALUES ('$nickName', '$userName', '$password', '$gender', '$birthday', '$phoneNumber', '$email', '$address')";
     mysqli_query($link,$sql);
 }
 

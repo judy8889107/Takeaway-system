@@ -1,6 +1,7 @@
 <!-- 用戶註冊頁面，後台Register.php -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,229 +10,231 @@
     <!-- 引用jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <!-- 動態判斷input -->
-        <script>
-            //當docment ready(DOM樹建立起來)
-            $(document).ready(function(){
-                 //動態新增&&判斷select option
-                 
-               
-                    //讀取檔案
-                $.get("../res/county.txt", function(data) {
+    <script>
+        //當docment ready(DOM樹建立起來)
+        $(document).ready(function () {
+            //動態新增&&判斷select option
+            //讀取檔案
+            $.get("../res/county.txt", function (data) {
+                data = data.split(/[(\r\n)\r\n]+/); //分行為array
+                $("#countySelect").append('<option value="" disabled selected>縣市</option>');
+                for (var i = 0; i < data.length; i++) {
+                    $("#countySelect").append('<option value=' + data[i] + '>' + data[i] + '</option>');
+
+                };
+                // UI刷新  
+                $('#countySelect').selectpicker('refresh');
+                $('#countySelect').selectpicker('render');
+            });
+            //判斷下拉選單值變化(countySelect)
+            $("#countySelect").change(function () {
+                var countySelect = $(this).children('option:selected').attr("value");
+                var encodeURL = encodeURI("http://localhost/Takeaway-system/res/township/" + countySelect + ".txt"); /* 使用localhost網址 */
+                $.get(encodeURL, function (data) {
                     data = data.split(/[(\r\n)\r\n]+/); //分行為array
-                    $("#countySelect").append('<option value="" disabled selected>縣市</option>');
-                    for(var i=0;i<data.length;i++){
-                        $("#countySelect").append('<option value='+data[i]+'>'+data[i]+'</option>');
-                        
+                    $("#townshipSelect").empty(); /* 先清空欄位再新增 */
+                    $("#townshipSelect").append('<option value="" disabled selected>鄉鎮[市]區</option>');
+                    for (var i = 0; i < data.length; i++) {
+                        $("#townshipSelect").append('<option value=' + data[i] + '>' + data[i] + '</option>');
+
                     };
                     // UI刷新  
-                    $('#countySelect').selectpicker('refresh');  
-                    $('#countySelect').selectpicker('render');
-                    });
-                    //判斷下拉選單值變化(countySelect)
-                    $("#countySelect").change(function () {
-                        var countySelect = $(this).children('option:selected').attr("value");
-                        var encodeURL = encodeURI("http://localhost/Takeaway-system/res/township/"+countySelect+".txt"); /* 使用localhost網址 */
-                        $.get(encodeURL, function(data) {
-                            data = data.split(/[(\r\n)\r\n]+/); //分行為array
-                            $("#townshipSelect").empty(); /* 先清空欄位再新增 */
-                            $("#townshipSelect").append('<option value="" disabled selected>鄉鎮[市]區</option>');
-                            for(var i=0;i<data.length;i++){
-                                $("#townshipSelect").append('<option value='+data[i]+'>'+data[i]+'</option>');
-                                
-                            };
-                            // UI刷新  
-                            $('#townshipSelect').selectpicker('refresh');  
-                            $('#townshipSelect').selectpicker('render');
-                        });
-                    });
-                    //判斷下拉選單值變化(townshipSelect)
-                    $("#townshipSelect").change(function () {
-                        var countySelect = $("#countySelect").children('option:selected').attr("value");
-                        var streetSelect = $(this).children('option:selected').attr("value");
-                        var encodeURL = encodeURI("http://localhost/Takeaway-system/res/"+countySelect+"/"+streetSelect+".txt"); /* 使用localhost網址 */
-                        $.get(encodeURL, function(data) {
-                            data = data.split(/[(\r\n)\r\n]+/); //分行為array
-                            $("#streetSelect").empty(); /* 先清空欄位再新增 */
-                            $("#streetSelect").append('<option value="" disabled selected>路(街)名或鄉里名稱</option>');
-                            for(var i=0;i<data.length;i++){
-                                $("#streetSelect").append('<option value='+data[i]+'>'+data[i]+'</option>');
-                                
-                            };
-                            // UI刷新  
-                            $('#streetSelect').selectpicker('refresh');  
-                            $('#streetSelect').selectpicker('render');
-                        });
-                    });
-                
-                 
+                    $('#townshipSelect').selectpicker('refresh');
+                    $('#townshipSelect').selectpicker('render');
+                });
+            });
+            //判斷下拉選單值變化(townshipSelect)
+            $("#townshipSelect").change(function () {
+                var countySelect = $("#countySelect").children('option:selected').attr("value");
+                var streetSelect = $(this).children('option:selected').attr("value");
+                var encodeURL = encodeURI("http://localhost/Takeaway-system/res/" + countySelect + "/" + streetSelect + ".txt"); /* 使用localhost網址 */
+                $.get(encodeURL, function (data) {
+                    data = data.split(/[(\r\n)\r\n]+/); //分行為array
+                    $("#streetSelect").empty(); /* 先清空欄位再新增 */
+                    $("#streetSelect").append('<option value="" disabled selected>路(街)名或鄉里名稱</option>');
+                    for (var i = 0; i < data.length; i++) {
+                        $("#streetSelect").append('<option value=' + data[i] + '>' + data[i] + '</option>');
 
-                //動態判斷input
-                // 判斷暱稱(長度不小於4)
-                $("input[name='nickName']").bind("input propertychange", function(e) {
-                    $nickName = $("input[name='nickName']").val();
-                    if($nickName.length < 4){
-                        document.getElementById("nickNameHint").innerHTML = "長度過短";
-                        $("#submit").prop("disabled",true);
-                    }
-                        
-                    else{
-                        document.getElementById("nickNameHint").innerHTML = "";
-                        $("#submit").prop("disabled",false);
-                    }
-                   
-                 });
-                 // 判斷帳號(長度不小於4)
-                 $("input[name='userName']").bind("input propertychange", function(e) {
-                    $userName = $("input[name='userName']").val();
-                    if($userName.length < 4){
-                        document.getElementById("userNameHint").innerHTML = "帳號長度過短";
-                        $("#submit").prop("disabled",true);
-                    } 
-                    else{
-                        document.getElementById("userNameHint").innerHTML = "";
-                        $("#submit").prop("disabled",false);
-                    } 
-                    
-                    
-                 });
-                //  判斷密碼(限制長度8~20)
-                 $("input[name='password']").bind("input propertychange", function(e) {
-                    $password = $("input[name='password']").val();
-                    if($password.length < 8){
-                        document.getElementById("passwordHint").innerHTML = "長度至少要為8";
-                       $("#submit").prop("disabled",true);
-                    }
-                    
-                    else {
-                        document.getElementById("passwordHint").innerHTML = "";
-                        $("#submit").prop("disabled",false);
-                    }
-                    
-                    
-                 });
-                  //  確認輸入密碼
-                  $("input[name='checkpassword']").bind("input propertychange", function(e) {
-                    $password = $("input[name='password']").val();
-                    $checkpassword = $("input[name='checkpassword']").val();
-                    if($checkpassword != $password){
-                        document.getElementById("checkpasswordHint").innerHTML = "輸入密碼不一致，請重新輸入";
-                       $("#submit").prop("disabled",true);
-                    }
-                    
-                    else {
-                        document.getElementById("checkpasswordHint").innerHTML = "";
-                        $("#submit").prop("disabled",false);
-                    }
-                    
-                    
-                 });
-                 //  判斷手機號碼格式
-                 $("input[name='phoneNumber']").bind("input propertychange", function(e) {
-                    $phoneNumber = $("input[name='phoneNumber']").val();
-                    if(!$phoneNumber.match("^09[0-9]{8}")){
-                        document.getElementById("phoneNumberHint").innerHTML = "錯誤的格式";
-                        $("#submit").prop("disabled",true);
-                    }
-                        
-                    else{
-                        document.getElementById("phoneNumberHint").innerHTML = "";
-                        $("#submit").prop("disabled",false);
-                    } 
-                    
-                 //  判斷信箱格式
-                 });$("input[name='email']").bind("input propertychange", function(e) {
-                    $email = $("input[name='email']").val();
-                    var validEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                    if(!$email.match(validEmail)){
-                        document.getElementById("emailHint").innerHTML = "錯誤的格式";
-                        $("#submit").prop("disabled",true);
-                    }  
-                    else{
-                        document.getElementById("emailHint").innerHTML = "";  
-                        $("#submit").prop("disabled",false);
-                    }
-                 });
+                    };
+                    // UI刷新  
+                    $('#streetSelect').selectpicker('refresh');
+                    $('#streetSelect').selectpicker('render');
+                });
+            });
 
-                 // 當按下送出，ajax將表單資料傳到後台(Register.php)
-                //  Register.php print資料到前台
-                 $("#register").submit(function(e){
-                    var form = $(this);
-                    var url = form.attr('action');
-                    alert(form.serialize());
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        dataType:"text", //接收json資料
-                        data: form.serialize(), // serializes the form's elements.
-                        success: function(data)
-                        {
-                            
-                            // 接收表單資料(判斷帳號, 手機號碼, 電子郵件有無重複)
-                            // {'userNameRep'='true/false', 'phoneNumberRep':'', 'emailRep'=''};
-                            // 前台做處理
-                            var registerComplete = false;
-                            var arr = ["帳號", "聯絡電話", "電子郵件"];
-                            var index = 0;
-                            var response = "";
-                            for(var k in data){
-                                data[k] = data[k] == "true"?true:false; /* 字串轉boolean */
-                                if(data[k]){
-                                    if(response!="") response += ", ";
-                                    response += arr[index];
-                                }
-                                index++;  
-                            }
-                            if(!data.userNameRep && !data.phoneNumberRep && !data.emailRep)
-                                 registerComplete = true;
 
-                            // 對用戶返回註冊結果
-                            if(registerComplete){
-                                $("#formDiv").hide(); /* 註冊成功則表單隱藏 */
-                                alert("註冊成功!");
-                                $(location).prop("href", "../HomePage.html"); /* 註冊成功跳轉首頁 */
+
+            //動態判斷input
+            // 判斷暱稱(長度不小於4)
+            $("input[name='nickName']").bind("input propertychange", function (e) {
+                $nickName = $("input[name='nickName']").val();
+                if ($nickName.length < 4) {
+                    document.getElementById("nickNameHint").innerHTML = "長度過短";
+                    $("#submit").prop("disabled", true);
+                }
+
+                else {
+                    document.getElementById("nickNameHint").innerHTML = "";
+                    $("#submit").prop("disabled", false);
+                }
+
+            });
+            // 判斷帳號(長度不小於4)
+            $("input[name='userName']").bind("input propertychange", function (e) {
+                $userName = $("input[name='userName']").val();
+                if ($userName.length < 4) {
+                    document.getElementById("userNameHint").innerHTML = "帳號長度過短";
+                    $("#submit").prop("disabled", true);
+                }
+                else {
+                    document.getElementById("userNameHint").innerHTML = "";
+                    $("#submit").prop("disabled", false);
+                }
+
+
+            });
+            //  判斷密碼(限制長度8~20)
+            $("input[name='password']").bind("input propertychange", function (e) {
+                $password = $("input[name='password']").val();
+                if ($password.length < 8) {
+                    document.getElementById("passwordHint").innerHTML = "長度至少要為8";
+                    $("#submit").prop("disabled", true);
+                }
+
+                else {
+                    document.getElementById("passwordHint").innerHTML = "";
+                    $("#submit").prop("disabled", false);
+                }
+
+
+            });
+            //  確認輸入密碼
+            $("input[name='checkpassword']").bind("input propertychange", function (e) {
+                $password = $("input[name='password']").val();
+                $checkpassword = $("input[name='checkpassword']").val();
+                if ($checkpassword != $password) {
+                    document.getElementById("checkpasswordHint").innerHTML = "輸入密碼不一致，請重新輸入";
+                    $("#submit").prop("disabled", true);
+                }
+
+                else {
+                    document.getElementById("checkpasswordHint").innerHTML = "";
+                    $("#submit").prop("disabled", false);
+                }
+
+
+            });
+            //  判斷手機號碼格式
+            $("input[name='phoneNumber']").bind("input propertychange", function (e) {
+                $phoneNumber = $("input[name='phoneNumber']").val();
+                if (!$phoneNumber.match("^09[0-9]{8}")) {
+                    document.getElementById("phoneNumberHint").innerHTML = "錯誤的格式";
+                    $("#submit").prop("disabled", true);
+                }
+
+                else {
+                    document.getElementById("phoneNumberHint").innerHTML = "";
+                    $("#submit").prop("disabled", false);
+                }
+
+                //  判斷信箱格式
+            }); $("input[name='email']").bind("input propertychange", function (e) {
+                $email = $("input[name='email']").val();
+                var validEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                if (!$email.match(validEmail)) {
+                    document.getElementById("emailHint").innerHTML = "錯誤的格式";
+                    $("#submit").prop("disabled", true);
+                }
+                else {
+                    document.getElementById("emailHint").innerHTML = "";
+                    $("#submit").prop("disabled", false);
+                }
+            });
+
+            // 當按下送出，ajax將表單資料傳到後台(Register.php)
+            //  Register.php print資料到前台
+            $("#register").submit(function (e) {
+                var form = $(this);
+                var url = form.attr('action');
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "text", //接收json資料
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function (data) {
+
+                        // 接收表單資料(判斷帳號, 手機號碼, 電子郵件有無重複)
+                        // {'userNameRep'='true/false', 'phoneNumberRep':'', 'emailRep'=''};
+                        // 前台做處理
+                        var registerComplete = false;
+                        var arr = ["帳號", "聯絡電話", "電子郵件"];
+                        var index = 0;
+                        var response = "";
+                        for (var k in data) {
+                            data[k] = data[k] == "true" ? true : false; /* 字串轉boolean */
+                            if (data[k]) {
+                                if (response != "") response += ", ";
+                                response += arr[index];
                             }
-                            // 顯示重複的input有哪些
-                            else{
-                                response += "重複，請重新輸入";
-                                alert(response);
-                            }
-                           
+                            index++;
                         }
-                    });
+                        if (!data.userNameRep && !data.phoneNumberRep && !data.emailRep)
+                            registerComplete = true;
 
-                    e.preventDefault(); // avoid to execute the actual submit of the form.
-                })
-                
-       
-       
+                        // 對用戶返回註冊結果
+                        if (registerComplete) {
+                            $("#formDiv").hide(); /* 註冊成功則表單隱藏 */
+                            alert("註冊成功!");
+                            $(location).prop("href", "../HomePage.html"); /* 註冊成功跳轉首頁 */
+                        }
+                        // 顯示重複的input有哪些
+                        else {
+                            response += "重複，請重新輸入";
+                            alert(response);
+                        }
+
+                    }
+                });
+
+                e.preventDefault(); // avoid to execute the actual submit of the form.
             })
-        </script>
-        
+
+
+
+        })
+    </script>
+
 </head>
+
 <body>
     <div id="formDiv">
-    <form id="register" action="../phpCode/Register.php">
-        姓名: <input type="text" name="nickName" maxlength="20" required/><br/>
-        <label id="nickNameHint"></label><br/>
-        帳號: <input type="text" name="userName" maxlength="20" required/><br/>
-        <label id="userNameHint"></label><br/>
-        密碼: <input type="password" name="password" maxlength="20" required/><br/>
-        <label id="passwordHint"></label><br/>
-        確認密碼: <input type="password" name="checkpassword" maxlength="20" required/><br/>
-        <label id="checkpasswordHint"></label><br/>
-        男 <input type="radio" name="gender" value="male" required><br/>
-        女 <input type="radio" name="gender" value="female" required><br/>
-        生日: <input type="date" name="birthday" required/><br/>
-        手機號碼: <input type="tel" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required/><br/>
-        <label id="phoneNumberHint"></label><br/>
-        電子郵件: <input type="text" name="email" maxlength="50"/><br/>
-        <label id="emailHint"></label><br/>
-        地址: 
-        <select id="countySelect" name="countySelect" data-actions-box="true"  data-live-search="true" data-live-search-placeholder="請選擇···" ></select>
-        <select id="townshipSelect" name="townshipSelect" data-actions-box="true"  data-live-search="true" data-live-search-placeholder="請選擇···" ></select>
-        <select id="streetSelect" name="streetSelect" data-actions-box="true"  data-live-search="true" data-live-search-placeholder="請選擇···" ></select>
-        <input id="submit" type="submit" name="submit" value="註冊使用者"/>
-    </form>
+        <form id="register" action="../phpCode/Register.php">
+            姓名: <input type="text" name="nickName" maxlength="20" required /><br />
+            <label id="nickNameHint"></label><br />
+            帳號: <input type="text" name="userName" maxlength="20" required /><br />
+            <label id="userNameHint"></label><br />
+            密碼: <input type="password" name="password" maxlength="20" required /><br />
+            <label id="passwordHint"></label><br />
+            確認密碼: <input type="password" name="checkpassword" maxlength="20" required /><br />
+            <label id="checkpasswordHint"></label><br />
+            男 <input type="radio" name="gender" value="male" required><br />
+            女 <input type="radio" name="gender" value="female" required><br />
+            生日: <input type="date" name="birthday" required /><br />
+            手機號碼: <input type="text" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required /><br />
+            <label id="phoneNumberHint"></label><br />
+            電子郵件: <input type="text" name="email" maxlength="50" /><br />
+            <label id="emailHint"></label><br />
+            地址:
+            <select id="countySelect" name="countySelect" data-actions-box="true" data-live-search="true"
+                data-live-search-placeholder="請選擇···"></select>
+            <select id="townshipSelect" name="townshipSelect" data-actions-box="true" data-live-search="true"
+                data-live-search-placeholder="請選擇···"></select>
+            <select id="streetSelect" name="streetSelect" data-actions-box="true" data-live-search="true"
+                data-live-search-placeholder="請選擇···"></select>
+            <input type="text" name="RESTaddress" maxlength="50" /><br />
+            <input id="submit" type="submit" name="submit" value="註冊使用者" />
+        </form>
     </div>
 </body>
+
 </html>
