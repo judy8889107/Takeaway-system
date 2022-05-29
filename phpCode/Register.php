@@ -13,6 +13,7 @@ $gender = isset($_POST["gender"])? $_POST["gender"]: "";
 $birthday = isset($_POST["birthday"])? $_POST["birthday"]: "";
 $phoneNumber = isset($_POST["phoneNumber"])? $_POST["phoneNumber"]: "";
 $email = isset($_POST["email"])? $_POST["email"]: "";
+$countySelect = isset($_POST["countySelect"])? $_POST["countySelect"]: "";
 
 
 // //insert前確認資料有無重複

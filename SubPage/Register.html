@@ -10,7 +10,62 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <!-- 動態判斷input -->
         <script>
+            //當docment ready(DOM樹建立起來)
             $(document).ready(function(){
+                 //動態新增&&判斷select option
+                 
+               
+                    //讀取檔案
+                $.get("../res/county.txt", function(data) {
+                    data = data.split(/[(\r\n)\r\n]+/); //分行為array
+                    $("#countySelect").append('<option value="" disabled selected>縣市</option>');
+                    for(var i=0;i<data.length;i++){
+                        $("#countySelect").append('<option value='+data[i]+'>'+data[i]+'</option>');
+                        
+                    };
+                    // UI刷新  
+                    $('#countySelect').selectpicker('refresh');  
+                    $('#countySelect').selectpicker('render');
+                    });
+                    //判斷下拉選單值變化(countySelect)
+                    $("#countySelect").change(function () {
+                        var countySelect = $(this).children('option:selected').attr("value");
+                        var encodeURL = encodeURI("http://localhost/Takeaway-system/res/township/"+countySelect+".txt"); /* 使用localhost網址 */
+                        $.get(encodeURL, function(data) {
+                            data = data.split(/[(\r\n)\r\n]+/); //分行為array
+                            $("#townshipSelect").empty(); /* 先清空欄位再新增 */
+                            $("#townshipSelect").append('<option value="" disabled selected>鄉鎮[市]區</option>');
+                            for(var i=0;i<data.length;i++){
+                                $("#townshipSelect").append('<option value='+data[i]+'>'+data[i]+'</option>');
+                                
+                            };
+                            // UI刷新  
+                            $('#townshipSelect').selectpicker('refresh');  
+                            $('#townshipSelect').selectpicker('render');
+                        });
+                    });
+                    //判斷下拉選單值變化(townshipSelect)
+                    $("#townshipSelect").change(function () {
+                        var countySelect = $("#countySelect").children('option:selected').attr("value");
+                        var streetSelect = $(this).children('option:selected').attr("value");
+                        var encodeURL = encodeURI("http://localhost/Takeaway-system/res/"+countySelect+"/"+streetSelect+".txt"); /* 使用localhost網址 */
+                        $.get(encodeURL, function(data) {
+                            data = data.split(/[(\r\n)\r\n]+/); //分行為array
+                            $("#streetSelect").empty(); /* 先清空欄位再新增 */
+                            $("#streetSelect").append('<option value="" disabled selected>路(街)名或鄉里名稱</option>');
+                            for(var i=0;i<data.length;i++){
+                                $("#streetSelect").append('<option value='+data[i]+'>'+data[i]+'</option>');
+                                
+                            };
+                            // UI刷新  
+                            $('#streetSelect').selectpicker('refresh');  
+                            $('#streetSelect').selectpicker('render');
+                        });
+                    });
+                
+                 
+
+                //動態判斷input
                 // 判斷暱稱(長度不小於4)
                 $("input[name='nickName']").bind("input propertychange", function(e) {
                     $nickName = $("input[name='nickName']").val();
@@ -102,14 +157,15 @@
                  $("#register").submit(function(e){
                     var form = $(this);
                     var url = form.attr('action');
-
+                    alert(form.serialize());
                     $.ajax({
                         type: "POST",
                         url: url,
-                        dataType:"json", //接收json資料
+                        dataType:"text", //接收json資料
                         data: form.serialize(), // serializes the form's elements.
                         success: function(data)
                         {
+                            
                             // 接收表單資料(判斷帳號, 手機號碼, 電子郵件有無重複)
                             // {'userNameRep'='true/false', 'phoneNumberRep':'', 'emailRep'=''};
                             // 前台做處理
@@ -170,8 +226,12 @@
         <label id="phoneNumberHint"></label><br/>
         電子郵件: <input type="text" name="email" maxlength="50"/><br/>
         <label id="emailHint"></label><br/>
+        地址: 
+        <select id="countySelect" name="countySelect" data-actions-box="true"  data-live-search="true" data-live-search-placeholder="請選擇···" ></select>
+        <select id="townshipSelect" name="townshipSelect" data-actions-box="true"  data-live-search="true" data-live-search-placeholder="請選擇···" ></select>
+        <select id="streetSelect" name="streetSelect" data-actions-box="true"  data-live-search="true" data-live-search-placeholder="請選擇···" ></select>
         <input id="submit" type="submit" name="submit" value="註冊使用者"/>
-        </form>
+    </form>
     </div>
 </body>
 </html>
