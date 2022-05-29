@@ -150,6 +150,20 @@
                     $("#submit").prop("disabled", false);
                 }
             });
+            // 判斷地址格式
+            $("input[name='RESTaddress']").bind("input propertychange", function (e) {
+                $RESTaddress = $("input[name='RESTaddress']").val();
+                var validRESTaddress = /[\u4E00-\u9FA5\d]+$/;
+                if(!$RESTaddress.match(validRESTaddress)){
+                    document.getElementById("RESTaddressHint").innerHTML = "錯誤的地址格式";
+                    $("#submit").prop("disabled", true);
+                }
+                else{
+                    document.getElementById("RESTaddressHint").innerHTML = "";
+                    $("#submit").prop("disabled", false);
+                }
+                
+            });
 
             // 當按下送出，ajax將表單資料傳到後台(Register.php)
             //  Register.php print資料到前台
@@ -184,7 +198,7 @@
                         // 對用戶返回註冊結果
                         if (registerComplete) {
                             $("#formDiv").hide(); /* 註冊成功則表單隱藏 */
-                            alert("註冊成功!");
+                            alert("註冊成功!即將跳轉到首頁");
                             $(location).prop("href", "../HomePage.html"); /* 註冊成功跳轉首頁 */
                         }
                         // 顯示重複的input有哪些
@@ -232,6 +246,7 @@
             <select id="streetSelect" name="streetSelect" data-actions-box="true" data-live-search="true"
                 data-live-search-placeholder="請選擇···"></select>
             <input type="text" name="RESTaddress" maxlength="50" /><br />
+            <label id="RESTaddressHint"></label><br />
             <input id="submit" type="submit" name="submit" value="註冊使用者" />
         </form>
     </div>
