@@ -21,7 +21,7 @@ $email = isset($_POST["email"])? $_POST["email"]: "";
      'X-Mailer: PHP/' . phpversion();
 
  // 送出郵件功能
-//  mail($to, $subject, $message, $headers);
+ mail($to, $subject, $message, $headers);
 
  // 回傳驗證碼至前台
  print $validCode;
