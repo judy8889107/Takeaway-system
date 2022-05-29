@@ -12,10 +12,11 @@
     <!-- 動態判斷input -->
     <script>
         var emailCheck = false;
+        var allValid = 1; /* 確認所有欄位是否合法 */
         //當docment ready(DOM樹建立起來)
         $(document).ready(function () {
             var validCode;
-            var resPath =  location.href.substring(0,location.href.indexOf("SubPage"))+"res";
+            var resPath = location.href.substring(0, location.href.indexOf("SubPage")) + "res";
             //動態新增&&判斷select option
             //讀取檔案
             $.get("../res/county.txt", function (data) {
@@ -32,7 +33,7 @@
             //判斷下拉選單值變化(countySelect)
             $("#countySelect").change(function () {
                 var countySelect = $(this).children('option:selected').attr("value");
-                var encodeURL = encodeURI(resPath+"/township/" + countySelect + ".txt"); /* 使用localhost網址 */
+                var encodeURL = encodeURI(resPath + "/township/" + countySelect + ".txt"); /* 使用localhost網址 */
                 $.get(encodeURL, function (data) {
                     data = data.split(/[(\r\n)\r\n]+/); //分行為array
                     $("#townshipSelect").empty(); /* 先清空欄位再新增 */
@@ -50,7 +51,7 @@
             $("#townshipSelect").change(function () {
                 var countySelect = $("#countySelect").children('option:selected').attr("value");
                 var streetSelect = $(this).children('option:selected').attr("value");
-                var encodeURL = encodeURI(resPath +"/"+ countySelect + "/" + streetSelect + ".txt"); /* 使用localhost網址 */
+                var encodeURL = encodeURI(resPath + "/" + countySelect + "/" + streetSelect + ".txt"); /* 使用localhost網址 */
                 $.get(encodeURL, function (data) {
                     data = data.split(/[(\r\n)\r\n]+/); //分行為array
                     $("#streetSelect").empty(); /* 先清空欄位再新增 */
@@ -65,112 +66,131 @@
                 });
             });
 
-
-
-            //動態判斷input
-            // 判斷暱稱(長度不小於4)
-            $("input[name='nickName']").bind("input propertychange", function (e) {
-                $nickName = $("input[name='nickName']").val();
-                if ($nickName.length < 4) {
+            function nickNamecheck(nickName) {
+                if (nickName.length < 4) {
                     document.getElementById("nickNameHint").innerHTML = "長度過短";
-                    $("#submit").prop("disabled", true);
+                    return 1; /* 有錯誤標記為1 */
                 }
 
                 else {
                     document.getElementById("nickNameHint").innerHTML = "";
-                    $("#submit").prop("disabled", false);
+                    return 0;
                 }
+            }
 
-            });
-            // 判斷帳號(長度不小於4)
-            $("input[name='userName']").bind("input propertychange", function (e) {
-                $userName = $("input[name='userName']").val();
-                if ($userName.length < 4) {
+            function userNamecheck(userName) {
+                if (userName.length < 4) {
                     document.getElementById("userNameHint").innerHTML = "帳號長度過短";
-                    $("#submit").prop("disabled", true);
+                    return 1;
                 }
                 else {
                     document.getElementById("userNameHint").innerHTML = "";
-                    $("#submit").prop("disabled", false);
+                    return 0;
                 }
+            }
 
-
-            });
-            //  判斷密碼(限制長度8~20)
-            $("input[name='password']").bind("input propertychange", function (e) {
-                $password = $("input[name='password']").val();
-                if ($password.length < 8) {
+            function passwordcheck(password) {
+                if (password.length < 8) {
                     document.getElementById("passwordHint").innerHTML = "長度至少要為8";
-                    $("#submit").prop("disabled", true);
+                    return 1;
                 }
 
                 else {
                     document.getElementById("passwordHint").innerHTML = "";
-                    $("#submit").prop("disabled", false);
+                    return 0;
                 }
+            }
 
-
-            });
-            //  確認輸入密碼
-            $("input[name='checkpassword']").bind("input propertychange", function (e) {
-                $password = $("input[name='password']").val();
-                $checkpassword = $("input[name='checkpassword']").val();
-                if ($checkpassword != $password) {
+            function checkpasswordcheck(password, checkpassword) {
+                if (checkpassword != password) {
                     document.getElementById("checkpasswordHint").innerHTML = "輸入密碼不一致，請重新輸入";
-                    $("#submit").prop("disabled", true);
+                    return 1;
                 }
 
                 else {
                     document.getElementById("checkpasswordHint").innerHTML = "";
-                    $("#submit").prop("disabled", false);
+                    return 0;
                 }
+            }
 
-
-            });
-            //  判斷手機號碼格式
-            $("input[name='phoneNumber']").bind("input propertychange", function (e) {
-                $phoneNumber = $("input[name='phoneNumber']").val();
-                if (!$phoneNumber.match("^09[0-9]{8}")) {
+            function phoneNumbercheck(phoneNumber) {
+                if (!phoneNumber.match("^09[0-9]{8}")) {
                     document.getElementById("phoneNumberHint").innerHTML = "錯誤的格式";
-                    $("#submit").prop("disabled", true);
+                    return 1;
                 }
 
                 else {
                     document.getElementById("phoneNumberHint").innerHTML = "";
-                    $("#submit").prop("disabled", false);
+                    return 0;
                 }
+            }
 
-                //  判斷信箱格式
-            }); $("input[name='email']").bind("input propertychange", function (e) {
-                $email = $("input[name='email']").val();
+            function emailcheck(email) {
                 var validReg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                if (!$email.match(validReg)) {
+                if (!email.match(validReg)) {
                     document.getElementById("emailHint").innerHTML = "錯誤的格式";
-                    $("#submit").prop("disabled", true);
                     $("#validEmail").prop("disabled", true);
+                    return 1;
                 }
                 else {
                     document.getElementById("emailHint").innerHTML = "";
-                    $("#submit").prop("disabled", false);
                     $("#validEmail").prop("disabled", false);
+                    return 0;
                 }
-            });
-            // 判斷地址格式
-            $("input[name='RESTaddress']").bind("input propertychange", function (e) {
-                $RESTaddress = $("input[name='RESTaddress']").val();
+
+            }
+
+            function RESTaddresscheck(RESTaddress) {
                 var validReg = /[\u4E00-\u9FA5\d]+$/;
-                if (!$RESTaddress.match(validReg)) {
+                if (!RESTaddress.match(validReg)) {
                     document.getElementById("RESTaddressHint").innerHTML = "錯誤的地址格式";
-                    $("#submit").prop("disabled", true);
+                    return 1;
                 }
                 else {
                     document.getElementById("RESTaddressHint").innerHTML = "";
-                    $("#submit").prop("disabled", false);
+                    return 0;
                 }
+            }
+            /* 一開始所有欄位皆設為不正確 */
+            $nickName = $userName = $password = $checkpassword = $phoneNumber = $email = $RESTaddress = 1; 
+            //動態判斷input
+            // 判斷所有欄位
+            $('input[name!=inputCode]').bind("input propertychange", function (e) {
+                var element = e.target.name;
+                switch (element) {
+                    case "nickName":
+                        $nickName = nickNamecheck($("input[name='nickName']").val());
+                        break;
+                    case "userName":
+                        $userName = userNamecheck($("input[name='userName']").val());
+                        break;
+                    case "password":
+                        $password = passwordcheck($("input[name='password']").val());
+                        break;
+                    case "checkpassword":
+                        $checkpassword = checkpasswordcheck($("input[name='password']").val(), $("input[name='checkpassword']").val());
+                        break;
+                    case "phoneNumber":
+                        $phoneNumber = phoneNumbercheck($("input[name='phoneNumber']").val());
+                        break;
+                    case "email":
+                        $email = emailcheck($("input[name='email']").val());
+                        break;
+                    case "RESTaddress":
+                        $RESTaddress = RESTaddresscheck($("input[name='RESTaddress']").val());
+                        break;
+
+                }
+                allValid = ($nickName + $userName + $password + $checkpassword + $phoneNumber + $email + $RESTaddress);
+
+
+
+
 
             });
+
             // 先進行電子信箱認證
-            $("input[name='validEmail']").click(function () {
+            $("#validEmail").click(function () {
 
                 $email = $("input[name='email']").val();
                 $.ajax({
@@ -180,7 +200,7 @@
                     data: { email: $email }, /* 傳送email給後台 */
                     success: function (data) {
                         validCode = data;
-                        alert(validCode);
+                        // alert(validCode); /* 測試驗證碼 */
                     }
                 });
                 $("#inputCode").toggle(); /* 顯示隱藏的input */
@@ -208,12 +228,13 @@
             //還未寫完，要監聽validCode
             $("#inputCodeSubmit").click(function () {
                 $inputCode = $("#inputCode").val();
-                if (validCode == $inputCode){
-                    alert("輸入正確");
-                } 
-                else{
-                    alert("輸入錯誤");
-                } 
+                if (validCode == $inputCode) {
+                    alert("驗證碼正確");
+                    if(allValid == 0) $("#submit").prop("disabled",null); /* 解鎖送出按鈕 */
+                }
+                else {
+                    alert("驗證碼錯誤，請重新嘗試");
+                }
             });
 
             // 當按下送出，ajax將表單資料傳到後台(Register.php)
@@ -288,10 +309,10 @@
             手機號碼: <input type="text" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required /><br />
             <label id="phoneNumberHint"></label><br />
             電子郵件: <input type="text" name="email" maxlength="50" />
-            <input id="validEmail" type="button" name="validEmail" value="驗證電子郵件" disabled /><br />
+            <input id="validEmail" type="button" value="驗證電子郵件" disabled /><br />
             <input id="inputCode" type="text" style="display:none" name="inputCode" value="" maxlength="6"
                 placeholder="輸入您的驗證碼" required />
-            <input id="inputCodeSubmit" type="button" style="display:none" name="inputCodeSubmit" value="送出認證碼" /><br />
+            <input id="inputCodeSubmit" type="button" style="display:none" value="送出認證碼" /><br />
             <br />
             <label id="emailHint"></label><br />
             地址:
@@ -303,7 +324,7 @@
                 data-live-search-placeholder="請選擇···"></select>
             <input type="text" name="RESTaddress" maxlength="50" /><br />
             <label id="RESTaddressHint"></label><br />
-            <input id="submit" type="submit" name="submit" value="註冊使用者" />
+            <input id="submit" type="submit" name="submit" value="註冊使用者" disabled />
         </form>
     </div>
 </body>
