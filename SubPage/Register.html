@@ -11,8 +11,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <!-- 動態判斷input -->
     <script>
+        var emailCheck = false;
         //當docment ready(DOM樹建立起來)
         $(document).ready(function () {
+            var validCode;
             //動態新增&&判斷select option
             //讀取檔案
             $.get("../res/county.txt", function (data) {
@@ -140,29 +142,77 @@
                 //  判斷信箱格式
             }); $("input[name='email']").bind("input propertychange", function (e) {
                 $email = $("input[name='email']").val();
-                var validEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                if (!$email.match(validEmail)) {
+                var validReg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                if (!$email.match(validReg)) {
                     document.getElementById("emailHint").innerHTML = "錯誤的格式";
                     $("#submit").prop("disabled", true);
+                    $("#validEmail").prop("disabled", true);
                 }
                 else {
                     document.getElementById("emailHint").innerHTML = "";
                     $("#submit").prop("disabled", false);
+                    $("#validEmail").prop("disabled", false);
                 }
             });
             // 判斷地址格式
             $("input[name='RESTaddress']").bind("input propertychange", function (e) {
                 $RESTaddress = $("input[name='RESTaddress']").val();
-                var validRESTaddress = /[\u4E00-\u9FA5\d]+$/;
-                if(!$RESTaddress.match(validRESTaddress)){
+                var validReg = /[\u4E00-\u9FA5\d]+$/;
+                if (!$RESTaddress.match(validReg)) {
                     document.getElementById("RESTaddressHint").innerHTML = "錯誤的地址格式";
                     $("#submit").prop("disabled", true);
                 }
-                else{
+                else {
                     document.getElementById("RESTaddressHint").innerHTML = "";
                     $("#submit").prop("disabled", false);
                 }
-                
+
+            });
+            // 先進行電子信箱認證
+            $("input[name='validEmail']").click(function () {
+
+                $email = $("input[name='email']").val();
+                $.ajax({
+                    type: "POST",
+                    url: "../phpCode/validEmail.php",
+                    dataType: "text",
+                    data: { email: $email }, /* 傳送email給後台 */
+                    success: function (data) {
+                        validCode = data;
+                        alert(validCode);
+                    }
+                });
+                $("#inputCode").toggle(); /* 顯示隱藏的input */
+                $("#inputCodeSubmit").toggle(); /* 顯示隱藏的button */
+
+                $t = 30; /* 30秒才能傳送一次驗證碼 */
+                $("#validEmail").prop("disabled", true);
+                $("#validEmail").attr("value", "重新傳送(" + String($t) + ")");
+
+                var interval = setInterval(function () {
+                    $t -= 1;
+                    if ($t == 0) {
+                        $("#validEmail").prop("disabled", false);
+                        $("#validEmail").attr("value", "重新傳送");
+                        clearInterval(interval);
+                    } else {
+                        $str = "重新傳送(" + String($t) + ")";
+                        $("#validEmail").attr("value", $str);
+                    }
+                }, 1000);
+
+
+
+            });
+            //還未寫完，要監聽validCode
+            $("#inputCodeSubmit").click(function () {
+                $inputCode = $("#inputCode").val();
+                if (validCode == $inputCode){
+                    alert("輸入正確");
+                } 
+                else{
+                    alert("輸入錯誤");
+                } 
             });
 
             // 當按下送出，ajax將表單資料傳到後台(Register.php)
@@ -236,7 +286,12 @@
             生日: <input type="date" name="birthday" required /><br />
             手機號碼: <input type="text" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required /><br />
             <label id="phoneNumberHint"></label><br />
-            電子郵件: <input type="text" name="email" maxlength="50" /><br />
+            電子郵件: <input type="text" name="email" maxlength="50" />
+            <input id="validEmail" type="button" name="validEmail" value="驗證電子郵件" disabled /><br />
+            <input id="inputCode" type="text" style="display:none" name="inputCode" value="" maxlength="6"
+                placeholder="輸入您的驗證碼" required />
+            <input id="inputCodeSubmit" type="button" style="display:none" name="inputCodeSubmit" value="送出認證碼" /><br />
+            <br />
             <label id="emailHint"></label><br />
             地址:
             <select id="countySelect" name="countySelect" data-actions-box="true" data-live-search="true"
