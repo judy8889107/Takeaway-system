@@ -16,10 +16,10 @@
         //當docment ready(DOM樹建立起來)
         $(document).ready(function () {
             var validCode;
-            var resPath = location.href.substring(0, location.href.indexOf("SubPage")) + "res";
+            var txtPath = location.href.replace(/SubPage.*/,"res/txt/");
             //動態新增&&判斷select option
             //讀取檔案
-            $.get("../res/county.txt", function (data) {
+            $.get("../res/txt/county.txt", function (data) {
                 data = data.split(/[(\r\n)\r\n]+/); //分行為array
                 $("#countySelect").append('<option value="" disabled selected>縣市</option>');
                 for (var i = 0; i < data.length; i++) {
@@ -33,7 +33,7 @@
             //判斷下拉選單值變化(countySelect)
             $("#countySelect").change(function () {
                 var countySelect = $(this).children('option:selected').attr("value");
-                var encodeURL = encodeURI(resPath + "/township/" + countySelect + ".txt"); /* 使用localhost網址 */
+                var encodeURL = encodeURI(txtPath + "township/" + countySelect + ".txt"); /* 使用localhost網址 */
                 $.get(encodeURL, function (data) {
                     data = data.split(/[(\r\n)\r\n]+/); //分行為array
                     $("#townshipSelect").empty(); /* 先清空欄位再新增 */
@@ -51,7 +51,7 @@
             $("#townshipSelect").change(function () {
                 var countySelect = $("#countySelect").children('option:selected').attr("value");
                 var streetSelect = $(this).children('option:selected').attr("value");
-                var encodeURL = encodeURI(resPath + "/" + countySelect + "/" + streetSelect + ".txt"); /* 使用localhost網址 */
+                var encodeURL = encodeURI(txtPath  + countySelect + "/" + streetSelect + ".txt"); /* 使用localhost網址 */
                 $.get(encodeURL, function (data) {
                     data = data.split(/[(\r\n)\r\n]+/); //分行為array
                     $("#streetSelect").empty(); /* 先清空欄位再新增 */
@@ -271,7 +271,7 @@
                         if (registerComplete) {
                             $("#formDiv").hide(); /* 註冊成功則表單隱藏 */
                             alert("註冊成功!即將跳轉到首頁");
-                            $(location).prop("href", "../SubPage/HomePage.html"); /* 註冊成功跳轉首頁 */
+                            $(location).prop("href", "HomePage.html"); /* 註冊成功跳轉首頁 */
                         }
                         // 顯示重複的input有哪些
                         else {
