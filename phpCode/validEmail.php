@@ -15,7 +15,7 @@ $email = isset($_POST["email"])? $_POST["email"]: "";
  // 寄送驗證碼給使用者，讓使用者可以重設密碼
  // 帳號/密碼: dbpteam12@gmail.com/dbpteam12dbpteam12
  $to      = $email;
- $subject = '忘記密碼通知';
+ $subject = '驗證電子郵件';
  $headers = 'From: dbpteam12@gmail.com' . "\r\n" .
      'Reply-To: dbpteam12@gmail.com' . "\r\n" .
      'X-Mailer: PHP/' . phpversion();

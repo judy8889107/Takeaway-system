@@ -9,10 +9,12 @@
     <!-- 引用jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script>
+        var isMatch = false;
         $(document).ready(function () {
             $("#login").submit(function (e) {
                 var form = $(this);
-                var url = form.attr('action');
+                var url = "../phpCode/Login.php";
+
 
                 $.ajax({
                     type: "POST",
@@ -21,31 +23,55 @@
                     data: form.serialize(), // serializes the form's elements.
                     success: function (data) {
 
-                        var isLoginSuccess = data == "true" ? true : false;
-                        if (isLoginSuccess) {
-                            alert("登入成功");
-                            $(location).prop("href", "HomePage.html"); /* 登入成功跳轉首頁 */
+                        if(data=="falseCaptcha"){
+                            alert("驗證碼錯誤，請重新嘗試");
+                            $("#imgcode").attr("src", "../phpCode/captcha.php");
+                            $("input[name='password']").val(""); 
+                            $("input[name='inputCaptcha']").val(""); /* input清空 */
                         }
-                        else alert("帳號/密碼有誤，請重新登入");
+                        else{
+                            data = data=="true"? true:false;
+                            if(data){
+                                alert("登入成功，即將跳轉到首頁...");
+                                $(location).prop("href", "HomePage.html"); /* 登入成功跳轉首頁 */
+                            }else{
+                                alert("帳號/密碼有誤，請重新嘗試");
+                                $("#imgcode").attr("src", "../phpCode/captcha.php");
+                                $("input[name!='submit']").val(""); /* input清空 */
+                            }
+                        }
 
 
                     }
                 });
 
                 e.preventDefault(); // avoid to execute the actual submit of the form.
+
+
             })
 
-        })
+        });
+
+        function refresh_code() {
+            $("#imgcode").attr("src", "../phpCode/captcha.php");
+        }
     </script>
 </head>
 
 <body>
     <div id="formDiv">
-        <form id="login" action="../phpCode/Login.php">
+        <form id="login">
             帳號/手機號碼/電子郵件: <input type="tel" name="userName" maxlength="50" required /><br />
             密碼: <input type="password" name="password" maxlength="20" required /><br />
-            <a href="forgetPassword.html">忘記密碼</a><br />
-            <input id="submit" type="submit" name="submit" value="登入" /><br />
+
+            <p>請輸入下圖字樣：</p>
+            <p><img id="imgcode" src="../phpCode/captcha.php" onclick="refresh_code()" /><br />
+                點擊圖片可以更換驗證碼
+            </p>
+            <input type="text" name="inputCaptcha" size="10" maxlength="10" required/>
+
+            <a href="forgetPassword.html">忘記密碼</a><br /><br />
+            <input id="submit" type="submit" name="submit" value="登入" />
         </form>
     </div>
 
