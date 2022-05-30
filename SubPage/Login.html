@@ -8,54 +8,7 @@
     <title>登入頁面</title>
     <!-- 引用jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-    <script>
-        var isMatch = false;
-        $(document).ready(function () {
-            $("#login").submit(function (e) {
-                var form = $(this);
-                var url = "../phpCode/Login.php";
-
-
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    dataType: "text", //接收text資料
-                    data: form.serialize(), // serializes the form's elements.
-                    success: function (data) {
-
-                        if(data=="falseCaptcha"){
-                            alert("驗證碼錯誤，請重新嘗試");
-                            $("#imgcode").attr("src", "../phpCode/captcha.php");
-                            $("input[name='password']").val(""); 
-                            $("input[name='inputCaptcha']").val(""); /* input清空 */
-                        }
-                        else{
-                            data = data=="true"? true:false;
-                            if(data){
-                                alert("登入成功，即將跳轉到首頁...");
-                                $(location).prop("href", "HomePage.html"); /* 登入成功跳轉首頁 */
-                            }else{
-                                alert("帳號/密碼有誤，請重新嘗試");
-                                $("#imgcode").attr("src", "../phpCode/captcha.php");
-                                $("input[name!='submit']").val(""); /* input清空 */
-                            }
-                        }
-
-
-                    }
-                });
-
-                e.preventDefault(); // avoid to execute the actual submit of the form.
-
-
-            })
-
-        });
-
-        function refresh_code() {
-            $("#imgcode").attr("src", "../phpCode/captcha.php");
-        }
-    </script>
+    <script src="../js/Login.js"></script>
 </head>
 
 <body>
@@ -65,7 +18,7 @@
             密碼: <input type="password" name="password" maxlength="20" required /><br />
 
             <p>請輸入下圖字樣：</p>
-            <p><img id="imgcode" src="../phpCode/captcha.php" onclick="refresh_code()" /><br />
+            <p><img id="imgcode" src="../phpCode/generateCaptcha.php" onclick="refresh_code()" /><br />
                 點擊圖片可以更換驗證碼
             </p>
             <input type="text" name="inputCaptcha" size="10" maxlength="10" required/>

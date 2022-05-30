@@ -4,37 +4,37 @@ session_start();
 //建立連結
 $link = require_once("./inc/LoginDB.inc");
 
-$userName = isset($_POST["userName"])? $_POST["userName"]: "";
-$sql = "SELECT userName, phoneNumber, email FROM userdb";
+$email = isset($_POST["email"]) ? $_POST["email"] : "";
+$sql = "SELECT userName, email FROM userdb";
 $result = mysqli_query($link, $sql);
-$field_count = $result->field_count;
-$userEmail = false;
+$emailExist = false;
 
 // 核對帳號並得到使用者email
-while($row = mysqli_fetch_row($result)){
-    for($i=0;$i<$field_count;$i++){
-        if(strcmp($row[$i],$userName) == 0){
-            $userEmail = $row[$field_count-1];
-            $_SESSION['userName'] = $row[0]; /* 記錄使用者帳號 */
-            break;
-        }
+while ($row = mysqli_fetch_row($result)) {
+    if (strcmp($row[1], $email) == 0) {
+        $emailExist = true;
+        $_SESSION['userName'] = $row[0]; /* 記錄使用者帳號 */
+        break;
     }
 }
 
-if($userEmail){
+if ($emailExist) {
     // 隨機生成6位亂數
     $validCode = "";
-    for($i=0;$i<6;$i++){
-        $validCode = $validCode.strval(rand(0,9));
+    for ($i = 0; $i < 6; $i++) {
+        $validCode = $validCode . strval(rand(0, 9));
     }
     // 生成郵件訊息
     date_default_timezone_set('Asia/Taipei');
-    $message = sprintf("親愛的用戶您好，您已在%s時，申請忘記密碼。\n%s 為您的驗證碼。\n若此非您本人的操作，請忽略這封郵件。",
-    date("Y/m/d H:i:s"),$validCode);
-    
+    $message = sprintf(
+        "親愛的用戶您好，您已在%s時，申請忘記密碼。\n%s 為您的驗證碼。\n若此非您本人的操作，請忽略這封郵件。",
+        date("Y/m/d H:i:s"),
+        $validCode
+    );
+
     // 寄送驗證碼給使用者，讓使用者可以重設密碼
     // 帳號/密碼: dbpteam12@gmail.com/dbpteam12dbpteam12
-    $to      = $userEmail;
+    $to      = $email;
     $subject = '忘記密碼通知';
     $headers = 'From: dbpteam12@gmail.com' . "\r\n" .
         'Reply-To: dbpteam12@gmail.com' . "\r\n" .
@@ -45,8 +45,4 @@ if($userEmail){
 
     // 回傳驗證碼至前台
     print $validCode;
-
-}else print $userEmail;
-
-
-?>
+} else print $emailExist;
