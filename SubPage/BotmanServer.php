@@ -40,7 +40,7 @@ emoji使用：將emoji轉換成dex即可顯示
 
 */
 
-
+//test
 //引用外部的(class@functionName)
 $botman->hears('.*說?講?笑話.*', 'General@RandomJoke'); //機器人聽到:講笑話, 說笑話, 笑話
 $botman->hears('(.*熱量.*)', 'CalorieDB@FindDB'); //機器人聽到含 熱量 關鍵字字串
