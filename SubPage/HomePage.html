@@ -17,14 +17,35 @@
     <!-- 使用ajax串接後台php -->
     <script>
         $(document).ready(function () {
+            var session;
             // 利用load加載後台php
-            $("#backsideMessage").load("../phpCode/HomePage.php");
+            $.get("../phpCode/HomePage.php", function (result) {
+                session = result; /* 成功登入，得到該用戶所有資料 */
+               var fa_fa_person = $("div.util i.fa.fa-person"); /* 選取帶有空格的className要把空格替換成. */
+               var add_address = $("#add-address");
+               if(session.islogin){ /* 若登入成功 */
+                   fa_fa_person.text(session.nickName);
+                   add_address.text(session.address);
+               }
+            }, "json");
+
+            //Button事件(Login button)
+            $("div.util i.fa.fa-person").click(function(e){
+                if(!session.islogin){ /* 若還未登入則會跳轉登入頁面 */
+                    $(location).prop("href", "Login.html"); 
+                }
+            })
+            $("div.util i.fa.fa-person").hover(function(e){
+                if(session.islogin){ /* 若使用者登入則出現動態選單 */
+
+                }
+            })
         });
     </script>
 </head>
 
 <body>
-    <div id="backsideMessage"></div>
+    <div id="backsideSession"></div>
     <div id="container" class="container">
         <div id="menu">
             <div class="logo">

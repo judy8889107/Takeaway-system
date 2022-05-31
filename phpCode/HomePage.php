@@ -1,14 +1,27 @@
 <?php
-    // 啟動session
-    session_start();
-    if (isset($_SESSION['islogin'])) {
-    // 若已經登入
-    echo "你好! ".$_SESSION['userName'].' ,歡迎來到個人中心!<br>';
-    echo "F5重新整理即可登出";
-    session_destroy(); /* 清除session */
-    } else {
-    // 若沒有登入
-    echo "您還沒有登入,請<a href='../SubPage/Login.html'>登入</a>";
-    echo "或是<a href='../SubPage/Register.html'>新用戶註冊</a>";
+// 啟動session
+session_start();
+$response = array("islogin" => false);
+$attr = array("nickName", "userNmae", "password", "gender", "birthday", "phoneNumber", "email", "address");
+
+
+
+if (isset($_SESSION['islogin'])) { // 若已經登入
+    $response["islogin"] = true;
+    $userName = $_SESSION['userName'];
+    // 使用userName查找資料庫
+    //建立連結
+    $link = require_once("../phpCode/inc/LoginDB.inc");
+    $sql = "SELECT * FROM userdb WHERE userName='$userName'";
+    $result = mysqli_query($link, $sql);
+
+    $row = mysqli_fetch_row($result);
+
+    for($i=0;$i<count($attr);$i++){
+        $response[$attr[$i]] = $row[$i];
     }
-?>
+    session_destroy(); /* 清除session */
+}
+//回傳結果給前台
+$response = json_encode($response); // (將陣列轉為json檔案)
+print($response);

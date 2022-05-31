@@ -15,7 +15,7 @@ if ((!empty($_SESSION['check_word'])) || (!empty($_POST['inputCaptcha']))) {  //
 
         $userName = isset($_POST["userName"]) ? $_POST["userName"] : "";
         $password = isset($_POST["password"]) ? $_POST["password"] : "";
-        $sql = "SELECT userName, phoneNumber, email FROM userdb";
+        $sql = "SELECT userName, phoneNumber, email, nickName FROM userdb";
         $result = mysqli_query($link, $sql);
         $field_count = $result->field_count;
         $userNameMatch = false;
@@ -24,7 +24,7 @@ if ((!empty($_SESSION['check_word'])) || (!empty($_POST['inputCaptcha']))) {  //
 
         // 核對使用者帳號
         while ($row = mysqli_fetch_row($result)) {
-            for ($i = 0; $i < $field_count; $i++) {
+            for ($i = 0; $i < $field_count-1; $i++) {
                 if (strcmp($row[$i], $userName) == 0) {
                     $userNameMatch = true;
                     break;
