@@ -1,5 +1,4 @@
 <?php
-// TODO:先在資料庫檢查有沒有重複的電子郵件
 
 $link = require_once("./inc/LoginDB.inc");
 
