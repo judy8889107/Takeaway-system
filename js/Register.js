@@ -3,7 +3,7 @@ var allValid = 1; /* 確認所有欄位是否合法 */
 //當docment ready(DOM樹建立起來)
 $(document).ready(function () {
     var validCode;
-    var txtPath = location.href.replace(/SubPage.*/,"res/txt/");
+    var txtPath = location.href.replace(/SubPage.*/, "res/txt/");
     //動態新增&&判斷select option
     //讀取檔案
     $.get("../res/txt/county.txt", function (data) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
     $("#townshipSelect").change(function () {
         var countySelect = $("#countySelect").children('option:selected').attr("value");
         var streetSelect = $(this).children('option:selected').attr("value");
-        var encodeURL = encodeURI(txtPath  + countySelect + "/" + streetSelect + ".txt"); /* 使用localhost網址 */
+        var encodeURL = encodeURI(txtPath + countySelect + "/" + streetSelect + ".txt"); /* 使用localhost網址 */
         $.get(encodeURL, function (data) {
             data = data.split(/[(\r\n)\r\n]+/); //分行為array
             $("#streetSelect").empty(); /* 先清空欄位再新增 */
@@ -139,7 +139,7 @@ $(document).ready(function () {
         }
     }
     /* 一開始所有欄位皆設為不正確 */
-    $nickName = $userName = $password = $checkpassword = $phoneNumber = $email = $RESTaddress = 1; 
+    $nickName = $userName = $password = $checkpassword = $phoneNumber = $email = $RESTaddress = 1;
     //動態判斷input
     // 判斷所有欄位
     $('input[name!=inputCode]').bind("input propertychange", function (e) {
@@ -168,7 +168,7 @@ $(document).ready(function () {
                 break;
 
         }
-        allValid = ($nickName + $userName + $password + $checkpassword + $phoneNumber + $email + $RESTaddress);
+        allValid = ($nickName + $userName + $password + $checkpassword + $phoneNumber + $RESTaddress);
 
 
 
@@ -176,9 +176,10 @@ $(document).ready(function () {
 
     });
 
-    // 先進行電子信箱認證
+    // 先進行電子信箱認證(後台搜尋此電子信箱有無被註冊過)
     $("#validEmail").click(function () {
-
+        $("input[name='email']").attr("readonly", "readonly"); /* 怕用戶在中途修改電子郵件，這樣傳送到後台的表單會錯誤 */
+        var isRepeat;
         $email = $("input[name='email']").val();
         $.ajax({
             type: "POST",
@@ -186,91 +187,115 @@ $(document).ready(function () {
             dataType: "text",
             data: { email: $email }, /* 傳送email給後台 */
             success: function (data) {
-                validCode = data;
-                // alert(validCode); /* 測試驗證碼 */
+                isRepeat = data == true ? true : false;
+                if (isRepeat) {
+                    alert("此電子郵件已被註冊過，請重新嘗試");
+                    $("input[name='email']").attr("readonly", null);
+                }
+                else {
+                    validCode = data;
+                    // alert(validCode); /* 驗證碼測試用 */
+                    $("#inputCode").show(); /* 顯示隱藏的input */
+                    $("#inputCodeSubmit").show(); /* 顯示隱藏的button */
+
+                    $t = 30; /* 30秒才能傳送一次驗證碼 */
+                    $("#validEmail").prop("disabled", true);
+                    $("#validEmail").attr("value", "重新傳送(" + String($t) + ")");
+
+                    var interval = setInterval(function () {
+                        if (!emailCheck) {
+                            $t -= 1;
+                            if ($t == 0) {
+                                $("input[name='email']").attr("readonly", null); /* 若驗證信箱錯誤，用戶可以再次輸入信箱欄位(有可能是信箱填錯) */
+                                $("#validEmail").prop("disabled", false);
+                                $("#validEmail").attr("value", "重新傳送");
+                                clearInterval(interval);
+                            } else {
+                                $str = "重新傳送(" + String($t) + ")";
+                                $("#validEmail").attr("value", $str);
+                            }
+                        } else {
+                            $("#validEmail").prop("disabled", true);
+                            $("#validEmail").attr("value", "重新傳送");
+                        }
+
+                    }, 1000);
+
+                }
             }
         });
-        $("#inputCode").toggle(); /* 顯示隱藏的input */
-        $("#inputCodeSubmit").toggle(); /* 顯示隱藏的button */
 
-        $t = 30; /* 30秒才能傳送一次驗證碼 */
-        $("#validEmail").prop("disabled", true);
-        $("#validEmail").attr("value", "重新傳送(" + String($t) + ")");
-
-        var interval = setInterval(function () {
-            $t -= 1;
-            if ($t == 0) {
-                $("#validEmail").prop("disabled", false);
-                $("#validEmail").attr("value", "重新傳送");
-                clearInterval(interval);
-            } else {
-                $str = "重新傳送(" + String($t) + ")";
-                $("#validEmail").attr("value", $str);
-            }
-        }, 1000);
 
 
 
     });
-    
+
+
     $("#inputCodeSubmit").click(function () {
         $inputCode = $("#inputCode").val();
         if (validCode == $inputCode) {
             alert("驗證碼正確");
-            if(allValid == 0) $("#submit").prop("disabled",null); /* 解鎖送出按鈕 */
+            emailCheck = true;
+            $("#inputCodeSubmit").attr("disabled", "true");
+            $("#validEmail").prop("disabled", true);
+            $("#validEmail").attr("value", "重新傳送");
         }
         else {
             alert("驗證碼錯誤，請重新嘗試");
+            emailCheck = false;
         }
     });
-
+    // FIXME:重複資料有問題
     // 當按下送出，ajax將表單資料傳到後台(Register.php)
     //  Register.php print資料到前台
     $("#register").submit(function (e) {
-        var form = $(this);
-        var url = form.attr('action');
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: "text", //接收json資料
-            data: form.serialize(), // serializes the form's elements.
-            success: function (data) {
-
-                // 接收表單資料(判斷帳號, 手機號碼, 電子郵件有無重複)
-                // {'userNameRep'='true/false', 'phoneNumberRep':'', 'emailRep'=''};
-                // 前台做處理
-                var registerComplete = false;
-                var arr = ["帳號", "聯絡電話", "電子郵件"];
-                var index = 0;
-                var response = "";
-                for (var k in data) {
-                    data[k] = data[k] == "true" ? true : false; /* 字串轉boolean */
-                    if (data[k]) {
-                        if (response != "") response += ", ";
-                        response += arr[index];
+        if (allValid != 0 || !emailCheck) alert("尚有欄位錯誤，請重新填寫");
+        else {
+            var form = $(this);
+            var url = "../phpCode/Register.php";
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: "text", //接收json資料
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    // 接收表單資料(判斷帳號, 手機號碼, 電子郵件有無重複)
+                    // {'userNameRep'='true/false', 'phoneNumberRep':'', 'emailRep'=''};
+                    // 前台做處理
+                    var registerComplete = false;
+                    var arr = ["帳號", "聯絡電話", "電子郵件"];
+                    var index = 0;
+                    var response = "";
+                    for (var k in data) {
+                        data[k] = data[k] == "true" ? true : false; /* 字串轉boolean */
+                        if (data[k]) {
+                            if (response != "") response += ", ";
+                            response += arr[index];
+                        }
+                        index++;
                     }
-                    index++;
-                }
-                if (!data.userNameRep && !data.phoneNumberRep && !data.emailRep)
-                    registerComplete = true;
+                    if (!data.userNameRep && !data.phoneNumberRep && !data.emailRep)
+                        registerComplete = true;
 
-                // 對用戶返回註冊結果
-                if (registerComplete) {
-                    $("#formDiv").hide(); /* 註冊成功則表單隱藏 */
-                    alert("註冊成功!即將跳轉到首頁");
-                    $(location).prop("href", "HomePage.html"); /* 註冊成功跳轉首頁 */
-                }
-                // 顯示重複的input有哪些
-                else {
-                    response += "重複，請重新輸入";
-                    alert(response);
-                }
+                    // 對用戶返回註冊結果
+                    if (registerComplete) {
+                        $("#formDiv").hide(); /* 註冊成功則表單隱藏 */
+                        alert("註冊成功!即將跳轉到首頁");
+                        $(location).prop("href", "HomePage.html"); /* 註冊成功跳轉首頁 */
+                    }
+                    // 顯示重複的input有哪些
+                    else {
+                        response += "重複，請重新輸入";
+                        alert(response);
+                    }
 
-            }
-        });
+                }
+            });
+        }
+
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
-    })
+    });
 
 
 

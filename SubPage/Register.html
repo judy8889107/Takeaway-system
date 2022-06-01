@@ -17,37 +17,37 @@
 
 <body>
     <div id="formDiv">
-        <form id="register" action="../phpCode/Register.php">
+        <form id="register">
             姓名: <input type="text" name="nickName" maxlength="20" required /><br />
-            <label id="nickNameHint"></label><br />
+            <label class="Hint" id="nickNameHint"></label><br />
             帳號: <input type="text" name="userName" maxlength="20" required /><br />
-            <label id="userNameHint"></label><br />
+            <label class="Hint" id="userNameHint"></label><br />
             密碼: <input type="password" name="password" maxlength="20" required /><br />
-            <label id="passwordHint"></label><br />
+            <label class="Hint" id="passwordHint"></label><br />
             確認密碼: <input type="password" name="checkpassword" maxlength="20" required /><br />
-            <label id="checkpasswordHint"></label><br />
+            <label class="Hint" id="checkpasswordHint"></label><br />
             男 <input type="radio" name="gender" value="male" required><br />
             女 <input type="radio" name="gender" value="female" required><br />
             生日: <input type="date" name="birthday" required /><br />
             手機號碼: <input type="text" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required /><br />
-            <label id="phoneNumberHint"></label><br />
+            <label class="Hint" id="phoneNumberHint"></label><br />
             電子郵件: <input type="text" name="email" maxlength="50" />
             <input id="validEmail" type="button" value="驗證電子郵件" disabled /><br />
             <input id="inputCode" type="text" style="display:none" name="inputCode" value="" maxlength="6"
                 placeholder="輸入您的驗證碼" required />
             <input id="inputCodeSubmit" type="button" style="display:none" value="送出認證碼" /><br />
             <br />
-            <label id="emailHint"></label><br />
+            <label class="Hint" id="emailHint"></label><br />
             地址:
             <select id="countySelect" name="countySelect" data-actions-box="true" data-live-search="true"
-                data-live-search-placeholder="請選擇···"></select>
+                data-live-search-placeholder="請選擇···" required></select>
             <select id="townshipSelect" name="townshipSelect" data-actions-box="true" data-live-search="true"
-                data-live-search-placeholder="請選擇···"></select>
+                data-live-search-placeholder="請選擇···" required></select>
             <select id="streetSelect" name="streetSelect" data-actions-box="true" data-live-search="true"
-                data-live-search-placeholder="請選擇···"></select>
+                data-live-search-placeholder="請選擇···" required></select>
             <input type="text" name="RESTaddress" maxlength="50" /><br />
-            <label id="RESTaddressHint"></label><br />
-            <input id="submit" type="submit" name="submit" value="註冊使用者" disabled />
+            <label class="Hint" id="RESTaddressHint"></label><br />
+            <input id="submit" type="submit" name="submit" value="註冊使用者"  />
         </form>
     </div>
 </body>
