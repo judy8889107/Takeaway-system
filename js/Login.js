@@ -3,13 +3,13 @@ $(document).ready(function () {
         var form = $(this);
         var url = "../phpCode/Login.php";
 
-
+ 
         $.ajax({
             type: "POST",
             url: url,
             dataType: "text", //接收text資料
             data: form.serialize(), // serializes the form's elements.
-            success: function (data) {
+            success: function (data) { // data == '
 
                 if(data=="falseCaptcha"){
                     alert("驗證碼錯誤，請重新嘗試");

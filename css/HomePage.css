@@ -94,7 +94,11 @@ body {
     font-size: 20px;
 }
 
-.util i,.user i,.util p{
+.util{
+    flex-direction: column;
+}
+
+.util i,.user i.Login,.util p{
     font-size:18px;
     margin:0 16px;
     border:1px solid #606060;
@@ -105,13 +109,67 @@ body {
     background: rgb(50 66 56);
 }
 
+a.SignIn {
+   margin:0 40px 0 -10px;
+   color:#597969;
+   font-size:18px;
+}
+
+a.SignIn:hover{
+    color:#2c422e;
+}
+
 .util i:active{
     color:#ffffff;
     background:#606060 ;
 }
 
+.user i.Login:active{
+    color:#ffffff;
+    background:#606060 ;
+}
+
+
+
+ .user-dropdown{
+    /* margin-left: 20px; */
+    display: none;
+    position: absolute;
+    min-width: 131px;
+    background-color: #597969;
+    z-index: 1;
+    text-align:center;
+    border-radius: 13px;
+}
+
+
+.user-dropdown i:hover{
+    background-color: #ffffff44;
+    color: #ffffff;
+} 
+
+.user-dropdown i:active{
+   
+    color: #bfbfbf;
+} 
+
+.user-dropdown i{
+    margin-top: 8px;
+    margin-bottom: 10px;
+    min-width: 131px;
+    color:#dbf0e6;
+}
+
+.user-dropdown p{
+    margin-top: 10px;
+    color:#ffffff;
+}
+
+
+
+
 .food-items{
-    display: flex;;
+   
 }
 
 #Appetizer,#Soup,#Salad,#Entree,#Main-course,#Dessert {
@@ -199,5 +257,65 @@ body {
 }
 
 #cart {
-    background: rgb(116, 116, 116);
+    /* background: rgb(151 175 175); */
+    background: rgb(236, 233, 187);
+    padding-right: 30px;
+    overflow-y:scroll;
 }
+
+.taste-header{
+    padding-top: 40px;
+    padding-bottom: 10px;
+    position: sticky;
+    top:0;
+    background: rgb(236, 233, 187);
+}
+
+.item-menu{
+    margin: 0;
+    font-size: 30px;
+    margin-top: 40px;
+    color:rgb(58, 72, 67)
+
+}
+
+.border{
+    width: 80px;
+    height: 4px;
+    margin:3px 0;
+    margin-bottom: 30px;
+    border-radius: 2px;
+    background:#597969;
+}
+
+.list-card{
+    display:flex;
+    align-items:center;
+    border-radius: 25px;
+    cursor:pointer;
+    transition:0.3s all ease-in-out;
+}
+
+.list-card img{
+    width:50px;
+    height:50px;
+    border-radius: 50px;
+}
+
+.list-card:hover{
+    background:rgb(17 98 70 / 31%);
+    
+}
+
+.list-card:hover img{
+    transition:0.5s all ease-in-out;
+    transform:scale(1.1);
+}
+.list-name{
+    font-size: 20px;
+    margin:0 10px;
+    text-decoration: none;
+    text-transform: capitalize;
+    color:#2c422e;
+}
+

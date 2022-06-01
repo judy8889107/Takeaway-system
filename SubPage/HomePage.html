@@ -16,30 +16,73 @@
     <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
     <!-- 使用ajax串接後台php -->
     <script>
+
         $(document).ready(function () {
             var session;
             // 利用load加載後台php
             $.get("../phpCode/HomePage.php", function (result) {
                 session = result; /* 成功登入，得到該用戶所有資料 */
-               var fa_fa_person = $("div.util i.fa.fa-person"); /* 選取帶有空格的className要把空格替換成. */
-               var add_address = $("#add-address");
-               if(session.islogin){ /* 若登入成功 */
-                   fa_fa_person.text(session.nickName);
-                   add_address.text(session.address);
-               }
+                var fa_fa_user = $("div.user i.fa.fa-user"); /* 選取帶有空格的className要把空格替換成. */
+                var add_address = $("#add-address");
+                if (session.islogin) { /* 若登入成功 */
+                    fa_fa_user.text(session.nickName);
+                    add_address.text(session.address);
+                }
             }, "json");
 
             //Button事件(Login button)
-            $("div.util i.fa.fa-person").click(function(e){
-                if(!session.islogin){ /* 若還未登入則會跳轉登入頁面 */
-                    $(location).prop("href", "Login.html"); 
-                }
-            })
-            $("div.util i.fa.fa-person").hover(function(e){
-                if(session.islogin){ /* 若使用者登入則出現動態選單 */
+            $("i.fa.fa-user").click(function (e) {
+                if (!session.islogin) { /* 若還未登入則會跳轉登入頁面 */
+                     $(location).prop("href", "Login.html"); 
 
                 }
             })
+            
+            //當login時方可下拉選單
+            let hoverLogin = false
+            let hoverDropdown = false
+            $("i.fa.fa-user").hover(
+                function (e) {
+                   // if (session.islogin)
+                    hoverLogin = true
+                    $('.user-dropdown').slideDown(500)
+                },function(e){
+                    hoverLogin=false
+                    loginSlideUp()
+                }
+            )
+
+            $('.user-dropdown').hover(
+                ()=>{
+                    hoverDropdown = true
+                },
+                ()=>{
+                    hoverDropdown = false
+                    loginSlideUp()
+                }
+            )
+            
+            //由於判定hoverLogin、hoverDropdown true false需要幾秒的時間，因此需設hover計時器
+            function loginSlideUp(){
+                setTimeout(()=>{
+                    if(!(hoverDropdown || hoverLogin)){
+                        $('.user-dropdown').slideUp(500)
+                    }
+                },100)
+                
+            }
+            
+
+
+
+            //當成功登入後 SignIn隱藏
+            $(function () {
+                if (session.islogin) { /* 若使用者登入則出現動態選單 */
+                    $(".SignIn").hide();
+                }
+            });
+
+
         });
     </script>
 </head>
@@ -66,11 +109,11 @@
                 <div class="util">
                     <i class="fa fa-search">Search</i>
                     <i class="fa fa-cart-plus" id="cart-plus"> 0 Items</i>
-                    <i class="fa fa-person">Login</i>
                 </div>
+
             </div>
 
-            <div id="food-items">
+            <div id="food-items" class="food-items">
 
                 <div id="appetizer">
                     <p id="category-name">開胃菜</p>
@@ -204,8 +247,55 @@
         </div>
 
         <div id="cart">
-            <h1>購物車QQ</h1>
+            <div class="taste-header">
+                <div class="user">
+                    <i class="fa fa-user Login"> Login</i>
+                    <a href="Register.html" class="SignIn">Sign in</a>
+                    <div class="user-dropdown">
+                        <p> Hello User !</p>
+                        <!-- <a href="#">Profile</a> -->
+                        <i class="fa fa-sign-out  Logout"> Logout</i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="category-list">
+                <p class="item-menu">Food Menu</p>
+                <div class="border"></div>
+                <div class="list-card">
+                    <img src="../images/Mixed-Fruit-Shake.png" alt="list">
+                    <a href="" class="list-name"><b>開胃菜</b></a>
+                </div>
+
+                <div class="list-card">
+                    <img src="../images/Mixed-Fruit-Shake.png" alt="list">
+                    <a href="" class="list-name"><b>濃湯</b></a>
+                </div>
+
+                <div class="list-card">
+                    <img src="../images/Mixed-Fruit-Shake.png" alt="list">
+                    <a href="" class="list-name"><b>沙拉</b></a>
+                </div>
+
+                <div class="list-card">
+                    <img src="../images/Mixed-Fruit-Shake.png" alt="list">
+                    <a href="" class="list-name"><b>前菜</b></a>
+                </div>
+
+                <div class="list-card">
+                    <img src="../images/Mixed-Fruit-Shake.png" alt="list">
+                    <a href="" class="list-name"><b>主餐</b></a>
+                </div>
+
+                <div class="list-card">
+                    <img src="../images/Mixed-Fruit-Shake.png" alt="list">
+                    <a href="" class="list-name"><b>甜點</b></a>
+                </div>
+            </div>
         </div>
+
+
     </div>
 
 </body>
