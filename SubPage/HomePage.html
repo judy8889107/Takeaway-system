@@ -75,11 +75,12 @@
 
 
 
-            //當成功登入後 SignIn隱藏
+            //當成功登入後 SignIn隱藏 longin文字隱藏
             $(function () {
-                if (session.islogin) { /* 若使用者登入則出現動態選單 */
+                //if (session.islogin) { /* 若使用者登入則出現動態選單 */
                     $(".SignIn").hide();
-                }
+                    $(".Login").text("");
+               // }
             });
 
 
