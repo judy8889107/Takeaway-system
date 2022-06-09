@@ -245,7 +245,6 @@ $(document).ready(function () {
             emailCheck = false;
         }
     });
-    // FIXME:重複資料有問題
     // 當按下送出，ajax將表單資料傳到後台(Register.php)
     //  Register.php print資料到前台
     $("#register").submit(function (e) {
@@ -256,7 +255,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: url,
-                dataType: "text", //接收json資料
+                dataType: "json", //接收json資料
                 data: form.serialize(), // serializes the form's elements.
                 success: function (data) {
                     // 接收表單資料(判斷帳號, 手機號碼, 電子郵件有無重複)
