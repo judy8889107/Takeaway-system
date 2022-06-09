@@ -1,6 +1,15 @@
-import { foodItem } from "./foodItem.js";
+
+var foodItem;
+//從資料庫讀取值
+$.get("http://localhost/Takeaway-system/phpCode/fooditem.php", function (data) {
+    foodItem = data;
+    console.log(foodItem);
+    displayItems();
+}, "json");
+
 
 function displayItems(){
+
     var Appetizer=document.getElementById('Appetizer_Item');
     var Soup=document.getElementById('Soup_Item');
     var Salad=document.getElementById('Salad_Item');
@@ -332,4 +341,3 @@ function displayItems(){
     })
 
 }
-displayItems();
