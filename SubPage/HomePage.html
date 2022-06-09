@@ -77,10 +77,10 @@
 
             //當成功登入後 SignIn隱藏 longin文字隱藏
             $(function () {
-                //if (session.islogin) { /* 若使用者登入則出現動態選單 */
+                if (session.islogin) { /* 若使用者登入則出現動態選單 */
                     $(".SignIn").hide();
                     $(".Login").text("");
-               // }
+                }
             });
 
 
@@ -116,29 +116,13 @@
 
             <div id="food-items" class="food-items">
 
-                <div id="appetizer">
+                <div id="Appetizer">
                     <p id="category-name">開胃菜</p>
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">4.5</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
-                    </div>
 
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">4.5</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
-                    </div>
+                    <div id="Appetizer_Item" class="All_Item">
 
-                    <div id="item-card">
+                    </div>
+                    <!-- <div id="item-card">
                         <div id="card-top">
                             <i class="fa fa-star" id="rating">4.5</i>
                             <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
@@ -146,103 +130,88 @@
                         <img src="../images/Mixed-Fruit-Shake.png" alt="">
                         <p id="item-name">綜合水果奶昔</p>
                         <p id="item-price">價格 : $ 10</p>
-                    </div>
+                    </div> -->
 
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">4.5</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
-                    </div>
-
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">4.5</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
-                    </div>
-
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">4.5</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
-                    </div>
                 </div>
 
                 <div id="Soup">
                     <p id="category-name">濃湯</p>
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">3.8</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
+
+                    <div id="Soup_Item" class="All_Item">
+
                     </div>
+                   
                 </div>
 
                 <div id="Salad">
                     <p id="category-name">沙拉</p>
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">5.0</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
+                    
+                    <div id="Salad_Item" class="All_Item">
+
                     </div>
                 </div>
 
                 <div id="Entree">
                     <p id="category-name">前菜</p>
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">4.3</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
+                   
+                    <div id="Entree_Item" class="All_Item">
+
                     </div>
                 </div>
 
                 <div id="Main-course">
                     <p id="category-name">主餐</p>
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">4.9</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
+                    
+                    <div id="Main-course_Item" class="All_Item">
+
                     </div>
                 </div>
 
                 <div id="Dessert">
                     <p id="category-name">甜點</p>
-                    <div id="item-card">
-                        <div id="card-top">
-                            <i class="fa fa-star" id="rating">3.6</i>
-                            <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
-                        </div>
-                        <img src="../images/Mixed-Fruit-Shake.png" alt="">
-                        <p id="item-name">綜合水果奶昔</p>
-                        <p id="item-price">價格 : $ 10</p>
+                    
+                    <div id="Dessert_Item" class="All_Item">
+
                     </div>
                 </div>
+
+                <div id="Tea">
+                    <p id="category-name">飲品</p>
+                    
+                    <div id="Tea_Item" class="All_Item">
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="cart-page" class="cart-toggle">
+                <p id="cart-title"><b>餐點總覽</b></p>
+                <p id="m-total-amount"><b>總共 : $999</b></p>
+                <table>
+                    <thead>
+                        <td><b>餐點</b></td>
+                        <td><b>名稱</b></td>
+                        <td><b>數量</b></td>
+                        <td><b>價格</b></td>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td>
+                                <img src="../images/Mixed-Fruit-Shake.png" alt="img">
+                            </td>
+                            <td>
+                                <b>奶昔</b>
+                            </td>
+                            <td>
+                                <button class="decrease-item">-</button>
+                                <span>1</span>
+                                <button class="increase-item">+</button>
+                            </td>
+                            <td>10</td>
+                        </tr>
+                    </tbody>
+                </table>
 
             </div>
         </div>
@@ -265,7 +234,7 @@
                 <p class="item-menu">Food Menu</p>
                 <div class="border"></div>
                 <div class="list-card">
-                    <img src="../images/Mixed-Fruit-Shake.png" alt="list">
+                    <img src="../images/Appetizer/Scallop with Apple and Chicken Gravy Recipe.jfif" alt="list">
                     <a href="" class="list-name"><b>開胃菜</b></a>
                 </div>
 
@@ -294,11 +263,19 @@
                     <a href="" class="list-name"><b>甜點</b></a>
                 </div>
             </div>
+
+            <div id="checkout" class="cart-toggle">
+                <p id="total-item"><b>總共 : 5 件</b></p>
+                <p id="total-price"><b>總價 : $50</b></p>
+                <p id="delievery"><b>外送費 : $30</b></p>
+                <button class="cart-btn"><b>確認</b></button>
+            </div>
         </div>
 
 
     </div>
 
+    <script src="../js/HomePage.js" type="module"></script>
 </body>
 
 </html>
