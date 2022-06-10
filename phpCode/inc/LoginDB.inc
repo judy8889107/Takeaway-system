@@ -3,7 +3,7 @@
 //登入資料庫
 $host = 'localhost';  //host
 $dbuser ='root';  //帳號
-$dbpassword = 'judy890912'; //密碼
+$dbpassword = ''; //密碼
 $dbname = 'takeaway-system'; //資料庫名稱
 $link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
 

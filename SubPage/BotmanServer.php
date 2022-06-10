@@ -48,7 +48,7 @@ $botman->hears('.*(迷因|meme).*', 'General@Meme'); //機器人聽到含 迷因
 $botman->hears('.*(你好|哈瞜|Hello|Hi).*', 'General@Hello'); //機器人打招呼
 $botman->hears('.*你.*(?=名字|性別|歲|年齡|誰|是|生日).*', 'General@RobotInfo'); //詢問機器人的資訊
 $botman->hears('(大*前天|昨天|今天|明天|大*後天).*(是|日期|星期).*(?!天氣)', 'General@Date'); //查詢日期
-
+// test
 
 
 
