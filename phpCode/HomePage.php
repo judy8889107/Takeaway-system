@@ -25,3 +25,4 @@ if (isset($_SESSION['islogin'])) { // 若已經登入
 //回傳結果給前台
 $response = json_encode($response); // (將陣列轉為json檔案)
 print($response);
+

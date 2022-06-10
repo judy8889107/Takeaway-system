@@ -15,6 +15,7 @@
     <script src="../js/botmanWidget.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
     <!-- 使用ajax串接後台php -->
+    <script src="../js/HomePage.js" type="module"></script>
     <script>
 
         $(document).ready(function () {
@@ -29,6 +30,8 @@
                 }
             }, "json");
 
+           
+
             //Button事件(Login button)
             $("i.fa.fa-user").click(function (e) {
                 if (!session.islogin) { /* 若還未登入則會跳轉登入頁面 */
@@ -37,7 +40,7 @@
                 }
             })
             // 按下登出按鈕
-            $("i.fa.fa-sign-out.Logout").click(function(e){
+            $("i.fa.fa-sign-out.Logout").click(function (e) {
                 session.islogin = false;
                 location.reload();
             });
@@ -51,7 +54,7 @@
                     if (session.islogin) { /* 已登入 */
                         hoverLogin = true
                         $('.user-dropdown').slideDown(500) /* 選單下拉動畫 */
-                        
+
                     } else {   /* 未登入 */
                         hoverLogin = false
                     }
@@ -82,13 +85,13 @@
 
             //當成功登入後 SignIn隱藏 longin文字隱藏
             /* 若使用者登入則出現動態選單 */
-           /* $(function () {
-                if (session.islogin) { 
-                    $(".SignIn").hide();
-                    $(".Login").text("");
-                }
-            }); */
-            
+            /* $(function () {
+                 if (session.islogin) { 
+                     $(".SignIn").hide();
+                     $(".Login").text("");
+                 }
+             }); */
+
             //當成功登入後 設定前台所有element
             function setForegroundElement() {
                 $("div.user i.fa.fa-user").text(session.nickName);
@@ -100,6 +103,7 @@
 
         });
     </script>
+    
 </head>
 
 <body>
@@ -154,12 +158,12 @@
                     <div id="Soup_Item" class="All_Item">
 
                     </div>
-                   
+
                 </div>
 
                 <div id="Salad">
                     <p id="category-name">沙拉</p>
-                    
+
                     <div id="Salad_Item" class="All_Item">
 
                     </div>
@@ -167,7 +171,7 @@
 
                 <div id="Entree">
                     <p id="category-name">前菜</p>
-                   
+
                     <div id="Entree_Item" class="All_Item">
 
                     </div>
@@ -175,7 +179,7 @@
 
                 <div id="Main-course">
                     <p id="category-name">主餐</p>
-                    
+
                     <div id="Main-course_Item" class="All_Item">
 
                     </div>
@@ -183,7 +187,7 @@
 
                 <div id="Dessert">
                     <p id="category-name">甜點</p>
-                    
+
                     <div id="Dessert_Item" class="All_Item">
 
                     </div>
@@ -191,7 +195,7 @@
 
                 <div id="Tea">
                     <p id="category-name">飲品</p>
-                    
+
                     <div id="Tea_Item" class="All_Item">
 
                     </div>
@@ -288,8 +292,6 @@
 
 
     </div>
-
-    <script src="../js/HomePage.js" type="module"></script>
 </body>
 
 </html>
