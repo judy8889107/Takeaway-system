@@ -2,7 +2,7 @@
 // 啟動session
 session_start();
 $response = array("islogin" => false);
-$attr = array("nickName", "userNmae", "password", "gender", "birthday", "phoneNumber", "email", "address");
+$attr = array("nickName", "userName", "password", "gender", "birthday", "phoneNumber", "email", "address");
 
 
 
@@ -17,7 +17,7 @@ if (isset($_SESSION['islogin'])) { // 若已經登入
 
     $row = mysqli_fetch_row($result);
 
-    for($i=0;$i<count($attr);$i++){
+    for($i=0;$i<count($attr)-1;$i++){
         $response[$attr[$i]] = $row[$i];
     }
     session_destroy(); /* 清除session */

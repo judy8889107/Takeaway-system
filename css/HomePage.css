@@ -363,7 +363,7 @@ a.SignIn:hover{
     padding-bottom: 10px;
 }
 #m-total-amount{
-    display: none;
+    /* display: none; */
 }
 
 #cart-page table tbody td{
