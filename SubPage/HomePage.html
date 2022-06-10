@@ -23,6 +23,7 @@
             // 利用load加載後台php
             $.get("../phpCode/HomePage.php", function (result) {
                 session = result; /* 成功登入，得到該用戶所有資料 */
+                // alert(JSON.stringify(session));
                 if (session.islogin) { /* 若登入成功 */
                     setForegroundElement(); /* 執行設定前台element fun */
                 }
