@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervisor</title>
+    <!-- 引用jquery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            //檢視資料
+            $("#show_userdb").click(function (e) {
+                $dataformName = $(this).attr("id");
+                $.post("../phpCode/showDatabase.php", { dataformName: $dataformName }, function (result) {
+                    alert(result);
+                });
+            });
+
+            $("#show_fooditem").click(function (e) {
+                $dataformName = $(this).attr("id");
+                $.post("../phpCode/showDatabase.php", { dataformName: $dataformName }, function (result) {
+                    alert(result);
+                });
+            });
+
+
+
+        });
+    </script>
 </head>
+
 <body>
-    管理員介面
+    <a href="">修改使用者資料表</a>
+    <a href="">修改菜單資料表</a><br>
+    <button id="show_userdb">檢視使用者資料表</button>
+    <button id="show_fooditem">檢視菜單資料表</button>
 </body>
+
 </html>
