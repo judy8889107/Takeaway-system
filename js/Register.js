@@ -205,7 +205,7 @@ $(document).ready(function () {
                     var interval = setInterval(function () {
                         if (!emailCheck) {
                             $t -= 1;
-                            if ($t == 0) {
+                            if ($t <= 0) {
                                 $("input[name='email']").attr("readonly", null); /* 若驗證信箱錯誤，用戶可以再次輸入信箱欄位(有可能是信箱填錯) */
                                 $("#validEmail").prop("disabled", false);
                                 $("#validEmail").attr("value", "重新傳送");
