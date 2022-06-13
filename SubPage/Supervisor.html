@@ -11,21 +11,74 @@
     <script>
 
         $(document).ready(function () {
-
-            //檢視資料
-            $("#show_userdb").click(function (e) {
+            //得到json資料(bind多重元素)
+            $("#show_userdb, #show_fooditem").bind("click", function (e) {
                 $dataformName = $(this).attr("id");
-                $.post("../phpCode/showDatabase.php", { dataformName: $dataformName }, function (result) {
-                    alert(result);
-                });
+                $.post("../phpCode/showDatabase.php", { dataformName: $dataformName }, function (data) {
+                    displayForm(data);
+                }, "json");
             });
 
-            $("#show_fooditem").click(function (e) {
-                $dataformName = $(this).attr("id");
-                $.post("../phpCode/showDatabase.php", { dataformName: $dataformName }, function (result) {
-                    alert(result);
-                });
+            //為動態新增的元素增加綁定事件
+            $("input").live("dblclick", function (e) {
+                this.removeAttribute("readonly"); // 雙擊可更改value
             });
+
+            //顯示表格
+            function displayForm(formData) {
+
+                var dataform = document.getElementById("dataform");
+                dataform.innerHTML = ""; // 初始化表格
+                //內容
+                for (i = 0; i < formData.length; i++) {
+                    var tr = document.createElement("tr");
+                    var keys = Object.keys(formData[i]);
+                    var values = Object.values(formData[i]);
+                    for (j = 0; j < values.length; j++) {
+                        var td = document.createElement("td");
+                        var key = keys[j];
+                        if (i == 0) {
+                            td.innerHTML = values[j];
+                        } else {
+                            //指定產生元素
+                            switch (key) {
+                                case "Gender":
+                                    var input = document.createElement("select");
+                                    var male_option = document.createElement("option");
+                                    var female_option = document.createElement("option");
+                                    male_option.text = "男";
+                                    male_option.value = "male";
+                                    female_option.text = "女";
+                                    female_option.value = "female";
+                                    if(values[j] == "male") male_option.selected = true;
+                                    else female_option.selected = true;
+                                    input.appendChild(male_option);
+                                    input.appendChild(female_option);
+                                    break;
+                                case "Birthday":
+                                    var input = document.createElement("input");
+                                    input.type = "date";
+                                    input.readOnly = "true";
+                                    input.value = values[j];
+                                    break;
+                                default:
+                                    var input = document.createElement("input");
+                                    input.readOnly = "true";
+                                    input.value = values[j];
+                                    break;
+                            }
+                            td.appendChild(input);
+                        }
+
+                        tr.appendChild(td);
+                    }
+                    dataform.append(tr);
+                }
+                document.getElementById("dataformDiv").appendChild(dataform);
+
+            }
+
+
 
 
 
@@ -34,10 +87,16 @@
 </head>
 
 <body>
-    <a href="">修改使用者資料表</a>
-    <a href="">修改菜單資料表</a><br>
-    <button id="show_userdb">檢視使用者資料表</button>
-    <button id="show_fooditem">檢視菜單資料表</button>
+    <a id="show_userdb" href="#">使用者資料表</a>
+    <a id="show_fooditem" href="#">菜單資料表</a>
+    <a id="insert" href="#">新增</a>
+    <a id="modify" href="#">修改</a>
+    <a id="delete" href="#">刪除</a>
+    <a id="search" href="#">查詢</a>
+    <br /><br />
+    <div id="dataformDiv">
+        <table id="dataform"></table>
+    </div>
 </body>
 
 </html>
