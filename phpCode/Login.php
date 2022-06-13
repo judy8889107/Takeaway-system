@@ -1,15 +1,20 @@
 <?php
 
+
+$response = array("CaptchaMatch"=>false, "islogin"=> false, "isSupervisor"=> false);
 // 判斷session是否已啟動
 if (!isset($_SESSION)) {
     session_start();
 }
 // 先檢查驗證碼是否正確
 if ((!empty($_SESSION['check_word'])) || (!empty($_POST['inputCaptcha']))) {  //判斷此兩個變數是否為空
-    if ($_SESSION['check_word'] != $_POST['inputCaptcha'])
-        print "falseCaptcha";
+    if ($_SESSION['check_word'] != $_POST['inputCaptcha']){
+        $response["CaptchaMatch"] = false;
+    }
+        
         
     else { // 若驗證碼正確則檢查帳號密碼
+        $response["CaptchaMatch"] = true;
         //建立連結
         $link = require_once("./inc/LoginDB.inc");
 
@@ -45,11 +50,20 @@ if ((!empty($_SESSION['check_word'])) || (!empty($_POST['inputCaptcha']))) {  //
 
         // 帳號密碼皆符合
         if ($userNameMatch && $passwordMatch) {
-            print "true";
+            $response["islogin"] = true;
             $_SESSION['userName'] = $userName;
             $_SESSION['islogin'] = 1;
-        } else print "false";
+            //匹配管理者
+            if($userName == "team12"){
+                $_SESSION['isSupervisor'] = 1;
+                $response["isSupervisor"] = true;
+            } 
+        }
+        
         // 關閉資料庫連結
         mysqli_close($link);
     }
 }
+// 傳送資料到前台
+$response = json_encode($response); // (將陣列轉為json檔案)
+print $response;

@@ -24,6 +24,7 @@
             $.get("../phpCode/HomePage.php", function (result) {
                 session = result; /* 成功登入，得到該用戶所有資料 */
                 console.log(result)
+                // alert(JSON.stringify(session));
                 if (session.islogin) { /* 若登入成功 */
                     console.log("我登入了");
                     setForegroundElement(); /* 執行設定前台element fun */
