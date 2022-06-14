@@ -1,7 +1,7 @@
 
 var foodItem;
 //從資料庫讀取值
-$.get("http://localhost/Takeaway-system/phpCode/fooditem.php", function (data) {
+$.get("../phpCode/fooditem.php", function (data) {
     foodItem = data;
     console.log(foodItem);
     displayItems();
