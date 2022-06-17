@@ -88,6 +88,7 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor:pointer;
+    /* text-transform:capitalize; */
 }
 
 .add-box i{
@@ -169,7 +170,7 @@ a.SignIn:hover{
 
 
 .food-items{
-   /* display: none; */
+   display: none;
 }
 
 #Appetizer,#Soup,#Salad,#Entree,#Main-course,#Dessert {
@@ -234,8 +235,18 @@ a.SignIn:hover{
     color: #000000;
     cursor: pointer;
     border-radius: 50%;
-   
 }
+
+.add-to-cart:hover{
+    transform: scale(1.1);
+}
+
+.toggle-cart{
+    color: #636363;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
 
 #item-card img{
     width: 130px;
@@ -304,6 +315,7 @@ a.SignIn:hover{
     border-radius: 25px;
     cursor:pointer;
     transition:0.3s all ease-in-out;
+    margin: 10px;
 }
 
 .list-card img{
@@ -338,7 +350,7 @@ a.SignIn:hover{
 }
 
 #cart-page{
-    background:#bfbfbf;
+    background:#91919147;
     margin: 40px 10px;
     margin-right: 50px;   
     padding: 20px 30px;
@@ -348,13 +360,14 @@ a.SignIn:hover{
 
 #cart-title{
     font-size:35px;
-    margin:0;
+    margin:25px 16px -12px 553px;
     color:rgb(58, 72, 67);
 }
 
 #cart-page table{
     width:100%;
-    margin-top:20px;
+    margin-top:80px;
+    margin-left:-33px;
     text-align:center;
 }
 
@@ -363,11 +376,11 @@ a.SignIn:hover{
     padding-bottom: 10px;
 }
 #m-total-amount{
-    /* display: none; */
+    display: none;
 }
 
 #cart-page table tbody td{
-    padding:10px 0;
+    padding:17px 36px;
     font-size:20px;
 }
 
@@ -376,7 +389,7 @@ a.SignIn:hover{
     border:none;
     font-size: 16px;
     background: none;
-    background: #ffffff;
+    background: #ffffffa8;
     color:#141111;
     border-radius:3px;
     cursor:pointer;
@@ -385,9 +398,18 @@ a.SignIn:hover{
 }
 
 #cart-page table tbody img{
-    width:75px;
-    height:75px;
-    border-radius: 50px;
+    width:100px;
+    height:100px;
+    border-radius: 16px;
+}
+
+#cart-page table tbody img:hover{
+    transition:0.5s all ease-in-out;
+    transform:scale(1.1);
+}
+
+.item-name{
+    width:252px;
 }
 
 #checkout{
@@ -400,12 +422,13 @@ a.SignIn:hover{
 }
 
 #checkout p{
-    margin:15px 0;
-    float:left; 
+    margin:15px -54px;
+    /* float:left;  */
 }
 #total-price,#total-item{
     font-size: 25px;
     color:rgb(58, 72, 67);
+    font-weight:bold;
 }
 
 .cart-btn{
