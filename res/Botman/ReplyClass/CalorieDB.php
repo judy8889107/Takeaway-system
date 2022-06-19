@@ -24,7 +24,7 @@ class CalorieDB{
             }
             //匹配 含有熱量關鍵字
             else{
-                $str = str_replace(['的','熱量','//s*/'],"",$str); //將"的","熱量",空格去掉
+                //$str = str_replace(['的','熱量','//s*/'],"",$str); //將"的","熱量",空格去掉
                 $sql = "SELECT 樣品名稱,俗名,每100克含量,食品分類 FROM caloriedb";
                 mysqli_query($link, 'SET NAMES utf8');  //送出UTF8編碼的MySQL指令
                 $result = mysqli_query($link, $sql);
