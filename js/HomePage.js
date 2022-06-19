@@ -23,11 +23,15 @@ $("i.fa.fa-user, i.fa.fa-sign-out.Logout").click(function (e) {
         case "fa fa-user Login":
             if (!session.islogin) /* 未登入則會跳轉登入頁面 */
                 $(location).prop("href", "Login.html");
+            else{
+                $(location).prop("href", "UserPage.html");
+            }
+                 
             break;
         case "fa fa-sign-out  Logout": /* 登出 */
-            session.islogin = false;
+            $.get("../phpCode/Logout.php");
             location.reload();
-            break
+            break;
     }
 
 })
