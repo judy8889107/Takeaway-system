@@ -6,7 +6,7 @@ $attr = array("nickName", "userName", "password", "gender", "birthday", "phoneNu
 
 
 
-if (isset($_SESSION['islogin'])) { // 若已經登入
+if (isset($_SESSION['islogin']) && $_SESSION['islogin']==1) { // 若已經登入
     $response["islogin"] = true;
     $userName = $_SESSION['userName'];
     // 使用userName查找資料庫

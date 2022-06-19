@@ -18,73 +18,73 @@
     <script src="../js/HomePage.js" type="module"></script>
     <script>
 
-        $(document).ready(function () {
-            var session;
-            // 利用load加載後台php
-            $.get("../phpCode/HomePage.php", function (result) {
-                session = result; /* 成功登入，得到該用戶所有資料 */
-                //console.log(result)
-                // alert(JSON.stringify(session));
-                if (session.islogin) { /* 若登入成功 */
-                    console.log("我登入了");
-                    setForegroundElement(); /* 執行設定前台element fun */
-                }
-            }, "json");
+        // $(document).ready(function () {
+        //     var session;
+        //     // 利用load加載後台php
+        //     $.get("../phpCode/HomePage.php", function (result) {
+        //         session = result; /* 成功登入，得到該用戶所有資料 */
+        //         //console.log(result)
+        //         // alert(JSON.stringify(session));
+        //         if (session.islogin) { /* 若登入成功 */
+        //             console.log("已經登入");
+        //             setForegroundElement(); /* 執行設定前台element fun */
+        //         }
+        //     }, "json");
 
            
 
-            //多元素Button事件綁定
-            $("i.fa.fa-user, i.fa.fa-sign-out.Logout").click(function (e) {
-                var className = $(e.target).attr("class");
-                switch(className){
-                    case "fa fa-user Login":
-                        if(!session.islogin) /* 未登入則會跳轉登入頁面 */
-                            $(location).prop("href", "Login.html");
-                    break;
-                    case "fa fa-sign-out  Logout": /* 登出 */
-                        session.islogin = false;
-                        location.reload();
-                    break
-                }
+            // //多元素Button事件綁定
+            // $("i.fa.fa-user, i.fa.fa-sign-out.Logout").click(function (e) {
+            //     var className = $(e.target).attr("class");
+            //     switch(className){
+            //         case "fa fa-user Login":
+            //             if(!session.islogin) /* 未登入則會跳轉登入頁面 */
+            //                 $(location).prop("href", "Login.html");
+            //         break;
+            //         case "fa fa-sign-out  Logout": /* 登出 */
+            //             session.islogin = false;
+            //             location.reload();
+            //         break
+            //     }
                
-            })
+            // })
 
-            //當login時方可下拉選單
-            let hoverLogin = false
-            let hoverDropdown = false
-            $("i.fa.fa-user").hover(
-                function (e) {
-                    // 判斷使用者是否登入
-                    if (session.islogin) { /* 已登入 */
-                        hoverLogin = true
-                        $('.user-dropdown').slideDown(500) /* 選單下拉動畫 */
+            // //當login時方可下拉選單
+            // let hoverLogin = false
+            // let hoverDropdown = false
+            // $("i.fa.fa-user").hover(
+            //     function (e) {
+            //         // 判斷使用者是否登入
+            //         if (session.islogin) { /* 已登入 */
+            //             hoverLogin = true
+            //             $('.user-dropdown').slideDown(500) /* 選單下拉動畫 */
 
-                    } else {   /* 未登入 */
-                        hoverLogin = false
-                    }
-                    loginSlideUp();
-                }
-            );
+            //         } else {   /* 未登入 */
+            //             hoverLogin = false
+            //         }
+            //         loginSlideUp();
+            //     }
+            // );
 
-            $('.user-dropdown').hover(
-                () => {
-                    hoverDropdown = true
-                },
-                () => {
-                    hoverDropdown = false
-                    loginSlideUp()
-                }
-            );
+            // $('.user-dropdown').hover(
+            //     () => {
+            //         hoverDropdown = true
+            //     },
+            //     () => {
+            //         hoverDropdown = false
+            //         loginSlideUp()
+            //     }
+            // );
 
-            //由於判定hoverLogin、hoverDropdown true false需要幾秒的時間，因此需設hover計時器
-            function loginSlideUp() {
-                setTimeout(() => {
-                    if (!(hoverDropdown || hoverLogin)) {
-                        $('.user-dropdown').slideUp(500)
-                    }
-                }, 100)
+            // //由於判定hoverLogin、hoverDropdown true false需要幾秒的時間，因此需設hover計時器
+            // function loginSlideUp() {
+            //     setTimeout(() => {
+            //         if (!(hoverDropdown || hoverLogin)) {
+            //             $('.user-dropdown').slideUp(500)
+            //         }
+            //     }, 100)
 
-            };
+            // };
 
 
             //當成功登入後 SignIn隱藏 longin文字隱藏
@@ -96,16 +96,16 @@
                  }
              }); */
 
-            //當成功登入後 設定前台所有element
-            function setForegroundElement() {
-                $("div.user i.fa.fa-user").text(session.nickName);
-                $("#add-address").text(session.address);
-                $(".SignIn").hide();
+            // //當成功登入後 設定前台所有element
+            // function setForegroundElement() {
+            //     $("div.user i.fa.fa-user").text(session.nickName);
+            //     $("#add-address").text(session.address);
+            //     $(".SignIn").hide();
                 
-            }
+            // }
 
 
-        });
+        // });
     </script>
     
 </head>
