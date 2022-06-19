@@ -33,18 +33,21 @@
 
            
 
-            //Button事件(Login button)
-            $("i.fa.fa-user").click(function (e) {
-                if (!session.islogin) { /* 若還未登入則會跳轉登入頁面 */
-                    $(location).prop("href", "Login.html");
-
+            //多元素Button事件綁定
+            $("i.fa.fa-user, i.fa.fa-sign-out.Logout").click(function (e) {
+                var className = $(e.target).attr("class");
+                switch(className){
+                    case "fa fa-user Login":
+                        if(!session.islogin) /* 未登入則會跳轉登入頁面 */
+                            $(location).prop("href", "Login.html");
+                    break;
+                    case "fa fa-sign-out  Logout": /* 登出 */
+                        session.islogin = false;
+                        location.reload();
+                    break
                 }
+               
             })
-            // 按下登出按鈕
-            $("i.fa.fa-sign-out.Logout").click(function (e) {
-                session.islogin = false;
-                location.reload();
-            });
 
             //當login時方可下拉選單
             let hoverLogin = false
