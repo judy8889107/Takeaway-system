@@ -1,16 +1,12 @@
 <?php
-// 啟動session
+
 if (!isset($_SESSION)) {
     session_start();
 }
-$response = array("islogin" => false);
+$userName = isset($_SESSION['userName']) ? $_SESSION['userName'] : "";
 $attr = array("nickName", "userName", "password", "gender", "birthday", "phoneNumber", "email", "address");
-
-
-if ($_SESSION['islogin']==1) { // 若已經登入
-    $response["islogin"] = true;
-    $userName = $_SESSION['userName'];
-    // 使用userName查找資料庫
+$response = array();
+if($userName!=""){
     //建立連結
     $link = require_once("../phpCode/inc/LoginDB.inc");
     $sql = "SELECT * FROM userdb WHERE userName='$userName'";
@@ -18,14 +14,10 @@ if ($_SESSION['islogin']==1) { // 若已經登入
 
     $row = mysqli_fetch_row($result);
 
-    for($i=0;$i<count($attr)-1;$i++){
+    for($i=0;$i<count($attr);$i++){
         $response[$attr[$i]] = $row[$i];
     }
-    // session_destroy(); /* 清除session */
+    //回傳結果給前台
+    $response = json_encode($response); // (將陣列轉為json檔案)
+    print($response);
 }
-
-
-//回傳結果給前台
-$response = json_encode($response); // (將陣列轉為json檔案)
-print($response);
-

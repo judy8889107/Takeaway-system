@@ -1,5 +1,79 @@
 
 var foodItem;
+var session;
+
+$.get("../phpCode/HomePage.php", function (result) {
+    session = result; /* 成功登入，得到該用戶所有資料 */
+    if (session.islogin)
+        setForegroundElement();
+}, "json");
+
+//當成功登入後 設定前台所有element
+function setForegroundElement() {
+    $("div.user i.fa.fa-user").text(session.nickName);
+    $("#add-address").text(session.address);
+    $(".SignIn").hide();
+
+}
+
+//多元素Button事件綁定
+$("i.fa.fa-user, i.fa.fa-sign-out.Logout").click(function (e) {
+    var className = $(e.target).attr("class");
+    switch (className) {
+        case "fa fa-user Login":
+            if (!session.islogin) /* 未登入則會跳轉登入頁面 */
+                $(location).prop("href", "Login.html");
+            else{
+                $(location).prop("href", "UserPage.html");
+            }
+                 
+            break;
+        case "fa fa-sign-out  Logout": /* 登出 */
+            $.get("../phpCode/Logout.php");
+            location.reload();
+            break;
+    }
+
+})
+
+//當login時方可下拉選單
+let hoverLogin = false
+let hoverDropdown = false
+$("i.fa.fa-user").hover(
+    function (e) {
+        // 判斷使用者是否登入
+        if (session.islogin) { /* 已登入 */
+            hoverLogin = true
+            $('.user-dropdown').slideDown(500) /* 選單下拉動畫 */
+
+        } else {   /* 未登入 */
+            hoverLogin = false
+        }
+        loginSlideUp();
+    }
+);
+
+$('.user-dropdown').hover(
+    () => {
+        hoverDropdown = true
+    },
+    () => {
+        hoverDropdown = false
+        loginSlideUp()
+    }
+);
+
+//由於判定hoverLogin、hoverDropdown true false需要幾秒的時間，因此需設hover計時器
+function loginSlideUp() {
+    setTimeout(() => {
+        if (!(hoverDropdown || hoverLogin)) {
+            $('.user-dropdown').slideUp(500)
+        }
+    }, 100)
+
+};
+
+// -------------------------------------------------------------------------
 //從資料庫讀取值
 $.get("../phpCode/fooditem.php", function (data) {
     foodItem = data;
@@ -13,7 +87,15 @@ $.get("../phpCode/fooditem.php", function (data) {
 
     //加入購物車
     document.querySelectorAll('.add-to-cart').forEach(item => {
-        item.addEventListener('click', addToCart);
+        console.log("islogin="+session.islogin);
+        if (session.islogin) /* 若登入才可將商品加入購物車 */
+            item.addEventListener('click', addToCart);
+        else
+            item.addEventListener('click', function () {
+                alert("請先登入方可選購商品");
+            });
+
+
     })
 
 
@@ -503,15 +585,15 @@ function decrementItem() {
     let decObj = cartData.find(element => element.name == itemToDec);
     let ind = cartData.indexOf(decObj);
 
-    var price=parseInt(decObj.price);
-    var quantity=parseInt(decObj.quantity);
+    var price = parseInt(decObj.price);
+    var quantity = parseInt(decObj.quantity);
 
     if (quantity > 1) {
-        currPrice = (price*quantity - price * (quantity - 1)) / (quantity);
+        currPrice = (price * quantity - price * (quantity - 1)) / (quantity);
 
-        decObj.quantity=String(quantity-1);
+        decObj.quantity = String(quantity - 1);
 
-        decObj.price = String(currPrice*(quantity-1));
+        decObj.price = String(currPrice * (quantity - 1));
     }
     else {
         document.getElementById(decObj.id).classList.remove('toggle-cart')
@@ -541,7 +623,7 @@ function totalAmount() {
     cartData.map(item => {
         sum += parseInt(item.price);
     })
-    document.getElementById('total-item').innerText = '餐點總類 : ' + cartData.length+' 項';
+    document.getElementById('total-item').innerText = '餐點總類 : ' + cartData.length + ' 項';
     document.getElementById('total-price').innerText = '總價格: $' + sum;
 
 }
@@ -565,21 +647,21 @@ function cartToggle() {
     }
 }
 
-document.getElementById('add-address').addEventListener('click',addAddress);
+document.getElementById('add-address').addEventListener('click', addAddress);
 // document.getElementById('m-add-address').addEventListener('click',addAddress);
 
 
 //新增送達地址
-function addAddress(){
-    var address=prompt('請輸入您欲送達目的地');
-    if(address){
-        document.getElementById('add-address').innerText=' '+address;
+function addAddress() {
+    var address = prompt('請輸入您欲送達目的地');
+    if (address) {
+        document.getElementById('add-address').innerText = ' ' + address;
         // document.getElementById('m-add-address').innerText=' '+address;
 
     }
 
-    else{
-       
+    else {
+
 
         alert("未做填寫或更改")
     }
