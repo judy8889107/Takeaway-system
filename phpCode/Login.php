@@ -53,7 +53,7 @@ if ((!empty($_SESSION['check_word'])) || (!empty($_POST['inputCaptcha']))) {  //
             $response["islogin"] = true;
             $_SESSION['userName'] = $userName;
             $_SESSION['islogin'] = 1;
-            //匹配管理者
+            // //匹配管理者
             if($userName == "team12"){
                 $_SESSION['isSupervisor'] = 1;
                 $response["isSupervisor"] = true;

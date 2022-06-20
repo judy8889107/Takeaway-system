@@ -10,50 +10,227 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <title>使用者資料</title>
     <script>
-
+        var unsave = false;
+        var userData;
         // 得到user data
         $.get("../phpCode/UserPage.php", function (result) {
-           var userData = result;
-           setDataLabel(userData);
+            userData = result;
+            setDataLabel(userData);
         }, "json");
 
         //設定data label
-        function setDataLabel(userData){
+        function setDataLabel(userData) {
             console.log(userData);
             var keys = Object.keys(userData);
             var values = Object.values(userData);
-            for(var i=0;i<keys.length;i++){
-                $("#"+keys[i]).text(values[i]);
+            for (var i = 0; i < keys.length; i++) {
+                $("#" + keys[i]).text(values[i]);
+                // 針對密碼顯示做額外處理
+                if (keys[i] == "password") {
+                    var text = $("#" + keys[i]).text();
+                    var substr = text.substring(1, text.length - 1);
+                    text = text.replace(substr, "*".repeat(substr.length));
+                    $("#" + keys[i]).text(text);
+                }
+                // 性別顯示處理
+                if(keys[i]=="gender"){
+                    var tmp = values[i]=="male"?"男":"女";
+                    $("#" + keys[i]).text(tmp);
+                }
+
             }
         }
+        $(document).ready(function () {
+            $("a").click(function () {
+                unsave = true;
+                var name = $(this).attr("for");
+                var toggle = $(this).attr("toggled") == "true" ? true : false;
+                var preEle = $("#" + name);
+                switch (name) {
+                    case "nickName":
+                        nickNameCheck($(this), name, toggle, preEle);
+                        break;
+                    case "password":
+                        var inputItem;
+                        passwordCheck($(this), name, toggle, preEle, inputItem);
+                        break;
+                    case "gender":
+                        genderCheck($(this), name, toggle, preEle);
+                        break;
+
+                }
+
+            });
+
+            // 修改檢查
+            function nickNameCheck(thisEle, name, toggle, preEle) {
+                if (!toggle) { /* 修改 */
+                    var newEle = document.createElement("input");
+                    newEle.id = name;
+                    newEle.value = preEle.text();
+                    preEle.replaceWith(newEle);
+                    thisEle.text("確認");
+                    thisEle.attr("toggled", "true");
+
+                }
+                else { /* 確認 */
+                    if (preEle.val().length >= 4) {
+                        var newEle = document.createElement("label");
+                        newEle.id = name;
+                        newEle.innerHTML = preEle.val();
+                        preEle.replaceWith(newEle);
+                        thisEle.text("修改");
+                        thisEle.attr("toggled", "false");
+                    }
+                    else {
+                        alert("輸入長度請大於4");
+                    }
+
+
+                }
+
+            }
+
+            function passwordCheck(thisEle, name, toggle, preEle) {
+
+                if (!toggle) { /* 修改 */
+                    var fragment = document.createDocumentFragment(); /* 建立dom fragment */
+                    inputItem = { orginPWD: "orginPWD", newPWD: "newPWD", checkPWD: "checkPWD" };
+                    var placeholder = ["請輸入原本密碼", "請輸入新密碼", "確認新密碼"];
+                    for (var i = 0; i < 3; i++) {
+                        var newEle = document.createElement("input");
+                        newEle.id = Object.values(inputItem)[i];
+                        newEle.placeholder = placeholder[i];
+                        newEle.type = "password";
+                        inputItem[Object.keys(inputItem)[i]] = newEle;
+                        fragment.appendChild(newEle);
+                    }
+                    console.log(inputItem);
+                    preEle.replaceWith(fragment);
+                    thisEle.text("確認");
+                    thisEle.attr("toggled", "true");
+
+                }
+                else { /* 確認 */
+                    var orginPWD = inputItem.orginPWD.value;
+                    var newPWD = inputItem.newPWD.value;
+                    var checkPWD = inputItem.checkPWD.value;
+                    //輸入檢查
+                    if (userData.password == orginPWD) {
+                        if (newPWD == checkPWD) {
+                            if (newPWD.length >= 8) {
+                                var newEle = document.createElement("label");
+                                newEle.id = name;
+
+                                //密碼隱私處理
+                                var substr = newPWD.substring(1, newPWD.length - 1);
+                                newPWD = newPWD.replace(substr, "*".repeat(substr.length));
+                                newEle.innerHTML = newPWD;
+                                //--
+
+                                inputItem.newPWD.remove();
+                                inputItem.checkPWD.remove();
+                                inputItem.orginPWD.replaceWith(newEle);
+                                thisEle.text("修改");
+                                thisEle.attr("toggled", "true");
+
+
+                            } else {
+                                alert("新密碼長度需大於8，請重新輸入");
+                            }
+
+                        }
+                        else {
+                            alert("新密碼輸入不一致，請重新輸入")
+                        }
+                    }
+                    else {
+                        alert("和原本密碼不一致，請重新輸入")
+                    }
+
+
+
+
+                }
+
+
+            }
+
+
+            function genderCheck(thisEle, name, toggle, preEle) {
+                var option = { male: "男", female: "女" };
+                if (!toggle) {
+                    var fragment = document.createDocumentFragment(); /* 建立dom fragment */
+                    var selectEle = document.createElement("select");
+                    selectEle.id = name;
+                    for (i = 0; i < 2; i++) {
+                        var newEle = document.createElement("option");
+                        newEle.value = Object.keys(option)[i];
+                        newEle.text = Object.values(option)[i];
+                        selectEle.append(newEle);
+                    }
+                    preEle.replaceWith(selectEle);
+                    thisEle.text("確認");
+                    thisEle.attr("toggled", "true");
+
+                } else {
+                    var selectVal = $("#" + name).val();
+                    var newEle = document.createElement("label");
+                    newEle.id = name;
+                    console.log(selectVal);
+                    console.log(option[selectVal]);
+                    newEle.innerHTML = option[selectVal];
+                    preEle.replaceWith(newEle);
+                    thisEle.text("修改");
+                    thisEle.attr("toggled", "false");
+
+                }
+            }
+        });
+
+
+
+
 
     </script>
 </head>
 
 <body>
-    <label>暱稱:</label>
-    <label id="nickName"></label>
-    <br />
-    <label>帳號:</label>
-    <label id="userName"></label>
-    <br />
-    <label>密碼:</label>
-    <label id="password"></label>
-    <br />
-    <label>性別:</label>
-    <label id="gender"></label>
-    <br />
-    <label>生日:</label>
-    <label id="birthday"></label>
-    <br />
-    <label>手機號碼:</label>
-    <label id="phoneNumber"></label>
-    <br />
-    <label>Email:</label>
-    <label id="email"></label>
-    <br />
-    <label>地址:</label>
-    <label id="address"></label>
+    <form id="userDataForm">
+        <label for="nickName">暱稱:</label>
+        <label name="nickName" id="nickName"></label>
+        <a for="nickName" href="#" toggled="false">修改</a>
+        <br />
+        <label>帳號:</label>
+        <label name="userName" id="userName"></label>
+        <br />
+        <label>密碼:</label>
+        <label name="password" id="password"></label>
+        <a for="password" href="#">修改</a>
+        <br />
+        <label>性別:</label>
+        <label name="gender" id="gender"></label>
+        <a for="gender" href="#">修改</a>
+        <br />
+        <label>生日:</label>
+        <label name="birthday" id="birthday"></label>
+        <a for="birthday" href="#">修改</a>
+        <br />
+        <label>手機號碼:</label>
+        <label name="phoneNumber" id="phoneNumber"></label>
+        <a for="phoneNumber" href="#">修改</a>
+        <br />
+        <label>Email:</label>
+        <label name="email" id="email"></label>
+        <a for="email" href="#">修改</a>
+        <br />
+        <label>地址:</label>
+        <label name="address" id="address"></label>
+        <a for="address" href="#">修改</a>
+        <br />
+        <input type="submit" value="儲存"></input>
+        <input id="" type="button" value="回上一頁"></input>
+    </form>
 </body>
 
 </html>
