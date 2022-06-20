@@ -33,8 +33,8 @@
                     $("#" + keys[i]).text(text);
                 }
                 // 性別顯示處理
-                if(keys[i]=="gender"){
-                    var tmp = values[i]=="male"?"男":"女";
+                if (keys[i] == "gender") {
+                    var tmp = values[i] == "male" ? "男" : "女";
                     $("#" + keys[i]).text(tmp);
                 }
 
@@ -57,10 +57,22 @@
                     case "gender":
                         genderCheck($(this), name, toggle, preEle);
                         break;
+                    case "birthday":
+                        birthdayCheck($(this), name, toggle, preEle);
+                        break;
+                    case "phoneNumber":
+                        phoneNumberCheck($(this), name, toggle, preEle);
+                        break;
+                    case "email":
+                        var validCode;
+                        var isValid = false;
+                        emailCheck($(this), name, toggle, preEle, validCode, isValid);
+                        break;
 
                 }
 
             });
+
 
             // 修改檢查
             function nickNameCheck(thisEle, name, toggle, preEle) {
@@ -186,6 +198,132 @@
 
                 }
             }
+
+            function birthdayCheck(thisEle, name, toggle, preEle) {
+                if (!toggle) {
+                    var newEle = document.createElement("input");
+                    newEle.id = name;
+                    newEle.type = "date";
+                    preEle.replaceWith(newEle);
+                    thisEle.text("確認");
+                    thisEle.attr("toggled", "true");
+
+
+                } else {
+                    var newEle = document.createElement("label");
+                    newEle.id = name;
+                    newEle.innerHTML = preEle.val();
+                    preEle.replaceWith(newEle);
+                    thisEle.text("修改");
+                    thisEle.attr("toggled", "false");
+                }
+            }
+
+            function phoneNumberCheck(thisEle, name, toggle, preEle) {
+                if (!toggle) {
+                    var newEle = document.createElement("input");
+                    newEle.id = name;
+                    newEle.type = "tel";
+                    newEle.placeholder = "0912345678";
+                    preEle.replaceWith(newEle);
+                    thisEle.text("確認");
+                    thisEle.attr("toggled", "true");
+
+
+                } else {
+                    var inputVal = preEle.val();
+                    if (inputVal.match("^09[0-9]{8}") && inputVal.length == 10) {
+                        // 若輸入的不是自己原號碼, 進入後台檢查有無重複   
+                        if (inputVal != userData.phoneNumber) {
+                            $.get("../phpCode/UserPageCheckRepeat.php", { phoneNumber: inputVal }, function (result) {
+                                isRepeat = result == "true" ? true : false;
+                                if (!isRepeat) {
+                                    var newEle = document.createElement("label");
+                                    newEle.id = name;
+                                    newEle.innerHTML = preEle.val();
+                                    preEle.replaceWith(newEle);
+                                    thisEle.text("修改");
+                                    thisEle.attr("toggled", "false");
+                                } else {
+                                    alert("已有存在的手機號碼，請重新輸入");
+                                }
+                            }, "text");
+                        }
+                    } else {
+                        alert("電話號碼格式有誤，請重新輸入");
+                    }
+
+                }
+            }
+
+            function emailCheck(thisEle, name, toggle, preEle) {
+                if (!toggle) {
+                    var fragment = document.createDocumentFragment(); /* 建立dom fragment */
+                    var newEle = document.createElement("input");
+                    var newBtn = document.createElement("button");
+                    var inputValidCode = document.createElement("input");
+                    newEle.id = name;
+                    newEle.placeholder = "email@example.com";
+                    newBtn.id = "emailValid";
+                    newBtn.innerHTML = "驗證電子郵件";
+                    inputValidCode.id = "inputValidCode";
+                    inputValidCode.placeholder = "請輸入驗證碼";
+                    inputValidCode.readOnly = true;
+                    newBtn.addEventListener("click", function (e) {
+                        var inputVal = $("#email").val();
+                        if (inputVal == userData.email) {
+                            alert("此Email已經驗證過了，無須驗證");
+                            isValid = true;
+                        } else {
+                            $.get("../phpCode/UserPageCheckRepeat.php", { email: inputVal }, function (result) {
+                                isRepeat = result == "true" ? true : false;
+                                if (!isRepeat) { /* 若無重複的Email則送出驗證信 */
+                                    $("#inputValidCode").removeAttr("readOnly");
+                                    $.get("../phpCode/UserPageCheckRepeat.php", { sendEmail: inputVal }, function (result) {
+                                        validCode = result;
+                                        console.log("驗證碼: " + validCode); /* 測試用 */
+                                    }, "text");
+                                }
+                                else {
+                                    alert("已有存在的Email，請重新輸入");
+                                }
+                            }, "text");
+                        }
+
+
+                    });
+                    fragment.appendChild(newEle);
+                    fragment.appendChild(newBtn);
+                    fragment.appendChild(inputValidCode);
+                    preEle.replaceWith(fragment);
+                    thisEle.text("確認");
+                    thisEle.attr("toggled", "true");
+
+
+                } else {
+                    var inputVal = $("#inputValidCode").val();
+                    if (!isValid) {
+                        if (inputVal == validCode) { /* 若輸入的驗證碼相符 */
+                            isValid = true;
+                        }
+                    }
+                    // 不能使用else(因為isValid會動態變化)
+                    if (isValid) {
+                        var newEle = document.createElement("label");
+                        newEle.id = name;
+                        newEle.innerHTML = $("#email").val();
+                        $("#emailValid").remove();
+                        $("#inputValidCode").remove();
+                        preEle.replaceWith(newEle);
+                        thisEle.text("修改");
+                        thisEle.attr("toggled", "false");
+                    }
+
+
+                }
+            }
+
+
         });
 
 
