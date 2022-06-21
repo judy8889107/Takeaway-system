@@ -19,7 +19,7 @@ if (!$emailRep) {
     // 隨機生成6位亂數
     $validCode = "";
     for ($i = 0; $i < 6; $i++) {
-        $validCode = $validCode . strval(rand(0, 9));
+        $validCode = $validCode.strval(rand(0, 9));
     }
     // 生成郵件訊息
     date_default_timezone_set('Asia/Taipei');

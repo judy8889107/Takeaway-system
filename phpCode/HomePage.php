@@ -3,11 +3,12 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+// session_start();
 $response = array("islogin" => false);
 $attr = array("nickName", "userName", "password", "gender", "birthday", "phoneNumber", "email", "address");
 
 
-if ($_SESSION['islogin']==1) { // 若已經登入
+if (isset($_SESSION['islogin']) && $_SESSION['islogin']==1) { // 若已經登入
     $response["islogin"] = true;
     $userName = $_SESSION['userName'];
     // 使用userName查找資料庫

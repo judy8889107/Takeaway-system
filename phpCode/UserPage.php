@@ -1,5 +1,5 @@
 <?php
-
+// 得到user相關資料
 if (!isset($_SESSION)) {
     session_start();
 }
