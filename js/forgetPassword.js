@@ -1,6 +1,6 @@
 function retransmit($t) {
     $t -= 1;
-    if ($t == 0) {
+    if ($t <= 0) {
         $("#submit").prop("disabled", false);
         $("#submit").attr("value", "重新傳送");
         clearInterval(interval);
@@ -36,7 +36,7 @@ $(document).ready(function () {
                     $("#submit").attr("value", "重新傳送(" + String($t) + ")");
                     var interval = setInterval(function () {
                         $t -= 1;
-                        if ($t == 0) {
+                        if ($t <= 0) {
                             $("#submit").prop("disabled", false);
                             $("#submit").attr("value", "重新傳送");
                             clearInterval(interval);
