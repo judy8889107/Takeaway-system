@@ -23,10 +23,10 @@ $("i.fa.fa-user, i.fa.fa-sign-out.Logout").click(function (e) {
         case "fa fa-user Login":
             if (!session.islogin) /* 未登入則會跳轉登入頁面 */
                 $(location).prop("href", "Login.html");
-            else{
+            else {
                 $(location).prop("href", "UserPage.html");
             }
-                 
+
             break;
         case "fa fa-sign-out  Logout": /* 登出 */
             $.get("../phpCode/Logout.php");
@@ -39,19 +39,32 @@ $("i.fa.fa-user, i.fa.fa-sign-out.Logout").click(function (e) {
 //當login時方可下拉選單
 let hoverLogin = false
 let hoverDropdown = false
+
+
 $("i.fa.fa-user").hover(
-    function (e) {
-        // 判斷使用者是否登入
+    (e) => {   //hoverIn
         if (session.islogin) { /* 已登入 */
+            // 判斷使用者是否登入
             hoverLogin = true
             $('.user-dropdown').slideDown(500) /* 選單下拉動畫 */
-
-        } else {   /* 未登入 */
-            hoverLogin = false
+            console.log("我輩碰到了");
         }
-        loginSlideUp();
+    },
+    (e) => { // hoverOut
+        if(session.islogin){
+                hoverLogin = false
+                loginSlideUp()
+                console.log("我要縮進去了");
+        }
     }
-);
+    
+    
+    // else {   /* 未登入 */
+    //     hoverLogin = false
+    // }
+    // loginSlideUp();
+
+)
 
 $('.user-dropdown').hover(
     () => {
@@ -87,7 +100,7 @@ $.get("../phpCode/fooditem.php", function (data) {
 
     //加入購物車
     document.querySelectorAll('.add-to-cart').forEach(item => {
-        console.log("islogin="+session.islogin);
+        // console.log("islogin=" + session.islogin);
         if (session.islogin) /* 若登入才可將商品加入購物車 */
             item.addEventListener('click', addToCart);
         else
@@ -97,6 +110,11 @@ $.get("../phpCode/fooditem.php", function (data) {
 
 
     })
+
+    //確認送出餐點
+   
+    
+    
 
 
 
@@ -466,6 +484,7 @@ function categoryLists() {
 
         var cloneListCard = listCard.cloneNode(true);
         categoryList.appendChild(listCard);
+        document.querySelector('.category-header').appendChild(cloneListCard);
 
     })
 }
@@ -487,6 +506,7 @@ function addToCart() {
     if (index === -1) {
         document.getElementById(itemObj.id).classList.add('toggle-cart');
         cartData = [...cartData, itemObj];
+        console.log("我是cartData1");
         console.log(cartData);
     }
 
@@ -498,7 +518,7 @@ function addToCart() {
 
     //顯示加入購物車數量
     document.getElementById('cart-plus').innerText = ' ' + cartData.length + ' Items';
-    // document.getElementById('m-cart-plus').innerText=' '+cartData.length;
+     document.getElementById('m-cart-plus').innerText=' '+cartData.length;
     totalAmount();
     cartItems();
 }
@@ -599,14 +619,14 @@ function decrementItem() {
         document.getElementById(decObj.id).classList.remove('toggle-cart')
         cartData.splice(ind, 1);
         document.getElementById('cart-plus').innerHTML = ' ' + cartData.length + ' Item';
-        //document.getElementById('m-cart-plus').innerHTML=' '+cartData.length;
+        document.getElementById('m-cart-plus').innerHTML=' '+cartData.length;
 
         if (cartData.length < 1 && flag) {
             document.getElementById('food-items').classList.toggle('food-items');
             document.getElementById('category-list').classList.toggle('food-items');
-            //document.getElementById('m-cart-plus').classList.toggle('m-cart-toggle');
+            document.getElementById('m-cart-plus').classList.toggle('m-cart-toggle');
             document.getElementById('cart-page').classList.toggle('cart-toggle');
-            //document.getElementById('category-header').classList.toggle('toggle-category');
+            document.getElementById('category-header').classList.toggle('toggle-category');
             document.getElementById('checkout').classList.toggle('cart-toggle');
             flag = false;
             alert("購物車已沒有餐點，請至首頁點餐");
@@ -625,20 +645,21 @@ function totalAmount() {
     })
     document.getElementById('total-item').innerText = '餐點總類 : ' + cartData.length + ' 項';
     document.getElementById('total-price').innerText = '總價格: $' + sum;
+    document.getElementById('m-total-amount').innerText = '總價格: $' + sum;
 
 }
 
 //當按下購物車按鈕顯示畫面
 document.getElementById('cart-plus').addEventListener('click', cartToggle);
-// document.getElementById('m-cart-plus').addEventListener('click', cartToggle);
+ document.getElementById('m-cart-plus').addEventListener('click', cartToggle);
 
 function cartToggle() {
     if (cartData.length > 0) {
         document.getElementById('food-items').classList.toggle('food-items');
         document.getElementById('category-list').classList.toggle('food-items');
-        //document.getElementById('m-cart-plus').classList.toggle('m-cart-toggle');
+        document.getElementById('m-cart-plus').classList.toggle('m-cart-toggle');
         document.getElementById('cart-page').classList.toggle('cart-toggle');
-        //document.getElementById('category-header').classList.toggle('toggle-category');
+        document.getElementById('category-header').classList.toggle('toggle-category');
         document.getElementById('checkout').classList.toggle('cart-toggle');
         flag = true;
     }
@@ -648,7 +669,7 @@ function cartToggle() {
 }
 
 document.getElementById('add-address').addEventListener('click', addAddress);
-// document.getElementById('m-add-address').addEventListener('click',addAddress);
+document.getElementById('m-add-address').addEventListener('click',addAddress);
 
 
 //新增送達地址
@@ -656,7 +677,7 @@ function addAddress() {
     var address = prompt('請輸入您欲送達目的地');
     if (address) {
         document.getElementById('add-address').innerText = ' ' + address;
-        // document.getElementById('m-add-address').innerText=' '+address;
+         document.getElementById('m-add-address').innerText=' '+address;
 
     }
 
@@ -666,3 +687,56 @@ function addAddress() {
         alert("未做填寫或更改")
     }
 } 
+
+document.getElementById('btn-cart').addEventListener('click', send);
+
+function send(){
+    console.log("我是cartData2");
+    console.log(cartData );
+    alert("餐點已送出，將在十分鐘後送達");
+    cartData=[];
+    console.log("我是cartData3");
+    console.log(cartData );
+    location.href ="../SubPage/HomePage.html"
+}
+
+window.onresize=window.onload=function(){
+    var size=window.innerWidth;
+    console.log(size);
+    if(size<800){
+        var cloneFoodItems=document.getElementById('food-items').cloneNode(true);
+        var cloneCartPage=document.getElementById('cart-page').cloneNode(true);
+        document.getElementById('food-items').remove();
+        document.getElementById('cart-page').remove();
+        document.getElementById('category-header').after(cloneFoodItems);
+        document.getElementById('food-items').after(cloneCartPage);
+        addEvents();
+
+
+    }
+    if(size>800){
+        var cloneFoodItems=document.getElementById('food-items').cloneNode(true);
+        document.getElementById('food-items').remove();
+        document.getElementById('header').after(cloneFoodItems);
+
+        var cloneCartPage=document.getElementById('cart-page').cloneNode(true);
+        document.getElementById('cart-page').remove();
+        document.getElementById('food-items').after(cloneCartPage);
+        addEvents();
+        
+    }
+}
+
+function addEvents(){
+    document.querySelectorAll('.add-to-cart').forEach(item=>{
+        item.addEventListener('click',addToCart);
+    })
+
+    document.querySelectorAll('.increase-item').forEach(item => {
+        item.addEventListener('click', incrementItem);
+    })
+
+    document.querySelectorAll('.decrease-item').forEach(item => {
+        item.addEventListener('click', decrementItem);
+    })
+}

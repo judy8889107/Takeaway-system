@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FOOD FOR YOU 註冊頁面</title>
     <link rel="icon" href="../images/FFYIcon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../css/Register.css">
+
     <!-- 引用jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <!-- 動態判斷input(引用js檔) -->
@@ -16,39 +18,108 @@
 </head>
 
 <body>
-    <div id="formDiv">
-        <form id="register">
-            姓名: <input type="text" name="nickName" maxlength="20" required /><br />
-            <label class="Hint" id="nickNameHint"></label><br />
-            帳號: <input type="text" name="userName" maxlength="20" required /><br />
-            <label class="Hint" id="userNameHint"></label><br />
-            密碼: <input type="password" name="password" maxlength="20" required /><br />
-            <label class="Hint" id="passwordHint"></label><br />
-            確認密碼: <input type="password" name="checkpassword" maxlength="20" required /><br />
-            <label class="Hint" id="checkpasswordHint"></label><br />
-            男 <input type="radio" name="gender" value="male" required><br />
-            女 <input type="radio" name="gender" value="female" required><br />
-            生日: <input type="date" name="birthday" required /><br />
-            手機號碼: <input type="text" name="phoneNumber" maxlength="10" placeholder="ex:0912345678" required /><br />
-            <label class="Hint" id="phoneNumberHint"></label><br />
-            電子郵件: <input type="text" name="email" maxlength="50" />
-            <input id="validEmail" type="button" value="驗證電子郵件" disabled /><br />
-            <input id="inputCode" type="text" style="display:none" name="inputCode" value="" maxlength="6"
-                placeholder="輸入您的驗證碼" required />
-            <input id="inputCodeSubmit" type="button" style="display:none" value="送出認證碼" /><br />
-            <br />
-            <label class="Hint" id="emailHint"></label><br />
-            地址:
-            <select id="countySelect" name="countySelect" data-actions-box="true" data-live-search="true"
-                data-live-search-placeholder="請選擇···" required></select>
-            <select id="townshipSelect" name="townshipSelect" data-actions-box="true" data-live-search="true"
-                data-live-search-placeholder="請選擇···" required></select>
-            <select id="streetSelect" name="streetSelect" data-actions-box="true" data-live-search="true"
-                data-live-search-placeholder="請選擇···" required></select>
-            <input type="text" name="RESTaddress" maxlength="50" /><br />
-            <label class="Hint" id="RESTaddressHint"></label><br />
-            <input id="submit" type="submit" name="submit" value="註冊使用者"  />
-        </form>
+    <div class="container">
+        <div id="formDiv">
+            <div id="signUp">
+                <form id="register">
+                    <h2 class="title">註冊</h2>
+
+                    <div class="user-details">
+                        <div class="input-form">
+                            <span class="form-text">姓名:</span>
+                            <input type="text" name="nickName" placeholder="姓名" maxlength="20" required /><br />
+                            <label class="Hint" id="nickNameHint"></label><br />
+                        </div>
+
+                        <div class="input-form">
+                            <span class="form-text">帳號:</span>
+                            <input type="text" name="userName" placeholder="帳號" maxlength="20" required /><br />
+                            <label class="Hint" id="userNameHint"></label><br />
+                        </div>
+                    </div>
+
+                    <div class="user-details">
+                        <div class="input-form">
+                            <span class="form-text">生日</span>
+                            <input type="date" name="birthday" placeholder="生日" required /><br />
+                        </div>
+
+                        <div class="input-form">
+                            <span class="form-text">手機號碼: </span>
+                            <input type="text" name="phoneNumber" placeholder="手機號碼" maxlength="10"
+                                placeholder="ex:0912345678" required /><br />
+                            <label class="Hint" id="phoneNumberHint"></label><br />
+                        </div>
+                    </div>
+
+
+                    <div class="user-details">
+                        <div class="input-form">
+                            <span class="form-text">密碼: </span>
+                            <input type="password" name="password" placeholder="密碼" maxlength="20" required /><br />
+                            <label class="Hint" id="passwordHint"></label><br />
+                        </div>
+
+
+                        <div class="input-form">
+                            <span class="form-text">確認密碼: </span>
+                            <input type="password" name="checkpassword" placeholder="確認密碼" maxlength="20"
+                                required /><br />
+                            <label class="Hint" id="checkpasswordHint"></label><br />
+                        </div>
+
+                    </div>
+                    <div class="gender-details">
+                        <div class="input-gender">
+                            <label class="form-text">生理男</label>
+                            <input type="radio" name="gender" value="male" required><br />
+                        </div>
+
+
+                        <div class="input-gender">
+                            <label class="form-text">生理女</label>
+                            <input type="radio" name="gender" value="female" required><br />
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="input-form">
+                        <span class="form-text">電子郵件: </span>
+                        <label class="Hint" id="emailHint"></label><br />
+                        <div class="input-email">
+                            
+                            <input type="text" name="email" placeholder="電子郵件" maxlength="50" />
+                            <input id="validEmail" type="button" value="驗證電子郵件" disabled /><br />
+                        </div>
+
+                        <div class="input-email">
+                            <input id="inputCode" type="text" style="display:none" name="inputCode" value=""
+                                maxlength="6" placeholder="輸入您的驗證碼" required />
+                            <input id="inputCodeSubmit" type="button" style="display:none" value="送出認證碼" /><br />
+                            <br />
+                        </div>
+                
+                    </div>
+
+                    <div class="input-form">
+                        <span class="form-text">地址:</span>
+                        <select class="address-sel" id="countySelect" name="countySelect" data-actions-box="true" data-live-search="true"
+                            data-live-search-placeholder="請選擇···" required></select>
+                        <select class="address-sel" id="townshipSelect" name="townshipSelect" data-actions-box="true"
+                            data-live-search="true" data-live-search-placeholder="請選擇···" required></select>
+                        <select class="address-sel" id="streetSelect" name="streetSelect" data-actions-box="true" data-live-search="true"
+                            data-live-search-placeholder="請選擇···" required></select>
+                        <input type="text" name="RESTaddress" maxlength="50" /><br />
+                        <label class="Hint" id="RESTaddressHint"></label><br />
+                    </div>
+
+                    <label class="Hint" id="RESTaddressHint"></label><br />
+                    <input id="submit" type="submit" name="submit" value="註冊使用者" />
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 

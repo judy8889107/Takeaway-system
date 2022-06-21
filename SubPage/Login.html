@@ -8,26 +8,53 @@
     <title>FOOD FOR YOU 登入頁面</title>
     <link rel="icon" href="../images/FFYIcon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../css/Login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- 引用jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script src="../js/Login.js"></script>
 </head>
 
 <body>
-    <div id="formDiv">
-        <form id="login">
-            帳號/手機號碼/電子郵件: <input type="tel" name="userName" maxlength="50" required /><br />
-            密碼: <input type="password" name="password" maxlength="20" required /><br />
+    <div class="container">
 
-            <p>請輸入下圖字樣：</p>
-            <p><img id="imgcode" src="../phpCode/generateCaptcha.php" onclick="refresh_code()" /><br />
-                點擊圖片可以更換驗證碼
-            </p>
-            <input type="text" name="inputCaptcha" size="10" maxlength="10" required/>
 
-            <a href="forgetPassword.html">忘記密碼</a><br /><br />
-            <input id="submit" type="submit" name="submit" value="登入" />
-        </form>
+        <div id="formDiv">
+            <div id="signIn">
+                <form id="login">
+                    <h2 class="title">登入</h2>
+
+                    <p class="login_text">帳號/手機號碼/電子郵件: </p>
+                    <div class="input-field">
+                        <i class="fa fa-user"></i>
+                        <input type="tel" name="userName" placeholder="Username" maxlength="50" required /><br />
+                    </div>
+
+                    <p class="login_text">密碼: </p>
+                    <div class="input-field">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" maxlength="20" required /><br />
+                    </div>
+                    
+
+                    <p class="login_text">請輸入下圖字樣：</p>
+                    <!-- <p class="login_text"><img id="imgcode" src="../phpCode/generateCaptcha.php" onclick="refresh_code()" /><br />
+                        點擊圖片可以更換驗證碼
+                    </p> -->
+
+                    <div class="input-imgcode">
+                    <img id="imgcode" src="../phpCode/generateCaptcha.php" onclick="refresh_code()" /> 
+                    
+                    <input type="text" name="inputCaptcha" size="10" maxlength="10" required />
+                    <i class="fa fa-refresh" onclick="refresh_code()"></i>
+                    </div>
+
+                    <a href="forgetPassword.html" class="forgetPass">忘記密碼</a><br /><br />
+
+                    <input id="login-btn" id="submit" type="submit" name="submit" value="登入" />
+                </form>
+            </div>
+        </div>
     </div>
 
 </body>

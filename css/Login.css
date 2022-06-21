@@ -1,0 +1,150 @@
+*{
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body,input{
+    font-weight:bold;
+}
+
+.container{
+    position:relative;
+    width: 100%;
+    background-color: rgb(236, 233, 187);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#formDiv{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+#signIn{
+    
+    top:50px;
+    background-color:#7c7c7c43 ;
+    margin: 100px;
+}
+
+/* #signIn{
+    position: absolute;
+    top:50px;
+    transform:translate(-50%,-50%);
+    left: 75px;
+    width: 50%;
+    transition: 1s 0.7s ease-in-out;
+    display:grid;
+    grid-template-columns: 1fr;
+    z-index: 5;
+} */
+
+.title{
+    font-size: 2.2rem;
+    color: rgb(50, 66, 56);
+    margin-bottom: 10px;
+}
+
+.login_text{
+    color: rgb(50, 66, 56);
+    margin-top: 30px;
+}
+.input-field{
+    max-width: 380px;
+    width: 100%;
+    height: 55px;
+    background-color: #597969;
+    margin:10px 0;
+    border-radius:55px ;
+    display:grid;
+    grid-template-columns: 15% 85%;
+    padding:0 .4rem;
+}
+
+.input-field i{
+    text-align: center;
+    line-height: 55px;
+    color:#fcfcfc;
+    font-size:1.1rem;
+}
+
+.input-field input{
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 300;
+    font-size:1.1rem;
+    color: rgb(255, 255, 255);
+}
+.input-field input::placeholder {
+    color: rgb(157, 157, 157);
+    font-weight: 500;
+  }
+
+.input-imgcode{
+    max-width: 370px;
+    width: 100%;
+    height: 26px;
+    /* background-color: #597969; */
+    margin:10px 0;
+    border-radius:55px ;
+    display:grid;
+    grid-template-columns: 35% 65% 10%;
+    padding:0 .4rem;
+}
+.input-imgcode i{
+    text-align: center;
+    margin-top:8px;
+    color: #597969;
+}
+
+.input-imgcode input{
+    background: #e9e7e7;
+    outline-color: #597969;
+    border:1px solid #597969;
+    line-height: 1;
+    font-weight: 300;
+    font-size:1.1rem;
+    color: rgb(50, 66, 56);
+}
+
+.forgetPass{
+    color: #597969;
+}
+
+.forgetPass:hover{
+    color: #27362f;
+}
+
+#login-btn{
+    width: 150px;
+    height: 49px;
+    border: none;
+    outline: none;
+    border-radius: 49px;
+    cursor: pointer;
+    background-color: #435b4f;
+    color: #ffff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px 0;
+    transition: .5s;
+}
+
+#login-btn:hover{
+    background-color:#27362f;
+}

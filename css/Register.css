@@ -1,0 +1,143 @@
+*{
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(236, 233, 187);
+}
+
+.container{
+    max-width: 700px;
+    width: 100%;
+    background: #597969;
+    padding: 25px 30px;
+    border-radius: 5px;
+
+}
+
+.title{
+    font-size: 2.2rem;
+    font-weight :1500;
+    height: 20px;
+    text-align:center;
+    color:rgb(254, 254, 254);
+    margin-bottom: -2px;
+}
+
+.user-details{
+    
+    display:grid;
+    grid-template-columns: 50% 50% ;
+    margin:20px 0px 12px 0;
+  
+   
+}
+
+.input-form{
+    margin:20px 10px -16px 0;
+    width: calc(100%/2-20px);
+}
+
+.input-form input{
+    height: 45px;
+    width:100%;
+    outline:none;
+    border-radius: 5px;
+    border:1px solid #597969;
+    padding-left:15px;
+    font-size:16px;
+    background-color: rgba(255, 255, 255, 0.938);
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.form-text{
+    display: block;
+    font-weight: 900;
+    margin-bottom:5px;
+    font-size: 18px;
+    color: rgb(50, 66, 56);
+}
+
+.input-form input:focus,
+.input-form input:valid{
+    border-color:rgb(50, 66, 56);
+}
+
+.Hint{
+    color: rgb(122, 7, 7);
+    font-weight: 600;
+}
+
+.gender-details{
+    display: grid;
+    grid-template-columns: 50% 50% ;
+    margin:30px 0px -16px 0;
+}
+
+.input-gender input{
+    
+    border: 0px;
+    width: 100%;
+    height: 2em;
+    accent-color: rgb(50, 66, 56);
+}
+
+.input-gender{
+    display: grid;
+    grid-template-columns: 25% 10% ;
+}
+
+.input-email{
+    display: grid;
+    grid-template-columns: 80% 20% ;
+}
+
+input[value="驗證電子郵件"] {
+    text-align:left;  
+}
+
+input[value="重新傳送"] {
+    text-align:left;  
+}
+
+input[value="送出認證碼"] {
+    text-align:left;  
+}
+
+select[attr=size] {
+    width:auto;
+    height:auto;
+}
+
+.address-sel{
+    width: 10em;
+    height: 2em;
+    font-size: 16px;
+}
+
+#submit{
+    display:block;
+    margin:0 auto ;
+    width: 150px;
+    height: 49px;
+    border: none;
+    outline: none;
+    border-radius: 49px;
+    cursor: pointer;
+    background-color: #27362f;
+    color: #ffff;
+    text-transform: uppercase;
+    font-weight: 600;
+    
+    transition: .5s;
+}
+#submit:hover{
+    background-color:#8fc0a9;
+}

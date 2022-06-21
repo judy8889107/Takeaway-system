@@ -456,3 +456,222 @@ a.SignIn:hover{
     font-size:20px;
     color:darkgoldenrod;
 }
+
+
+/* MOBILE DES */
+@media screen and (max-width: 800px)
+{
+    #container{
+        display: none;
+    }
+    #mobile-view{
+        display: grid;
+        grid-template-rows: 780px -1px 50px;
+        height: 100%;
+        overflow:hidden;
+        width:100%;
+    }
+
+    .mobile-top{
+        /* padding: 5px 15px; */
+        z-index: 1;
+        background: rgb(236, 233, 187);
+    }
+
+    .item-container{
+        overflow-y: scroll;
+        background-color:rgb(236, 233, 187) ;
+    }
+
+    .logo-box img {
+        width: 100px;
+        height: 100px;
+        margin-left: 15px
+    }
+
+    .logo-box,.top-menu{
+        display: flex;
+        justify-content:space-between ;
+        align-items: center;
+
+    }
+    
+    .logo-box{
+        background-color: rgb(50, 66, 56);
+        width: 100%;
+    }
+
+    .logo-box i{
+        margin-right: 20px;
+        margin-top: 10px;
+    }
+    
+    .top-menu{
+        color:#597969;
+        padding: 5px 15px;
+    }
+
+    .top-menu i{
+        font-size: 20px;
+        cursor: pointer;
+        padding:12px 5px;
+        border-radius: 50%;
+
+    }
+
+    .m-cart-toggle{
+        color:#606060;
+        background-color: #2c422e;
+
+    }
+    .category-header{
+        display:flex;
+        width: 100%;
+        overflow-x:scroll;
+        position: sticky;
+        top:0;
+        background: #597969;
+        z-index:1;
+        border-bottom: 1px solid rgb(255, 255, 255);
+        margin:0;
+    }
+    .toggle-category{
+        display:none;
+        position:relative;
+    }
+
+    .list-card{
+        margin:0 10px;
+        text-align: center;
+    }
+
+    .list-card img{
+        width:60px;
+        height: 60px;
+        border-radius: 50px;
+
+    }
+    .list-card:hover{
+        background: none;
+        transition:none;
+    }
+
+    .list-card:hover img{
+        transform:none;
+        transition: none;
+    }
+    .list-name{
+        margin:5px 0;
+        color:#141111;
+        width:max-content;
+        font-size: 16px;
+    }
+
+    #foot-items{
+        padding:5px 10px;
+    }
+
+    .mobile-footer{
+        display: flex;
+        justify-content: space-between;
+        align-items :center;
+        padding:10px 40px;
+        background: #2c422e
+        ;
+        border-top:1px solid #597969;
+
+    }
+
+    .mobile-footer a{
+        color:rgb(255, 255, 255);
+        text-decoration:none;
+        font-size: 20px;
+        position: sticky;
+        bottom:0;
+    }
+    #category-name{
+        font-size: 25px;
+    }
+
+    #item-card{
+        width:150px;
+        height:250px;
+    }
+    #item-card img{
+        width:100px;
+        height: 100px;
+    }
+    .list-card:hover img{
+        
+        transform:none;
+    }
+
+    #item-name,#item-price{
+        font-size:15px;
+        margin: 0;
+    }
+    .list-card{
+        flex-direction:column;
+
+    }
+    #cart-page{
+        margin:3px 0;
+        padding:10px 5px;
+        padding-bottom:30px;
+        border-top:1px solid rgb(159, 65, 65);
+    }
+
+    #cart-page table thead td{
+        font-size:20px;
+    }
+
+    #cart-page table tbody td{
+        font-size:20px;
+    }
+
+    #cart-page table thead img{
+        width:60px;
+        height: 60px;
+    }
+
+    #cart-title{
+        font-size: 25px;
+        display: inline-block;
+    }
+
+    #m-total-amount{
+        display: inline-block;
+        color: #000000;
+        padding: 5px 10px;
+        margin:0;
+        border:1px solid lawngreen;
+        float:right;
+
+    }
+    .cart-btn{
+        font-size:14px;
+        background:sandybrown;
+        padding: 8px 15px;
+        margin:auto;
+    }
+
+    .btn-box{
+        text-align:center;
+    }
+
+    #Appetizer{
+        margin-top:10px;
+    }
+    
+    @media screen and (max-width:380px){
+        #item-card{
+            height:200px;
+            width: 250px;
+        }
+        #food-items{
+            padding: 0;
+        }
+    }
+
+   
+}

@@ -111,6 +111,8 @@
 </head>
 
 <body>
+
+    <!-- desk view -->
     <div id="backsideSession"></div>
     <div id="container" class="container">
         <div id="menu">
@@ -242,7 +244,7 @@
             <div class="taste-header">
                 <div class="user">
                     <i class="fa fa-user Login"> Login</i>
-                    <a href="Register.html" class="SignIn">Sign in</a>
+                    <a href="Register.html" class="SignIn">Sign up</a>
                     <div class="user-dropdown">
                         <p> Hello User !</p>
                         <!-- <a href="#">Profile</a> -->
@@ -298,11 +300,41 @@
                 <p id="total-item"><b>總共 : 5 件</b></p>
                 <p id="total-price"><b>總價 : $50</b></p>
                 <p id="delievery"><b>外送費 : $30</b></p>
-                <button class="cart-btn"><b>確認</b></button>
+                <button class="cart-btn" id="btn-cart"><b>確認</b></button>
             </div>
         </div>
 
 
+    </div>
+
+    <!-- mobile view -->
+    <div id="mobile-view" class="view">
+        <div class="mobile-top">
+            <div class="logo-box">
+                <img src="../images/Logo-01-01.png" alt="logo">
+                <i class="fa fa-map-marker your-address" id="m-add-address">Your Address</i>
+
+            </div>
+            
+            <div class="top-menu">
+                <i class="fa fa-search"></i>
+                <i class="fa fa-cart-plus" id="m-cart-plus"> 0</i>
+              
+            </div>
+        </div>
+
+        <div class="item-container">
+            <div class="category-header" id="category-header">
+
+            </div>
+        </div>
+
+        <div class="mobile-footer">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Robot</a>
+
+        </div>
     </div>
 </body>
 
