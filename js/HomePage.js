@@ -4,6 +4,7 @@ var session;
 
 $.get("../phpCode/HomePage.php", function (result) {
     session = result; /* 成功登入，得到該用戶所有資料 */
+    console.log("session: "+ session);
     if (session.islogin)
         setForegroundElement();
 }, "json");

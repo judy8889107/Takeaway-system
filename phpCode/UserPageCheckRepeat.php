@@ -53,6 +53,7 @@ if(isset($_GET["sendEmail"])){
         'X-Mailer: PHP/' . phpversion();
 
     // 送出郵件功能
+    TODO:
     // mail($to, $subject, $message, $headers);
 
     // // 回傳驗證碼至前台

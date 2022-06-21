@@ -15,6 +15,7 @@
         // 得到user data
         $.get("../phpCode/UserPage.php", function (result) {
             userData = result;
+            console.log(userData);
             setDataLabel(userData);
         }, "json");
 
@@ -377,7 +378,7 @@
                 }
                 else { /* 確認 */
                     TODO: //不匹配英文
-                    var validReg = /[\u4E00-\u9FFF\d]+$/;
+                    var validReg = /[^a-zA-Z][\u4E00-\u9FFF\d]+$/;
                     var inputVal = preEle.val();
                     console.log(inputVal);
                     if (inputVal.match(validReg)) {
