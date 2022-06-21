@@ -15,7 +15,7 @@
         // 得到user data
         $.get("../phpCode/UserPage.php", function (result) {
             userData = result;
-            console.log(userData);
+            // console.log(userData);
             setDataLabel(userData);
         }, "json");
 
@@ -378,10 +378,12 @@
                 }
                 else { /* 確認 */
                     TODO: //不匹配英文
-                    var validReg = /[^a-zA-Z][\u4E00-\u9FFF\d]+$/;
+                    var validReg = /[a-z]+/i;
                     var inputVal = preEle.val();
+                    console.log(validReg);
                     console.log(inputVal);
-                    if (inputVal.match(validReg)) {
+                    // 地址不包含英文字母
+                    if (!inputVal.match(validReg)) {
                         var newEle = document.createElement("label");
                         newEle.id = name;
                         newEle.innerHTML = inputVal;
