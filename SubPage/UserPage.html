@@ -66,7 +66,7 @@
                         break;
                     case "email":
                         TODO:// validCode undefined
-                        var validCode;
+                        // var validCode;
                         var isValid = false;
                         emailCheck($(this), name, toggle, preEle, validCode, isValid);
                         break;
@@ -261,6 +261,7 @@
                 }
             }
 
+            var validCode; /* 把validCode宣告在外部 */
             function emailCheck(thisEle, name, toggle, preEle) {
                 var validReg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/; /* 電子郵件正則表達 */
                 if (!toggle) {
@@ -279,6 +280,7 @@
                     // 加入按鈕監聽事件
                     newBtn.addEventListener("click", function (e) {
                         isValid = false;
+                        
                         var inputVal = $("#email").val();
                         if (inputVal == userData.email) {
                             alert("此Email已經驗證過了，無須驗證");
@@ -377,11 +379,8 @@
 
                 }
                 else { /* 確認 */
-                    TODO: //不匹配英文
                     var validReg = /[a-z]+/i;
                     var inputVal = preEle.val();
-                    console.log(validReg);
-                    console.log(inputVal);
                     // 地址不包含英文字母
                     if (!inputVal.match(validReg)) {
                         var newEle = document.createElement("label");
