@@ -5,10 +5,11 @@ use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 
 // 一般聊天回應
 
-class General{
+class General
+{
 
     //總共50張迷因
-    private $memeImgTotal = 50; 
+    private $memeImgTotal = 50;
 
     //機器人資訊
     private $botName = "愛供偎&#128588;";
@@ -16,37 +17,38 @@ class General{
     private $botGender = "我也不清楚&#129300;";
     private $botHeight = "10cm&#128546;";
     private $botWeight = "999kg&#129322;";
-	
 
-	//日期回應
-	public function Date($bot, $day, $wd) {
-		$weekarray = array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+
+    //日期回應
+    public function Date($bot, $day, $wd)
+    {
+        $weekarray = array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
         date_default_timezone_set("Asia/Taipei");
         $index = date('w');
-        $arr = array("前天","昨天","今天","明天","後天");
+        $arr = array("前天", "昨天", "今天", "明天", "後天");
         $date = date("Y/m/d");
-        
-        if(in_array($day, $arr)){
-            if($day == '前天'){
-                $index = ($index-2)+7;
+
+        if (in_array($day, $arr)) {
+            if ($day == '前天') {
+                $index = ($index - 2) + 7;
                 $date = date("Y/m/d", strtotime("-2 day"));
-            } 
-            if($day == '昨天'){ 
-                $index = ($index-1)+7;
+            }
+            if ($day == '昨天') {
+                $index = ($index - 1) + 7;
                 $date = date("Y/m/d", strtotime("-1 day"));
             }
-            if($day == '明天') {
+            if ($day == '明天') {
                 $index += 1;
                 $date = date("Y/m/d", strtotime("+1 day"));
             }
-            if($day == '後天') {
+            if ($day == '後天') {
                 $index += 2;
                 $date = date("Y/m/d", strtotime("+2 day"));
             }
 
             //回覆
-            if($wd == '星期') $bot->reply($day.'是'.$weekarray[($index)%7]."&#128515;");
-            if($wd == '是'|$wd == '日期') $bot->reply($day."是 ".$date.$weekarray[($index)%7]."&#128515;");
+            if ($wd == '星期') $bot->reply($day . '是' . $weekarray[($index) % 7] . "&#128515;");
+            if ($wd == '是' | $wd == '日期') $bot->reply($day . "是 " . $date . $weekarray[($index) % 7] . "&#128515;");
         }
 
         //問太多天會生氣
@@ -54,45 +56,61 @@ class General{
     }
 
     //打招呼回應
-	public function Hello($bot, $str) {
+    public function Hello($bot, $str)
+    {
         $str = ucfirst($str);
-        $bot->reply($str.$str.'&#128516;&#128588;');
+        $bot->reply($str . $str . '&#128516;&#128588;');
     }
 
     //機器人資訊
-	public function RobotInfo($bot) {
-        $reply = sprintf("我是 %s<br>年齡：%s<br>性別：%s<br>身高：%s<br>體重：%s",
-        $this->botName, $this->botAge, $this->botGender, $this->botHeight, $this->botWeight);
+    public function RobotInfo($bot)
+    {
+        $reply = sprintf(
+            "我是 %s<br>年齡：%s<br>性別：%s<br>身高：%s<br>體重：%s",
+            $this->botName,
+            $this->botAge,
+            $this->botGender,
+            $this->botHeight,
+            $this->botWeight
+        );
         $bot->reply($reply);
     }
 
     //回傳 迷因圖片
-    public function Meme($bot){
+    public function Meme($bot)
+    {
         // 需要將FilePath轉換成URL
-        $random = rand(1,$this->memeImgTotal); //隨機選擇回傳圖片
-
-        $path = sprintf('http://%s/Demo/ReplyClass/Meme/img%d.jpg', $_SERVER['REMOTE_ADDR'], $random);
+        $random = rand(1, $this->memeImgTotal); //隨機選擇回傳圖片
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $url = "https://";
+        else
+            $url = "http://";
+        // Append the host(domain name, ip) to the URL.   
+        $url .= $_SERVER['HTTP_HOST'];
+        $path = sprintf('%s/Takeaway-system/res/Botman/ReplyClass/Meme/img%d.jpg', $url, $random);
         $attachment = new Image($path, [
             'custom_payload' => true,
         ]);
         $message = OutgoingMessage::create('')
-                    ->withAttachment($attachment);
+            ->withAttachment($attachment);
 
         // 回覆圖片
         $bot->reply($message);
     }
 
     // 隨機選擇笑話
-    public function RandomJoke($bot) {
-        $address = sprintf('http://%s/Demo/ReplyClass/Joke.txt', $_SERVER['REMOTE_ADDR']);
-		$data = file_get_contents($address);
-		$arr = explode(PHP_EOL, $data);
-		$index = rand(0,sizeof($arr)-1);
+    public function RandomJoke($bot)
+    {
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $url = "https://";
+        else
+            $url = "http://";
+        // Append the host(domain name, ip) to the URL.   
+        $url .= $_SERVER['HTTP_HOST'];
+        $address = sprintf('%s/Takeaway-system/res/Botman/ReplyClass/Joke.txt', $url);
+        $data = file_get_contents($address);
+        $arr = explode(PHP_EOL, $data);
+        $index = rand(0, sizeof($arr) - 1);
         $bot->reply($arr[$index]);
     }
-	
-	
-
 }
-
-?>
