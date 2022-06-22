@@ -216,11 +216,17 @@ function displaySearch() {
        
         searchPrice.innerText = '價格 : $ ' + item.price;
 
+        //餐點分類
+        var searchCategory= document.createElement('h3');
+       
+        searchCategory.innerText = '類別' + item.category;
+
         product.appendChild(img);
         product.appendChild(p_details);
 
         p_details.appendChild(searchName);
         p_details.appendChild(searchPrice);
+        p_details.appendChild(searchCategory);
         
         product_list_dom.appendChild(product);
 

@@ -34,7 +34,13 @@ body {
 .user-details {
     margin: 20px 10px -16px 0;
     width: calc(100%/2-20px);
+    color: #172318;
     
+}
+
+.user-details a{
+    color: #612929;
+
 }
 #submit{
     display: flex;
@@ -42,4 +48,28 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+}
+
+#saveData,#prePage{
+    width: 150px;
+    height: 49px;
+    border: none;
+    outline: none;
+    border-radius: 49px;
+    cursor: pointer;
+    background-color: #435b4f;
+    color: #ffff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px 10px;
+    transition: .5s;
+    border: 2px solid #27362f;
+}
+
+#saveData:hover{
+    background-color:#27362f;
+}
+
+#prePage:hover{
+    background-color:#27362f;
 }
