@@ -7,6 +7,8 @@ $.get("../phpCode/HomePage.php", function (result) {
     console.log("session: "+ session);
     if (session.islogin)
         setForegroundElement();
+    else
+    $("#m-sign-out").hide();
 }, "json");
 
 //當成功登入後 設定前台所有element
@@ -14,7 +16,7 @@ function setForegroundElement() {
     $("div.user i.fa.fa-user").text(session.nickName);
     $("#add-address").text(session.address);
     $(".SignIn").hide();
-
+    $("#m-sign-out").show();
 }
 
 //多元素Button事件綁定
@@ -109,18 +111,27 @@ $.get("../phpCode/fooditem.php", function (data) {
                 alert("請先登入方可選購商品");
             });
 
+            
 
     })
 
     //確認送出餐點
    
     
+//當rwd時購物車送出則呼叫send()
+document.getElementById('m-btn-cart').addEventListener('click', send);
+
     
-
-
+document.getElementById('Robot').addEventListener('click', send);
+ 
+    	
 
 }, "json");
 
+function changPage(){
+    console.log('Robot');
+    // document.getElementById("food-items").src = "./Robot.html";
+}
 
 function displayItems() {
 
@@ -690,9 +701,14 @@ function addAddress() {
 } 
 
 document.getElementById('btn-cart').addEventListener('click', send);
+// document.getElementById('m-btn-cart').addEventListener('touchend', send);
+// document.getElementById('m-btn-cart').addEventListener('passive', send);
+// document.getElementById('m-btn-cart').addEventListener('click', send);
+
 
 function send(){
     console.log("我是cartData2");
+   
     console.log(cartData );
     alert("餐點已送出，將在十分鐘後送達");
     cartData=[];

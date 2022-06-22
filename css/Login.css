@@ -148,3 +148,11 @@ form{
 #login-btn:hover{
     background-color:#27362f;
 }
+
+@media screen and (max-width: 800px) {
+    #signIn{
+        background-color:transparent;
+        margin:35px;
+        margin-top: 70px;
+    }
+}
