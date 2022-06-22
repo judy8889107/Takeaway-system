@@ -122,7 +122,7 @@ $.get("../phpCode/fooditem.php", function (data) {
 document.getElementById('m-btn-cart').addEventListener('click', send);
 
 //切換頁面  
-document.getElementById('Robot').addEventListener('click', changPage);
+// document.getElementById('Robot').addEventListener('click', changPage);
  
 document.getElementById('search_btn').addEventListener('click', search)
 document.getElementById('searchBtn').addEventListener('click', showSearch);
@@ -142,11 +142,11 @@ function showSearch(){
     
 }
 
-function changPage(e){
-    e.preventDefault()
-    console.log('Robot');
-    document.getElementById("food-container").src = "../SubPage/Robot.html";
-}
+// function changPage(e){
+//     e.preventDefault()
+//     console.log('Robot');
+//     document.getElementById("food-container").src = "../SubPage/Robot.html";
+// }
 
 //search
 function search(){
