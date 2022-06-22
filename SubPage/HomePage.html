@@ -106,6 +106,18 @@
 
 
         // });
+
+        /* document.onclick=function(){ 
+            var obj = event.srcElement; 
+            if(obj.class == "menu"){
+                if(obj.div == "Home") 
+                    document.getElementById("food-items").src = "HomePage.html";
+                if(obj.div == "About")
+                    document.getElementById("food-items").src = "./Robot.html";
+                if(obj.div== "Robot")
+                    document.getElementById("food-items").src = "SubPage/DailyCalorieNeed.html";
+        
+            }*/
     </script>
     
 </head>
@@ -120,11 +132,13 @@
                 <img src="../images/Logo-01-01.png" alt="logo">
             </div>
             <div class="menu-item">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Calorie</a>
+                <a  class="menu" div="Home" href="#">Home</a>
+                <a  class="menu" div="About" href="#">About</a>
+                <a  class="menu" div="Robot" href="#">Robot</a>
+               
             </div>
         </div>
+       
 
         <div id="food-container">
             <div id="header">
@@ -137,6 +151,7 @@
                 </div>
 
             </div>
+        </div>
 
             <div id="food-items" >
 
@@ -146,7 +161,7 @@
                     <div id="Appetizer_Item" class="All_Item">
 
                     </div>
-                    <!-- <div id="item-card">
+                    <div id="item-card">
                         <div id="card-top">
                             <i class="fa fa-star" id="rating">4.5</i>
                             <i class="fa fa-cart-plus fa-2x add-to-cart"></i>
@@ -154,7 +169,7 @@
                         <img src="../images/Mixed-Fruit-Shake.png" alt="">
                         <p id="item-name">綜合水果奶昔</p>
                         <p id="item-price">價格 : $ 10</p>
-                    </div> -->
+                    </div> 
 
                 </div>
 
@@ -210,8 +225,11 @@
             </div>
 
             <div id="cart-page" class="cart-toggle">
-                <p id="cart-title"><b>餐點總覽</b></p>
-                <p id="m-total-amount"><b>總共 : $999</b></p>
+                
+                    <p id="cart-title"><b>餐點總覽</b></p>
+                    
+                
+                
                 <table>
                     <thead>
                         <td><b>餐點</b></td>
@@ -220,7 +238,7 @@
                         <td><b>價格</b></td>
                     </thead>
                     <tbody id="table-body">
-                        <!-- <tr>
+                         <tr>
                             <td>
                                 <img src="../images/Mixed-Fruit-Shake.png" alt="img">
                             </td>
@@ -233,12 +251,15 @@
                                 <button class="increase-item">+</button>
                             </td>
                             <td>10</td>
-                        </tr> -->
+                        </tr> 
                     </tbody>
                 </table>
-
+                <div id="m-Cartfoot">
+                    <p id="m-total-amount"><b>總共 : $999</b></p>
+                    <button  id="m-btn-cart" ><b>確認</b></button>
+                </div>
             </div>
-        </div>
+        
 
         <div id="cart">
             <div class="taste-header">
@@ -312,22 +333,77 @@
         <div class="mobile-top">
             <div class="logo-box">
                 <img src="../images/Logo-01-01.png" alt="logo">
-                <i class="fa fa-map-marker your-address" id="m-add-address">Your Address</i>
+                <!-- <i class="fa fa-map-marker your-address" id="m-add-address">Your Address</i> -->
+                <div class="user">
+                    <i class="fa fa-user Login"> Login</i>
+                    <a href="Register.html" class="SignIn">Sign up</a>
+                    
+                    <i class="fa fa-sign-out  Logout" id="m-sign-out"> Logout</i>
 
+                   
+                </div>
             </div>
             
             <div class="top-menu">
-                <i class="fa fa-search"></i>
+                
+                <i class="fa fa-map-marker your-address" id="m-add-address">Your Address</i>
+                <i class="fa fa-search" id="m-search"></i>
                 <i class="fa fa-cart-plus" id="m-cart-plus"> 0</i>
               
             </div>
+
+           
         </div>
 
         <div class="item-container">
+            
             <div class="category-header" id="category-header">
+                <div id="category-list">
 
+                    <div class="list-card">
+                        <img src="../images/Appetizer/Vegetarische-steak.jfif" alt="list">
+                        <a href="#Appetizer" class="list-name"><b>開胃菜</b></a>
+                    </div>
+    
+                    <div class="list-card">
+                       
+                        <img src="../images/Soup/Vegan Tomato Soup.jfif" alt="list">
+                        <a href="#Soup" class="list-name"><b>濃湯</b></a>
+                    </div>
+    
+                    <div class="list-card">
+                        <img src="../images/Salad/Baked potato bowl with avocado, mushroom, and chickpea.jfif" alt="list">
+                        <a href="#Salad" class="list-name"><b>沙拉</b></a>
+                    </div>
+    
+                    <div class="list-card">
+                        <img src="../images/Entree/sheep.jfif" alt="list">
+                        <a href="#Entree" class="list-name"><b>前菜</b></a>
+                    </div>
+    
+                    <div class="list-card">
+                        <img src="../images/Main/Slow-baked meatballs.png" alt="list">
+                        <a href="#Main-course" class="list-name"><b>主餐</b></a>
+                    </div>
+    
+                    <div class="list-card">
+                        <img src="../images/dessert/green tea.jfif" alt="list">
+                        <a href="#Dessert" class="list-name"><b>甜點</b></a>
+                    </div>
+    
+                    <div class="list-card">
+                        <img src="../images/tea/flower tea.jfif" alt="list">
+                        <a href="#Tea" class="list-name"><b>飲品</b></a>
+                    </div>
+                    
+                    
+                </div>
             </div>
         </div>
+
+       
+        
+        
 
         <div class="mobile-footer">
             <a href="#">Home</a>
