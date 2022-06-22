@@ -70,7 +70,8 @@ class General{
     public function Meme($bot){
         // 需要將FilePath轉換成URL
         $random = rand(1,$this->memeImgTotal); //隨機選擇回傳圖片
-        $path = sprintf('http://localhost/Demo/ReplyClass/Meme/img%d.jpg', $random);
+
+        $path = sprintf('http://%s/Demo/ReplyClass/Meme/img%d.jpg', $_SERVER['REMOTE_ADDR'], $random);
         $attachment = new Image($path, [
             'custom_payload' => true,
         ]);
@@ -83,7 +84,8 @@ class General{
 
     // 隨機選擇笑話
     public function RandomJoke($bot) {
-		$data = file_get_contents('http://localhost/Demo/ReplyClass/Joke.txt');
+        $address = sprintf('http://%s/Demo/ReplyClass/Joke.txt', $_SERVER['REMOTE_ADDR']);
+		$data = file_get_contents($address);
 		$arr = explode(PHP_EOL, $data);
 		$index = rand(0,sizeof($arr)-1);
         $bot->reply($arr[$index]);

@@ -97,7 +97,7 @@ $.get("../phpCode/fooditem.php", function (data) {
     
     //加入菜單內容
     displayItems();
-    displaySearch()
+    displaySearch();
     //加入右邊類別連結區
     //categoryLists();
 
