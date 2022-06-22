@@ -87,7 +87,7 @@ class General
             $url = "http://";
         // Append the host(domain name, ip) to the URL.   
         $url .= $_SERVER['HTTP_HOST'];
-        $path = sprintf('%s/Demo/ReplyClass/Meme/img%d.jpg', $url, $random);
+        $path = sprintf('%s/Takeaway-system/res/Botman/ReplyClass/Meme/img%d.jpg', $url, $random);
         $attachment = new Image($path, [
             'custom_payload' => true,
         ]);
@@ -107,7 +107,7 @@ class General
             $url = "http://";
         // Append the host(domain name, ip) to the URL.   
         $url .= $_SERVER['HTTP_HOST'];
-        $address = sprintf('%s/Demo/ReplyClass/Joke.txt', $url);
+        $address = sprintf('%s/Takeaway-system/res/Botman/ReplyClass/Joke.txt', $url);
         $data = file_get_contents($address);
         $arr = explode(PHP_EOL, $data);
         $index = rand(0, sizeof($arr) - 1);
