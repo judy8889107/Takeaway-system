@@ -12,10 +12,11 @@
     <script>
         var unsave = false;
         var userData;
+        var newUserData; /* 紀錄使用者修改資料, 傳給後台做資料更改 */
         // 得到user data
         $.get("../phpCode/UserPage.php", function (result) {
-            userData = result;
-            console.log(userData);
+            userData = structuredClone(result);  /* 使userData的值不會改變 */
+            newUserData = result;
             setDataLabel(userData);
         }, "json");
 
@@ -43,7 +44,7 @@
         }
         $(document).ready(function () {
             $("a").click(function () {
-                unsave = true;
+                unsave = true; /* 只要有按下修改就會是未儲存 */
                 var name = $(this).attr("for");
                 var toggle = $(this).attr("toggled") == "true" ? true : false;
                 var preEle = $("#" + name);
@@ -65,8 +66,6 @@
                         phoneNumberCheck($(this), name, toggle, preEle);
                         break;
                     case "email":
-                        TODO:// validCode undefined
-                        var validCode;
                         var isValid = false;
                         emailCheck($(this), name, toggle, preEle, validCode, isValid);
                         break;
@@ -95,6 +94,7 @@
                         var newEle = document.createElement("label");
                         newEle.id = name;
                         newEle.innerHTML = preEle.val();
+                        newUserData.nickName = preEle.val();
                         preEle.replaceWith(newEle);
                         thisEle.text("修改");
                         thisEle.attr("toggled", "false");
@@ -138,7 +138,7 @@
                             if (newPWD.length >= 8) {
                                 var newEle = document.createElement("label");
                                 newEle.id = name;
-
+                                newUserData.password = newPWD;
                                 //密碼隱私處理
                                 var substr = newPWD.substring(1, newPWD.length - 1);
                                 newPWD = newPWD.replace(substr, "*".repeat(substr.length));
@@ -194,8 +194,9 @@
                     var selectVal = $("#" + name).val();
                     var newEle = document.createElement("label");
                     newEle.id = name;
-                    console.log(selectVal);
-                    console.log(option[selectVal]);
+                    // console.log(selectVal);
+                    // console.log(option[selectVal]);
+                    newUserData.gender = selectVal;
                     newEle.innerHTML = option[selectVal];
                     preEle.replaceWith(newEle);
                     thisEle.text("修改");
@@ -218,6 +219,7 @@
                     var newEle = document.createElement("label");
                     newEle.id = name;
                     newEle.innerHTML = preEle.val();
+                    newUserData.birthday = preEle.val();
                     preEle.replaceWith(newEle);
                     thisEle.text("修改");
                     thisEle.attr("toggled", "false");
@@ -246,6 +248,7 @@
                                     var newEle = document.createElement("label");
                                     newEle.id = name;
                                     newEle.innerHTML = preEle.val();
+                                    newUserData.phoneNumber = preEle.val();
                                     preEle.replaceWith(newEle);
                                     thisEle.text("修改");
                                     thisEle.attr("toggled", "false");
@@ -261,6 +264,7 @@
                 }
             }
 
+            var validCode; /* 把validCode宣告在外部 */
             function emailCheck(thisEle, name, toggle, preEle) {
                 var validReg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/; /* 電子郵件正則表達 */
                 if (!toggle) {
@@ -279,6 +283,7 @@
                     // 加入按鈕監聽事件
                     newBtn.addEventListener("click", function (e) {
                         isValid = false;
+
                         var inputVal = $("#email").val();
                         if (inputVal == userData.email) {
                             alert("此Email已經驗證過了，無須驗證");
@@ -350,6 +355,7 @@
                         var newEle = document.createElement("label");
                         newEle.id = name;
                         newEle.innerHTML = $("#email").val();
+                        newUserData.email = $("#email").val();
                         $("#emailValid").remove();
                         $("#inputValidCode").remove();
                         preEle.replaceWith(newEle);
@@ -377,18 +383,18 @@
 
                 }
                 else { /* 確認 */
-                    TODO: //不匹配英文
-                    var validReg = /[^a-zA-Z][\u4E00-\u9FFF\d]+$/;
+                    var validReg = /[a-z]+/i;
                     var inputVal = preEle.val();
-                    console.log(inputVal);
-                    if (inputVal.match(validReg)) {
+                    // 地址不包含英文字母
+                    if (!inputVal.match(validReg)) {
                         var newEle = document.createElement("label");
                         newEle.id = name;
                         newEle.innerHTML = inputVal;
+                        newUserData.address = inputVal;
                         preEle.replaceWith(newEle);
                         thisEle.text("修改");
                         thisEle.attr("toggled", "false");
-                    }else{
+                    } else {
                         alert("地址格式錯誤，請重新輸入");
                     }
 
@@ -396,6 +402,46 @@
 
                 }
             }
+
+            // 儲存按鈕
+            $("#saveData").click(function () {
+                unsave = true;
+                console.log(newUserData);
+                // 判斷是否都有確認了
+                // console.log($("input").length);
+                // console.log($("select").length);
+                if ($("input").length != 2 || $("select").length != 0) {
+                    alert("尚有未確認的欄位，請確認後再儲存");
+                }
+                else {
+                    $.get("../phpCode/saveData.php", newUserData, function (result) {
+                        console.log(newUserData);
+                        console.log("修改成功:" + result);
+
+                    }, "text");
+                    isSave = true;
+                }
+
+
+            });
+
+            // 回上一頁按鈕
+            $("#prePage").click(function () {
+                if (unsave) {
+                    var dialog = confirm("您有尚未儲存的資料，請問是否返回上一頁？");
+                    if (dialog) {
+                        console.log('是')
+                        $(location).prop("href", "HomePage.html"); /* 不儲存返回首頁 */
+                    }
+                    else {
+                        console.log('否');
+                        // 停留在此頁
+                    }
+                }else{
+                    $(location).prop("href", "HomePage.html"); /* 無更改返回首頁 */
+                }
+
+            });
 
         });
 
@@ -439,8 +485,8 @@
         <label name="address" id="address"></label>
         <a for="address" href="#">修改</a>
         <br />
-        <input type="submit" value="儲存"></input>
-        <input id="" type="button" value="回上一頁"></input>
+        <input id="saveData" type="submit" value="儲存"></input>
+        <input id="prePage" type="button" value="回上一頁"></input>
     </form>
 </body>
 

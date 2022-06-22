@@ -1,7 +1,7 @@
 <?php
 
 
-$response = array("CaptchaMatch"=>false, "islogin"=> false, "isSupervisor"=> false);
+$response = array("CaptchaMatch"=>false, "islogin"=> false);
 // 判斷session是否已啟動
 if (!isset($_SESSION)) {
     session_start();
@@ -53,11 +53,6 @@ if ((!empty($_SESSION['check_word'])) || (!empty($_POST['inputCaptcha']))) {  //
             $response["islogin"] = true;
             $_SESSION['userName'] = $userName;
             $_SESSION['islogin'] = 1;
-            // //匹配管理者
-            if($userName == "team12"){
-                $_SESSION['isSupervisor'] = 1;
-                $response["isSupervisor"] = true;
-            } 
         }
         
         // 關閉資料庫連結

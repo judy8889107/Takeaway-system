@@ -19,14 +19,10 @@ $(document).ready(function () {
                 }
                 else{
                     // 若為一般使用者
-                    if(response.islogin && !response.isSupervisor){
+                    if(response.islogin){
                         alert("登入成功，即將跳轉到首頁...");
                         $(location).prop("href", "HomePage.html"); /* 登入成功跳轉首頁 */
-                    }else if(response.islogin && response.isSupervisor){ // 若為管理員登入
-                        alert("進入管理員頁面...");
-                        $(location).prop("href", "Supervisor.html"); /* 登入成功跳轉首頁 */
-                    }
-                    else{ // 驗證碼正確, 帳號密碼錯誤
+                    }else{ // 驗證碼正確, 帳號密碼錯誤
                         alert("帳號/密碼有誤，請重新嘗試");
                         $("#imgcode").attr("src", "../phpCode/generateCaptcha.php");
                         $("input[name!='submit']").val(""); /* input清空 */
