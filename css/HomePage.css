@@ -776,6 +776,7 @@ a.SignIn:hover {
 
     #cart-page table{
         margin-left:-20px;
+        margin-top:2px;
     }
 
     #cart-page table thead td {
@@ -797,6 +798,7 @@ a.SignIn:hover {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        /* margin-top:-32px; */
     }
 
     #cart-title {
@@ -804,6 +806,12 @@ a.SignIn:hover {
         /* display: inline-block; */
         text-align: center;
         margin:3px 0 -39px 0;
+    }
+
+    #m-top{
+        display: flex;
+        flex-direction: row;
+        justify-content:space-between;
     }
 
     #m-total-amount {
@@ -824,7 +832,7 @@ a.SignIn:hover {
         background: rgba(255, 255, 255, 0.315);
         color: rgb(159, 65, 65);
         border: 2px solid rgba(165, 42, 42, 0.68);
-        padding: 10px 25px;
+        padding: 1px 25px;
         border-radius: 20px;
         font-size: 18px;
         text-transform: uppercase;
