@@ -102,8 +102,8 @@ body {
 .util {
     flex-direction: column;
 }
-
-.util i,
+#searchBtn,
+ #cart-plus,
 .user i.Login,
 .util p {
     font-size: 18px;
@@ -115,7 +115,74 @@ body {
     cursor: pointer;
     background: rgb(50 66 56);
 }
+#search-Box{
+    display: none;
+    height: 520px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 4px 4px 30px #484848;
+    padding: 20px;
+    overflow:scroll;
+    position: absolute;
+    right: 10px;
+    width: 20vw;
+    top: 90px;
+}
+.display{
+    display: block;
+}
+.container::-webkit-scrollbar{
+    display: none;
+}
 
+#search-Box form{
+    width:100%;
+    border:1px solid rgb(50 66 56);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#search-Box input{
+    border:none;
+    outline:none;
+    box-shadow:none;
+    width:100%;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 10px;
+}
+#search-Box i{
+    padding-left: 10px;
+}
+.product-list{
+    padding:20px 0;
+}
+.product{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-bottom :15px;
+}
+.product img{
+    width: 60px;
+    height:60px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.produce .p-details{
+    padding-left: 15px;
+}
+
+.produce .p-details h2{
+    font-size:20px;
+    color: #2c422e;
+}
+
+.produce .p-details h3{
+    font-size:18px;
+    color: #2c422e;
+}
 a.SignIn {
     margin: 0 40px 0 -10px;
     color: #597969;

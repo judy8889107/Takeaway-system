@@ -94,10 +94,10 @@ function loginSlideUp() {
 $.get("../phpCode/fooditem.php", function (data) {
     foodItem = data;
     console.log(foodItem);
-
+    
     //加入菜單內容
     displayItems();
-
+    displaySearch()
     //加入右邊類別連結區
     //categoryLists();
 
@@ -121,16 +121,111 @@ $.get("../phpCode/fooditem.php", function (data) {
 //當rwd時購物車送出則呼叫send()
 document.getElementById('m-btn-cart').addEventListener('click', send);
 
-    
-document.getElementById('Robot').addEventListener('click', send);
+//切換頁面  
+document.getElementById('Robot').addEventListener('click', changPage);
  
-    	
+document.getElementById('search_btn').addEventListener('click', search)
+document.getElementById('searchBtn').addEventListener('click', showSearch);
+document.getElementById('m_searchBtn').addEventListener('click', showSearch);
+
 
 }, "json");
 
-function changPage(){
+function showSearch(){
+    console.log('?');
+    let searchBox = document.getElementById('search-Box')
+    if(searchBox.style.display == 'block'){
+        searchBox.style.display = 'none'
+    }else{
+        searchBox.style.display = 'block'
+    }
+    
+}
+
+function changPage(e){
+    e.preventDefault()
     console.log('Robot');
-    // document.getElementById("food-items").src = "./Robot.html";
+    document.getElementById("food-container").src = "../SubPage/Robot.html";
+}
+
+//search
+function search(){
+    
+    const searchbox=document.getElementById("Search").value;
+    const storeitems=document.getElementById("product-list");
+    console.log(storeitems);
+    const product =storeitems.querySelectorAll(".product");
+    console.log(product);
+
+    const pname=storeitems.getElementsByTagName("h2");
+    console.log(pname);
+    console.log(searchbox);
+    for(var i=0; i<pname.length;i++){
+        let match=product[i].getElementsByTagName('h2')[0];
+
+        if(match){
+            
+            let textvalue=match.textContent||match.innerHtml
+            
+            let matchRe = textvalue.match(new RegExp(`${searchbox}`,'gmi'))
+            console.log(matchRe);
+            if(matchRe!==null){
+                product[i].style.display="";
+            }
+            else{
+                product[i].style.display="none";
+
+            }
+        }
+    }
+}  
+
+function displaySearch() {
+    var product_list_dom = document.getElementById('product-list');
+    // dom
+    console.log(foodItem);
+    var product_list = foodItem // .filter(item => item.price>50);
+    // foodItem(指標) -> foodItem(物件)
+    // product_list(指標)   -> foodItem(物件)
+    
+    // array
+
+   
+    console.log("product_list");
+    console.log(product_list);
+
+   
+    product_list.map(item => {
+        var product = document.createElement('div');
+        product.setAttribute('class', 'product');
+
+        //圖片
+        var img = document.createElement('img');
+        img.src = item.img;
+
+        var p_details = document.createElement('div');
+        p_details.setAttribute('class', 'p-details');
+        
+        //餐點名稱
+        var searchName = document.createElement('h2');
+       
+        searchName.innerText = item.name;
+
+        //餐點價格
+        var searchPrice = document.createElement('h3');
+       
+        searchPrice.innerText = '價格 : $ ' + item.price;
+
+        product.appendChild(img);
+        product.appendChild(p_details);
+
+        p_details.appendChild(searchName);
+        p_details.appendChild(searchPrice);
+        
+        product_list_dom.appendChild(product);
+
+
+    })
 }
 
 function displayItems() {
