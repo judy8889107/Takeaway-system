@@ -54,7 +54,7 @@ $(document).ready(function () {
     });
 
     function nickNamecheck(nickName) {
-        if (nickName.length < 4) {
+        if (nickName.length < 3) {
             document.getElementById("nickNameHint").innerHTML = "長度過短";
             return 1; /* 有錯誤標記為1 */
         }
