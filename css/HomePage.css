@@ -165,8 +165,8 @@ body {
     padding-bottom :15px;
 }
 .product img{
-    width: 60px;
-    height:60px;
+    width: 86px;
+    height:80px;
     object-fit: cover;
     border-radius: 12px;
 }
@@ -174,13 +174,13 @@ body {
     padding-left: 15px;
 }
 
-.produce .p-details h2{
-    font-size:20px;
+.p-details h2{
+    font-size:18px;
     color: #2c422e;
 }
 
-.produce .p-details h3{
-    font-size:18px;
+.p-details h3{
+    font-size:16px;
     color: #2c422e;
 }
 a.SignIn {
